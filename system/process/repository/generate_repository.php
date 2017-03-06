@@ -23,7 +23,7 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 	$text = "<?php \n";
 	fwrite($myfile, $text);
 
-	$text = "namespace App\Repositories\\". ucfirst($_POST['repository']).";\n\n";
+	$text = "namespace Modules\\".$_SESSION['module']."\Repositories;\n\n";
 	fwrite($myfile, $text);
 
 	$text = "interface ". ucfirst($_POST['repository']).'Repository'." {\n\n";
@@ -58,7 +58,7 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 	foreach ($models as $model) {
 		$model = substr($model, 0, -4);
-		$text ="use App\Model\\" . ucfirst($model). ";\n";	
+		$text ="use Modules\\".$_SESSION['module']."\Entities\\" . ucfirst($model). ";\n";	
 		fwrite($myfile, $text);
 	}
 
@@ -133,14 +133,14 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 	//for updating AppsServiceProvider.php-------------------------
 	// These two lines can be accomplished by using array_pop 
 	// This will also prevent it from inserting blank lines 
-	$file  = file('../../../../app/Providers/AppServiceProvider.php'); 
+	$file  = file('../../../../Modules/'.$_SESSION['module'].'/Providers/'.$_SESSION['module'].'ServiceProvider.php'); 
 	array_pop($file); 
-	$fp    = fopen('../../../../app/Providers/AppServiceProvider.php','w'); 
+	$fp    = fopen('../../../../Modules/'.$_SESSION['module'].'/Providers/'.$_SESSION['module'].'ServiceProvider.php','w'); 
 	fwrite($fp, implode('',$file)); 
 	fclose($fp);  
 
 	// write the new data to the file 
-	$myfile = fopen('../../../../app/Providers/AppServiceProvider.php', 'a'); 
+	$myfile = fopen('../../../../Modules/'.$_SESSION['module'].'/Providers/'.$_SESSION['module'].'ServiceProvider.php', 'a'); 
 	/*public function registerCategoryRepo() {
         return $this->app->bind(
             'App\\Repositories\\Category\\CategoryRepository',
@@ -151,22 +151,23 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 	$text .= "\t\treturn $"."this->app->bind(\n";
 	fwrite($myfile, $text);
 
-	$text = "\t\t\t'App\\" . "\Repositories\\"."\\".ucfirst($_POST['repository'])."\\" . "\\".ucfirst($_POST['repository'])."Repository',\n"; 
-	$text .= "\t\t\t'App\\" . "\Repositories\\"."\\".ucfirst($_POST['repository'])."\\" .ucfirst($_POST['repository']). "\Eloquent"."'"; 
+	$text = "\t\t\t'Modules\\"."\\" .$_SESSION['module']."\\" . "\Repositories\\" . "\\".ucfirst($_POST['repository'])."Repository',\n"; 
+	$text .= "\t\t\t'Modules\\"."\\" .$_SESSION['module']."\\" . "\Repositories\\" . "\\".ucfirst($_POST['repository'])."Eloquent',\n"; 
+	//$text .= "\t\t\t'App\\" . "\Repositories\\"."\\" .ucfirst($_POST['repository']). "Eloquent"."'"; 
 	fwrite($myfile, $text);
 
 	$text = "\n\t\t);\n\t}\n}";
 	fwrite($myfile, $text); 
 
 	//create boot.php inside Provider folder----
-	if(!file_exists('../../../../app/Providers/boot.php')) {
-		$myfile = fopen('../../../../app/Providers/boot.php', 'w');
+	if(!file_exists('../../../../Modules/'.$_SESSION['module'].'/Providers/boot.php')) {
+		$myfile = fopen('../../../../Modules/'.$_SESSION['module'].'/Providers/boot.php', 'w');
 		$text = "<?php";
 		fwrite($myfile, $text); 
 	}
 
 	//now add repository to boot file-------------
-	$myfile = fopen('../../../../app/Providers/boot.php', 'a');
+	$myfile = fopen('../../../../Modules/'.$_SESSION['module'].'/Providers/boot.php', 'a');
 	$text = "\n$" . "this->register".ucfirst($_POST['repository'])."Repository();";
 	fwrite($myfile, $text);
 

@@ -76,7 +76,7 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 			$text = "<?php \n";
 			fwrite($myfile, $text);
 
-			$text = "namespace App\Model;\n\n";
+			$text = "namespace Modules\\".$_SESSION['module']."\Entities;\n\n";
 			$text .= "use Illuminate\Database\Eloquent\Model;\n\n";
 			fwrite($myfile, $text);
 

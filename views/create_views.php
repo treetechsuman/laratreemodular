@@ -6,7 +6,8 @@ require_once('system/classes/service.class.php');
 $migratinFolders = scandir(MigrationFolderPathForView);
 
 $appFolders = glob(RepositoryFolderPathForView. '/*' , GLOB_ONLYDIR);
-$appController = glob(ControllerFolderPathForView. '/*' , GLOB_ONLYDIR);
+//$appController = glob(ControllerFolderPathForView. '/*' , GLOB_ONLYDIR);
+$appController = scandir(ControllerFolderPathForView);
 $appViews = glob(ViewFolderPathForView. '/*' , GLOB_ONLYDIR);
 
 $modelFolders = scandir(ModelFolderPathForView);
@@ -26,14 +27,13 @@ $modelFolders = scandir(ModelFolderPathForView);
     <div class="form-group">
       <label class="control-label col-sm-5" for="viewfolder">Select Controller:</label>
       <div class="col-sm-7">
-      <?php foreach ($appController as $folders) {
-      $files = scandir($folders);  ?>
+      
 
-      <?php foreach ($files as $file) { if($file !='.'&&$file!='..' ){ ?>
+      <?php foreach ($appController as $file) { if($file !='.'&&$file!='..' ){ ?>
         <div class="radio">
   			<label><input type="radio" name="controller" value="<?php echo $file; ?>"><?php echo $file; ?></label>
 		</div>
-		<?php }}} ?>
+		<?php }}?>
       </div>
     </div>
     <div class="form-group">

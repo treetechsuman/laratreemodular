@@ -23,16 +23,18 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	$text = "<?php \n\n";
 	fwrite($myfile, $text);
 //namespace App\Http\Controllers\Product;
-	$text = "namespace App\Http\Controllers\\". ucfirst($_POST['controller']).";\n\n";
+	$text = "namespace Modules\\".$_SESSION['module']."\Http\Controllers;\n\n";
 	fwrite($myfile, $text);
 
 	$text = "use Illuminate\Http\Request;\n";
-	$text .= "use App\Http\Controllers\Controller;\n";
+	$text .= "use Illuminate\Http\Response;\n";
+	$text .= "use Illuminate\Routing\Controller;\n";
 	fwrite($myfile, $text);
 	foreach ($repositories as $repository) {
 		$repository = substr($repository, 0, -4);
 		$folder = substr($repository, 0, -10);
-		$text = "use App\Repositories\\".ucfirst($folder)."\\" .ucfirst($repository).";\n";
+		//$text = "use App\Repositories\\".ucfirst($folder)."\\" .ucfirst($repository).";\n";
+		$text = "use Modules\\".$_SESSION['module']."\Repositories\\" .ucfirst($repository).";\n";
 		fwrite($myfile, $text);
 
 	}
@@ -126,15 +128,6 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 
 	$text ="\n}";
 	fwrite($myfile, $text);
-
-
 }
-
-
-new Locate('../../../index.php?menu=controller&action=create&success=yes&message=' .$_POST['controller'] . ' controller is created ');
-	
-
-
-
-
+new Locate('../../../index.php?menu=controller&action=create&success=yes&message=' .$_POST['controller'] . ' controller is created ');	
 ?>

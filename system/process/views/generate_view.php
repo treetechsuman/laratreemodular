@@ -112,24 +112,24 @@ foreach ($views as $view) {
 		fwrite($myfile, $text);
 }
 if(file_exists(RouteFolderPath)&&isset($controller)){
-	$myfile = fopen(RouteFolderPath.'/web.php', "a") or die("Unable to open file!");
+	$myfile = fopen(RouteFolderPath.'/routes.php', "a") or die("Unable to open file!");
 	$controller_prefix = substr($controller, 0, -14);
 	$text ="/*\n|--------------------------------------------------------------------------\n";
 	$text .="| ".ucfirst($controller_prefix)." Routes\n";
 	$text .="|--------------------------------------------------------------------------\n*/\n";
 	fwrite($myfile, $text);
-	$text = "Route::group(['prefix' => 'admin'], function() { \n";
+	$text = "Route::group(['middleware' => 'web','prefix' => '".lcfirst($_SESSION['module'])."','namespace' => 'Modules\\" . $_SESSION['module'] . "\Http\Controllers'], function() { \n";
 	fwrite($myfile, $text);
 		$text = "\tRoute::group(['prefix' => '".lcfirst($controller_prefix)."'], function() { \n";
 		fwrite($myfile, $text);
 
-			$text = "\t\tRoute::get('/','".ucfirst($controller_prefix)."\\" .substr($controller, 0, -4). "@index');\n";
-			$text .= "\t\tRoute::get('/create','".ucfirst($controller_prefix)."\\" .substr($controller, 0, -4). "@create');\n";
-			$text .= "\t\tRoute::post('/store','".ucfirst($controller_prefix)."\\" .substr($controller, 0, -4). "@store');\n";
-			$text .= "\t\tRoute::get('/{id}/edit','".ucfirst($controller_prefix)."\\" .substr($controller, 0, -4). "@edit');\n";
-			$text .= "\t\tRoute::get('/{id}','".ucfirst($controller_prefix)."\\" .substr($controller, 0, -4). "@show');\n";
-			$text .= "\t\tRoute::post('/update/{id}','".ucfirst($controller_prefix)."\\" .substr($controller, 0, -4). "@update');\n";
-			$text .= "\t\tRoute::get('/delete/{id}','".ucfirst($controller_prefix)."\\" .substr($controller, 0, -4). "@delete');\n";
+			$text = "\t\tRoute::get('/','".substr($controller, 0, -4). "@index');\n";
+			$text .= "\t\tRoute::get('/create','".substr($controller, 0, -4). "@create');\n";
+			$text .= "\t\tRoute::post('/store','".substr($controller, 0, -4). "@store');\n";
+			$text .= "\t\tRoute::get('/{id}/edit','".substr($controller, 0, -4). "@edit');\n";
+			$text .= "\t\tRoute::get('/{id}','".substr($controller, 0, -4). "@show');\n";
+			$text .= "\t\tRoute::post('/update/{id}','".substr($controller, 0, -4). "@update');\n";
+			$text .= "\t\tRoute::get('/delete/{id}','".substr($controller, 0, -4). "@delete');\n";
 			
 			fwrite($myfile, $text);
 
@@ -140,14 +140,14 @@ if(file_exists(RouteFolderPath)&&isset($controller)){
 	fwrite($myfile, $text);
 }
 //now add  menu--------------------------
-	$myfile = fopen('../../../../resources/views/backend/layouts/generated_menu.blade.php', 'a'); 
+	/*$myfile = fopen('../../../../resources/views/backend/layouts/generated_menu.blade.php', 'a'); 
 	
 	$text = "\n<li class=\"treeview\">\n";
 	$text .= "\t<a href=\"{{url('admin/".lcfirst($controller_prefix)."')}}\">\n";
 	$text .= "\t\t<i class=\"fa fa-dashboard\"></i> <span>".ucfirst($controller_prefix)."</span>\n";
 	$text .= "\t</a>\n";
 	$text .= "</li>\n";
-	fwrite($myfile, $text); 
+	fwrite($myfile, $text); */
 
 new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
 	
