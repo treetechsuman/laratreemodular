@@ -6,7 +6,9 @@ require_once('system/classes/service.class.php');
 $migratinFolders = scandir(MigrationFolderPathForView);
 
 $appFolders = glob(RepositoryFolderPathForView. '/*' , GLOB_ONLYDIR);
-$appController = glob(ControllerFolderPathForView. '/*' , GLOB_ONLYDIR);
+//$appController = glob(ControllerFolderPathForView. '/*' , GLOB_ONLYDIR);
+$appFolders = scandir(RepositoryFolderPathForView);
+$appController = scandir(ControllerFolderPathForView);
 
 $modelFolders = scandir(ModelFolderPathForView);
 //print_r($modelFolders);
@@ -25,14 +27,14 @@ $modelFolders = scandir(ModelFolderPathForView);
     <div class="form-group">
       <label class="control-label col-sm-5" for="repository">Select Repo:</label>
       <div class="col-sm-7">
-      <?php foreach ($appFolders as $folders) {
-      $files = scandir($folders);  ?>
+      <?php //foreach ($appFolders as $folders) {
+      //$files = scandir($folders);  ?>
 
-      <?php foreach ($files as $file) { if($file !='.'&&$file!='..' &&strpos($file,'Repository') !==false){ ?>
+      <?php foreach ($appFolders as $file) { if($file !='.'&&$file!='..' &&strpos($file,'Repository') !==false){ ?>
         <div class="checkbox">
   			<label><input type="checkbox" name="repository[]" value="<?php echo $file; ?>"><?php echo $file; ?></label>
 		</div>
-		<?php }}} ?>
+		<?php }} ?>
       </div>
     </div>
     <div class="form-group">        
@@ -43,7 +45,7 @@ $modelFolders = scandir(ModelFolderPathForView);
 </div>
 <div class="col-md-5">
 <?php //require_once('include/migration_model_file_tree.php'); ?>
-<?php require_once('include/controller_file_tree.php'); ?>
+<?php require_once('include/new_controller_file_tree.php'); ?>
 <?php //require_once('include/repository_file_tree.php'); ?>
 
 	

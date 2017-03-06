@@ -14,12 +14,12 @@ if (!file_exists(RepositoryFolderPath)) {
     mkdir(RepositoryFolderPath, 0777, true);
 }
 //create another folder in side Repositories----
-if (!file_exists(RepositoryFolderPath.ucfirst($_POST['repository']))) {
+/*if (!file_exists(RepositoryFolderPath.ucfirst($_POST['repository']))) {
     mkdir(RepositoryFolderPath.ucfirst($_POST['repository']), 0777, true);
-}
-$myfile = fopen(RepositoryFolderPath.$_POST['repository'].'/'.$file_name, "w") or die("Unable to open file!");
+}*/
+$myfile = fopen(RepositoryFolderPath.'/'.$file_name, "w") or die("Unable to open file!");
 
-if(fopen(RepositoryFolderPath.$_POST['repository'].'/'.$file_name, "w")){
+if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 	$text = "<?php \n";
 	fwrite($myfile, $text);
 
@@ -43,18 +43,18 @@ if(fopen(RepositoryFolderPath.$_POST['repository'].'/'.$file_name, "w")){
 }
 
 //for eloquent---------------
-$file_name = 'Eloquent'.ucfirst($_POST['repository']).'.php';
+$file_name = ucfirst($_POST['repository']).'Eloquent.php';
 //echo $file_name;
-if (!file_exists(RepositoryFolderPath.$_POST['repository'])) {
+/*if (!file_exists(RepositoryFolderPath.$_POST['repository'])) {
     mkdir(RepositoryFolderPath.$_POST['repository'], 0777, true);
-}
-$myfile = fopen(RepositoryFolderPath.$_POST['repository'].'/'.$file_name, "w") or die("Unable to open file!");
+}*/
+$myfile = fopen(RepositoryFolderPath.'/'.$file_name, "w") or die("Unable to open file!");
 
-if(fopen(RepositoryFolderPath.$_POST['repository'].'/'.$file_name, "w")){
+if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 	$text = "<?php \n";
 	fwrite($myfile, $text);
 
-	$text = "namespace App\Repositories\\". ucfirst($_POST['repository']).";\n\n";
+	$text = "namespace Modules\\".$_SESSION['module']."\Repositories;\n\n";
 	fwrite($myfile, $text);
 	foreach ($models as $model) {
 		$model = substr($model, 0, -4);
@@ -62,7 +62,7 @@ if(fopen(RepositoryFolderPath.$_POST['repository'].'/'.$file_name, "w")){
 		fwrite($myfile, $text);
 	}
 
-	$text = "\nclass " .'Eloquent'.ucfirst($_POST['repository']). " implements ". ucfirst($_POST['repository'])."Repository{\n";
+	$text = "\nclass " . ucfirst($_POST['repository']).'Eloquent'. " implements ". ucfirst($_POST['repository'])."Repository{\n";
 	fwrite($myfile, $text);
 
 	foreach ($models as $model) {
@@ -152,7 +152,7 @@ if(fopen(RepositoryFolderPath.$_POST['repository'].'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 
 	$text = "\t\t\t'App\\" . "\Repositories\\"."\\".ucfirst($_POST['repository'])."\\" . "\\".ucfirst($_POST['repository'])."Repository',\n"; 
-	$text .= "\t\t\t'App\\" . "\Repositories\\"."\\".ucfirst($_POST['repository'])."\\" . "\Eloquent".ucfirst($_POST['repository'])."'"; 
+	$text .= "\t\t\t'App\\" . "\Repositories\\"."\\".ucfirst($_POST['repository'])."\\" .ucfirst($_POST['repository']). "\Eloquent"."'"; 
 	fwrite($myfile, $text);
 
 	$text = "\n\t\t);\n\t}\n}";

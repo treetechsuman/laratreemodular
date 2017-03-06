@@ -9,6 +9,11 @@
       		Home
       	</a>
       </li>
+      <li <?php if($_SESSION['menu']==''||$_SESSION['menu']=='modules'){?> class="active" <?php } ?> >
+        <a href="index.php?menu=modules">
+          Modules
+        </a>
+      </li>
       <li <?php if($_SESSION['menu']=='migration'){?> class="active" <?php } ?> >
       	<a href="index.php?menu=migration&action=create">
       		Create Migration
@@ -27,17 +32,6 @@
       <li <?php if($_SESSION['menu']=='views'){?> class="active" <?php } ?> >
         <a href="index.php?menu=views&action=create">
           Create Views
-        </a>
-      </li>
-
-      <li <?php if($_SESSION['menu']=='adminlte'){?> class="active" <?php } ?> >
-        <a href="index.php?menu=adminlte&action=create">
-          Create adminlte
-        </a>
-      </li>
-      <li <?php if($_SESSION['menu']=='component'){?> class="active" <?php } ?> >
-        <a href="index.php?menu=component&action=create">
-          Add Component
         </a>
       </li>
       <li <?php if($_SESSION['menu']=='file'){?> class="active" <?php } ?> >

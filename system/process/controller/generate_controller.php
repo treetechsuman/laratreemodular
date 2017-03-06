@@ -9,17 +9,17 @@ $_SESSION['repository']= $_POST['repository'];
 $_SESSION['controller']= $_POST['controller'];
 $repositories = $_POST['repository'];
 $file_name = ucfirst($_POST['controller']).'Controller.php';
-//create Repositories folder inside app
+/*//create Repositories folder inside app
 if (!file_exists(ControllerFolderPath)) {
     mkdir(ControllerFolderPath, 0777, true);
-}
-//create another folder in side Repositories----
+}*/
+/*//create another folder in side Repositories----
 if (!file_exists(ControllerFolderPath.ucfirst($_POST['controller']))) {
     mkdir(ControllerFolderPath.ucfirst($_POST['controller']), 0777, true);
-}
-$myfile = fopen(ControllerFolderPath.$_POST['controller'].'/'.$file_name, "w") or die("Unable to open file!");
+}*/
+$myfile = fopen(ControllerFolderPath.'/'.$file_name, "w") or die("Unable to open file!");
 
-if(fopen(ControllerFolderPath.$_POST['controller'].'/'.$file_name, "w")){
+if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	$text = "<?php \n\n";
 	fwrite($myfile, $text);
 //namespace App\Http\Controllers\Product;

@@ -15,6 +15,10 @@ switch($menu){
 		$page_to_load = "views/home.php";
 		break;
 
+	case 'modules':
+		$page_to_load = "views/select_module.php";
+		break;
+
 	case 'migration':
 		if($action == 'create'){
 			$page_to_load = "views/create_migration.php";

@@ -5,8 +5,10 @@ require_once('system/classes/service.class.php');
 
 $migratinFolders = scandir(MigrationFolderPathForView);
 
-$appFolders = glob(RepositoryFolderPathForView. '/*' , GLOB_ONLYDIR);
-$appController = glob(ControllerFolderPathForView. '/*' , GLOB_ONLYDIR);
+//$appFolders = glob(RepositoryFolderPathForView. '/*' , GLOB_ONLYDIR);
+$appFolders = scandir(RepositoryFolderPathForView);
+//$appController = glob(ControllerFolderPathForView. '/*' , GLOB_ONLYDIR);
+$appController = scandir(ControllerFolderPathForView);
 $appViews = glob(ViewFolderPathForView. '/*' , GLOB_ONLYDIR);
 
 $modelFolders = scandir(ModelFolderPathForView);
@@ -26,7 +28,7 @@ $modelFolders = scandir(ModelFolderPathForView);
 </div>
 <div class="col-md-5">
   <?php require_once('include/migration_model_file_tree.php'); ?>
-  <?php require_once('include/controller_file_tree.php'); ?>
-  <?php require_once('include/repository_file_tree.php'); ?>
+  <?php require_once('include/new_controller_file_tree.php'); ?>
+  <?php require_once('include/repo_file_tree.php'); ?>
   <?php require_once('include/views_file_tree.php'); ?>	
 </div>
