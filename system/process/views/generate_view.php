@@ -17,7 +17,7 @@ $variable = lcfirst(substr($controller, 0, -14));
 foreach ($views as $view) {
 		//mkdir(ViewFolderPath.'/'.lcfirst($_POST['viewfolder'].'/'.$view), 0777, true);
 		$myfile = fopen(ViewFolderPath.'/'.lcfirst($_POST['viewfolder']).'/'.$view.'.blade.php', "w") or die("Unable to open file!");
-		$text ="@extends('backend.layouts.app')\n";
+		$text ="@extends('". lcfirst($_SESSION['module']) ."::layouts.master')\n";
 		$text .="@section('title')\n";
 			$text .="\t".$view."\n";
 		$text .="@endsection\n";
@@ -149,6 +149,6 @@ if(file_exists(RouteFolderPath)&&isset($controller)){
 	$text .= "</li>\n";
 	fwrite($myfile, $text); */
 
-new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
+//new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
 	
 ?>

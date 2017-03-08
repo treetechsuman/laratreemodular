@@ -152,7 +152,7 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 
 	$text = "\t\t\t'Modules\\"."\\" .$_SESSION['module']."\\" . "\Repositories\\" . "\\".ucfirst($_POST['repository'])."Repository',\n"; 
-	$text .= "\t\t\t'Modules\\"."\\" .$_SESSION['module']."\\" . "\Repositories\\" . "\\".ucfirst($_POST['repository'])."Eloquent',\n"; 
+	$text .= "\t\t\t'Modules\\"."\\" .$_SESSION['module']."\\" . "\Repositories\\" . "\\".ucfirst($_POST['repository'])."Eloquent'\n"; 
 	//$text .= "\t\t\t'App\\" . "\Repositories\\"."\\" .ucfirst($_POST['repository']). "Eloquent"."'"; 
 	fwrite($myfile, $text);
 

@@ -58,6 +58,7 @@ $modelFolders = scandir(ModelFolderPathForView);
         <button type="submit" class="btn btn-success">Generate</button>
       </div>
     </div>
+    </form>
 </div>
 <div class="col-md-5">
 	<?php //require_once('include/migration_model_file_tree.php'); ?>

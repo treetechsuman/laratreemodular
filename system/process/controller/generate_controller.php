@@ -81,12 +81,12 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	$text = "\n\tpublic function index(){\n";
 	//$sliders = $this->sliderRepo->getAllSlider();
 	$text .= "\t\t$".lcfirst($_POST['controller'])."s = $". "this->".lcfirst($_POST['controller'])."Repo->getAll".ucfirst($_POST['controller'])."();\n";
-	$text .= "\t\treturn view('backend.".lcfirst($_POST['controller']).".index',compact('".lcfirst($_POST['controller'])."s'));\n";
+	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".index',compact('".lcfirst($_POST['controller'])."s'));\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
 
 	$text = "\n\tpublic function create(){\n";
-	$text .= "\t\treturn view('backend.".lcfirst($_POST['controller']).".create');\n";
+	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".create');\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
 
@@ -99,7 +99,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 	
 	$text = "\n\tpublic function show(){\n";
-	$text .= "\t\treturn view('backend.".lcfirst($_POST['controller']).".show');\n";
+	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".show');\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
 
@@ -107,7 +107,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	//return view('backend.slider.edit',compact('slider'));
 	$text = "\n\tpublic function edit($" . "id){\n";
 	$text .= "\t\t$".lcfirst($_POST['controller'])." = $". "this->".lcfirst($_POST['controller'])."Repo->get".ucfirst($_POST['controller'])."ById($" . "id);\n";
-	$text .= "\t\treturn view('backend.".lcfirst($_POST['controller']).".edit',compact('".lcfirst($_POST['controller'])."'));\n";
+	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".edit',compact('".lcfirst($_POST['controller'])."'));\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
 
