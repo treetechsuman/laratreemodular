@@ -3,26 +3,16 @@
 require_once('../../../config/config.php');
 require_once('../../classes/locate.class.php');
 
-//echo MigrationFolderPath .'<br>';
-//rtrim($string, ",")
 $_SESSION['repository']= $_POST['repository'];
 $_SESSION['controller']= $_POST['controller'];
 $repositories = $_POST['repository'];
 $file_name = ucfirst($_POST['controller']).'Controller.php';
-/*//create Repositories folder inside app
-if (!file_exists(ControllerFolderPath)) {
-    mkdir(ControllerFolderPath, 0777, true);
-}*/
-/*//create another folder in side Repositories----
-if (!file_exists(ControllerFolderPath.ucfirst($_POST['controller']))) {
-    mkdir(ControllerFolderPath.ucfirst($_POST['controller']), 0777, true);
-}*/
+
 $myfile = fopen(ControllerFolderPath.'/'.$file_name, "w") or die("Unable to open file!");
 
 if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	$text = "<?php \n\n";
 	fwrite($myfile, $text);
-//namespace App\Http\Controllers\Product;
 	$text = "namespace Modules\\".$_SESSION['module']."\Http\Controllers;\n\n";
 	fwrite($myfile, $text);
 
@@ -33,7 +23,6 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	foreach ($repositories as $repository) {
 		$repository = substr($repository, 0, -4);
 		$folder = substr($repository, 0, -10);
-		//$text = "use App\Repositories\\".ucfirst($folder)."\\" .ucfirst($repository).";\n";
 		$text = "use Modules\\".$_SESSION['module']."\Repositories\\" .ucfirst($repository).";\n";
 		fwrite($myfile, $text);
 
@@ -78,20 +67,20 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	$text = "\t}\n";
 	fwrite($myfile, $text);
 
+	//index function---------
 	$text = "\n\tpublic function index(){\n";
-	//$sliders = $this->sliderRepo->getAllSlider();
 	$text .= "\t\t$".lcfirst($_POST['controller'])."s = $". "this->".lcfirst($_POST['controller'])."Repo->getAll".ucfirst($_POST['controller'])."();\n";
 	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".index',compact('".lcfirst($_POST['controller'])."s'));\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
 
+	//create function----------
 	$text = "\n\tpublic function create(){\n";
 	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".create');\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
 
-	//$this->sliderRepo->createSlider($request->all());
-	//return redirect('/slider');
+	//store function---------------
 	$text = "\n\tpublic function store(Request $"."request){\n";
 	$text .= "\t\t$"."this->".lcfirst($_POST['controller'])."Repo->create".ucfirst($_POST['controller'])."($"."request->all());\n";
 	$text .= "\t\treturn redirect('admin/".lcfirst($_POST['controller'])."');\n";
@@ -102,24 +91,21 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".show');\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
-
-	//$slider = $this->sliderRepo->getSliderById($id);
-	//return view('backend.slider.edit',compact('slider'));
+	//edit function -------
 	$text = "\n\tpublic function edit($" . "id){\n";
 	$text .= "\t\t$".lcfirst($_POST['controller'])." = $". "this->".lcfirst($_POST['controller'])."Repo->get".ucfirst($_POST['controller'])."ById($" . "id);\n";
 	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".edit',compact('".lcfirst($_POST['controller'])."'));\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
 
-	//$this->sliderRepo->updateSlider($id,$request->all())
-	//return redirect('/slider');
+	//update function-------------
 	$text = "\n\tpublic function update($" . "id ,Request $"."request){\n";
 	$text .= "\t\t$"."this->".lcfirst($_POST['controller'])."Repo->update".ucfirst($_POST['controller'])."($" . "id,$"."request->all());\n";
 	$text .= "\t\treturn redirect('admin/".lcfirst($_POST['controller'])."');\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
-	//$this->sliderRepo->deleteSlider($id);
-	//return redirect('/slider');
+	
+	//delete function---------------
 	$text = "\n\tpublic function delete($" . "id){\n";
 	$text .= "\t\t$"."this->".lcfirst($_POST['controller'])."Repo->delete".ucfirst($_POST['controller'])."($"."id);\n";
 	$text .= "\t\treturn redirect('admin/".lcfirst($_POST['controller'])."');\n";

@@ -111,6 +111,7 @@ foreach ($views as $view) {
 		
 		fwrite($myfile, $text);
 }
+//generate routes----------------------------------------------------------------
 if(file_exists(RouteFolderPath)&&isset($controller)){
 	$myfile = fopen(RouteFolderPath.'/routes.php', "a") or die("Unable to open file!");
 	$controller_prefix = substr($controller, 0, -14);
@@ -149,6 +150,6 @@ if(file_exists(RouteFolderPath)&&isset($controller)){
 	$text .= "</li>\n";
 	fwrite($myfile, $text); */
 
-//new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
+new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
 	
 ?>
