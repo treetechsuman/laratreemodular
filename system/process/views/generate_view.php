@@ -10,9 +10,24 @@ $_SESSION['viewfolder']= $_POST['viewfolder'];
 $views = $_POST['views'];
 $controller = $_POST['controller'];
 
+//create nav for module--------------
+if (!file_exists('../../../../Modules/'.$_SESSION['module'].'/Resources/views/layouts/nav.blade.php')) {
+    //mkdir(ViewFolderPath.'/'.lcfirst($_POST['viewfolder']), 0777, true);
+    $myfile = fopen('../../../../Modules/'.$_SESSION['module'].'/Resources/views/layouts/nav.blade.php', 'w');
+    $text = "\t<div class=\"row\">\n";
+    $text .= "\t\t<div class=\"col-md-6\">\n";
+    $text .= "\t\t\t<div class=\"btn-group\">\n";
+    $text .= "\t\t\t\t<a href=\"{{url('admin/product/')}}\" class=\"btn btn-default\">Home</a>\n";
+    $text .= "\t\t\t</div>\n";
+    $text .= "\t\t</div>\n";
+    $text .= "\t</div>\n";
+    fwrite($myfile, $text);
+}
+
 if (!file_exists(ViewFolderPath.'/'.lcfirst($_POST['viewfolder']))) {
     mkdir(ViewFolderPath.'/'.lcfirst($_POST['viewfolder']), 0777, true);
 }
+
 $variable = lcfirst(substr($controller, 0, -14));
 foreach ($views as $view) {
 		//mkdir(ViewFolderPath.'/'.lcfirst($_POST['viewfolder'].'/'.$view), 0777, true);
@@ -25,6 +40,7 @@ foreach ($views as $view) {
 			$text .="\t".lcfirst($_POST['viewfolder']).'/'.$view."\n";
 		$text .="@endsection\n";
 		$text .="@section('content')\n";
+			$text .="\t@include('product::layouts.nav')\n";
 			$text .="\t<div class=\"row\">\n";
 				$text .="\t\t<div class=\"col-md-6\">\n";
 					$text .="\t\t\t<div class=\"box box-primary\">\n";
@@ -150,6 +166,6 @@ if(file_exists(RouteFolderPath)&&isset($controller)){
 	$text .= "</li>\n";
 	fwrite($myfile, $text); */
 
-//new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
+new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
 	
 ?>
