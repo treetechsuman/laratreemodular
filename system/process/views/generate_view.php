@@ -30,7 +30,7 @@ foreach ($views as $view) {
 					$text .="\t\t\t<div class=\"box box-primary\">\n";
 						$text .="\t\t\t\t<div class=\"box-header with-border\">\n";
 						$text .="\t\t\t\t\t<h3 class=\"box-title\">".$view."</h3>\n";
-						$text .="\t\t\t\t\t<a href=\"{{url('admin/".$variable."/create')}}\" data-toggle=\"tooltip\" title=\"Create!\" class=\"btn btn-primary btn-xs pull-right\"><i class=\"glyphicon glyphicon-plus\"></i></a>\n";
+						$text .="\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/create')}}\" data-toggle=\"tooltip\" title=\"Create!\" class=\"btn btn-primary btn-xs pull-right\"><i class=\"glyphicon glyphicon-plus\"></i></a>\n";
 						$text .="\t\t\t\t</div>\n";
 						$text .="\t\t\t\t<div class=\"box-body\">\n";
 						if($view=='index'){
@@ -46,8 +46,8 @@ foreach ($views as $view) {
 									$text.= "\t\t\t\t\t\t\t\t<td>{{\$" .$variable."['id']}}</td>\n";
 									$text.= "\t\t\t\t\t\t\t\t<td>item1</td>\n";
 									$text.= "\t\t\t\t\t\t\t\t<td>\n";
-										$text.= "\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".$variable."/'.$" .$variable."['id'].'/edit')}}\" data-toggle=\"tooltip\" title=\"Edit\" class=\"btn btn-info btn-xs\"><i class=\"glyphicon glyphicon-edit\"></i></a>\n";
-										$text.= "\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".$variable."/delete/'.$" .$variable."['id'])}}\" data-toggle=\"tooltip\" title=\"Delete\" class=\"btn btn-danger btn-xs\"><i class=\"glyphicon glyphicon-remove\"></i></a></i></a>\n";
+										$text.= "\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/'.$" .$variable."['id'].'/edit')}}\" data-toggle=\"tooltip\" title=\"Edit\" class=\"btn btn-info btn-xs\"><i class=\"glyphicon glyphicon-edit\"></i></a>\n";
+										$text.= "\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/delete/'.$" .$variable."['id'])}}\" data-toggle=\"tooltip\" title=\"Delete\" class=\"btn btn-danger btn-xs\"><i class=\"glyphicon glyphicon-remove\"></i></a></i></a>\n";
 
 									$text.= "\t\t\t\t\t\t\t\t</td>\n";
 								$text.= "\t\t\t\t\t\t\t</tr>\n";
@@ -56,7 +56,7 @@ foreach ($views as $view) {
 
 							$text .= "\t\t\t\t\t</table>\n";
 						}elseif($view=='create'){
-							$text .= "\t\t\t\t\t<form role=\"form\" action=\"{{url('admin/".$variable."/store')}}\" method=\"post\" enctype=\"multipart/form-data\">\n";
+							$text .= "\t\t\t\t\t<form role=\"form\" action=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/store')}}\" method=\"post\" enctype=\"multipart/form-data\">\n";
 							$text .= "\t\t\t\t\t\t{!! csrf_field() !!}\n";
 							$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
 							$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
@@ -78,7 +78,7 @@ foreach ($views as $view) {
 							$text .= "\t\t\t\t\t\t</div>\n";
 							$text .= "\t\t\t\t\t</form>\n";
 						}elseif($view=='edit'){
-							$text .= "\t\t\t\t\t<form role=\"form\" action=\"{{url('admin/".$variable."/update/'.$" .$variable."['id'])}}\" method=\"post\" enctype=\"multipart/form-data\">\n";
+							$text .= "\t\t\t\t\t<form role=\"form\" action=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/update/'.$" .$variable."['id'])}}\" method=\"post\" enctype=\"multipart/form-data\">\n";
 							$text .= "\t\t\t\t\t\t{!! csrf_field() !!}\n";
 							$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
 							$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
@@ -150,6 +150,6 @@ if(file_exists(RouteFolderPath)&&isset($controller)){
 	$text .= "</li>\n";
 	fwrite($myfile, $text); */
 
-new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
+//new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
 	
 ?>

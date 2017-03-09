@@ -13,15 +13,15 @@ define("MigrationFolderPath", "../../../../Modules/".$_SESSION['module']."/datab
 define("ModelFolderPath", "../../../../Modules/".$_SESSION['module']."/Entities/");
 define("ControllerFolderPath", "../../../../Modules/".$_SESSION['module']."/Http/Controllers/");
 define("RepositoryFolderPath", "../../../../Modules/".$_SESSION['module']."/Repositories/");
-define("ViewFolderPath", "../../../../resources/views/backend/");
-define("RouteFolderPath", "../../../../routes/");
+define("ViewFolderPath", "../../../../Modules/".$_SESSION['module']."/resources/views/");
+define("RouteFolderPath", "../../../../Modules/".$_SESSION['module']."/Http/");
 
 //for views-----------------------------------------
 define("MigrationFolderPathForView", "../Modules/".$_SESSION['module']."/database/migrations/");
 define("ModelFolderPathForView", "../Modules/".$_SESSION['module']."/Entities/");
 define("ControllerFolderPathForView", "../Modules/".$_SESSION['module']."/Http/Controllers");
 define("RepositoryFolderPathForView", "../Modules/".$_SESSION['module']."/Repositories");
-define("ViewFolderPathForView", "../resources/views/backend");
+define("ViewFolderPathForView", "../Modules/".$_SESSION['module']."/resources/views/");
 define("ModulesFolderPathForView", "../Modules");
 
 
