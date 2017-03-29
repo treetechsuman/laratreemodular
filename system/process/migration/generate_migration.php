@@ -34,7 +34,7 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 
 		for($i=0;$i<$_POST['no_of_fields'];$i++){
 			if($_POST['type'][$i]=='enum'){
-				$text = "\n\t\t\t$" . "table->".$_POST['type'][$i]."('" . $_POST['field_name'][$i] ."',['value1','value2']);";
+				$text = "\n\t\t\t$" . "table->".$_POST['type'][$i]."('" . $_POST['field_name'][$i] ."',['Active','Inactive']);";
 			}elseif($_POST['type'][$i]=='foreign'){
 				$text = "\n\t\t\t$" . "table->integer('" . $_POST['field_name'][$i] ."')->unsigned();";
 				$text .= "\n\t\t\t$" . "table->".$_POST['type'][$i]."('" . $_POST['field_name'][$i] ."')->references('id')->on('table name')->onDelete('cascade');";

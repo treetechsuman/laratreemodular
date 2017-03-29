@@ -85,45 +85,85 @@ foreach ($views as $view) {
 						}elseif($view=='create'){
 							$text .= "\t\t\t\t\t<form role=\"form\" action=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/store')}}\" method=\"post\" enctype=\"multipart/form-data\">\n";
 							$text .= "\t\t\t\t\t\t{!! csrf_field() !!}\n";
+							fwrite($myfile, $text);
+									foreach ($table_fields as $field) {
+										
+										//$text= "\t\t\t\t\t\t\t\t<td>{{\$" .$variable."['" . $field ."']}}</td>\n";
+										if($field=='status'){
+											$text = "\t\t\t\t\t\t<div class=\"form-group\">\n";
+											$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+											$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
+											$text .= "\t\t\t\t\t\t\t</div>\n";
+											$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+											 $text .= "\t\t\t\t\t\t\t\t<select name=\"status\" class=\"form-control\">\n";
+												$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Active\" @if(old('status')=='Active') selected=\"selected\" @endif >Active</option>\n";
+												$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Inactive\" @if(old('status')=='Inactive') selected=\"selected\" @endif >Inactive</option>\n";
+											$text .= "\t\t\t\t\t\t\t\t</select>\n";
+											$text .= "\t\t\t\t\t\t\t</div>\n";
+											$text .= "\t\t\t\t\t\t</div>\n";
+										}else{
+										$text = "\t\t\t\t\t\t<div class=\"form-group\">\n";
+										$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+										$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
+										$text .= "\t\t\t\t\t\t\t</div>\n";
+										$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+										$text .= "\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{old('" . $field ."')}}\" required>\n";
+				    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
+				    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
+			    						$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
+
+
+				    					$text .= "\t\t\t\t\t\t\t\t\t</span>\n";
+				    					$text .= "\t\t\t\t\t\t\t\t@endif\n";
+				    					$text .= "\t\t\t\t\t\t\t</div>\n";
+										$text .= "\t\t\t\t\t\t</div>\n";
+									}
+										fwrite($myfile, $text);								
+									}
 							
-							$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
-							$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
-							$text .= "\t\t\t\t\t\t\t\t<label for=\"name\" {{ $". "errors->has('name') ? ' has-error' : '' }}>Name:</label>\n";
-							$text .= "\t\t\t\t\t\t\t</div>\n";
-							$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
-							$text .= "\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"name\" placeholder=\"Enter Name\" name=\"name\" value=\"{{old('name')}}\" required>\n";
-    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('name'))\n";
-    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
-    					$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('name') }}</strong>\n";
-
-
-    					$text .= "\t\t\t\t\t\t\t\t\t</span>\n";
-    					$text .= "\t\t\t\t\t\t\t\t@endif\n";
-    					$text .= "\t\t\t\t\t\t\t</div>\n";
-							$text .= "\t\t\t\t\t\t</div>\n";
-							$text .= "\t\t\t\t\t\t<div class=\"box-footer\">\n";
+							$text = "\t\t\t\t\t\t<div class=\"box-footer\">\n";
 							$text .= "\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-primary btn-flat btn-sm\">Submit</button>\n";
 							$text .= "\t\t\t\t\t\t</div>\n";
 							$text .= "\t\t\t\t\t</form>\n";
 						}elseif($view=='edit'){
 							$text .= "\t\t\t\t\t<form role=\"form\" action=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/update/'.$" .$variable."['id'])}}\" method=\"post\" enctype=\"multipart/form-data\">\n";
 							$text .= "\t\t\t\t\t\t{!! csrf_field() !!}\n";
-							$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
-							$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
-							$text .= "\t\t\t\t\t\t\t\t<label for=\"name\" {{ $". "errors->has('name') ? ' has-error' : '' }}>Name:</label>\n";
-							$text .= "\t\t\t\t\t\t\t</div>\n";
-							$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
-							$text .= "\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"name\" placeholder=\"Enter Name\" name=\"name\" value=\"{{\$".$variable."['name']}}\" required>\n";
-    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('name'))\n";
-    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
-    					$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('name') }}</strong>\n";
+							fwrite($myfile, $text);
+									foreach ($table_fields as $field) {
+										
+										//$text= "\t\t\t\t\t\t\t\t<td>{{\$" .$variable."['" . $field ."']}}</td>\n";
+										if($field=='status'){
+											$text = "\t\t\t\t\t\t<div class=\"form-group\">\n";
+											$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+											$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
+											$text .= "\t\t\t\t\t\t\t</div>\n";
+											$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+											 $text .= "\t\t\t\t\t\t\t\t<select name=\"status\" class=\"form-control\">\n";
+												$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Active\" @if(\$".$variable."['status']=='Active') selected=\"selected\" @endif >Active</option>\n";
+												$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Inactive\" @if(\$".$variable."['status']=='Inactive') selected=\"selected\" @endif >Inactive</option>\n";
+											$text .= "\t\t\t\t\t\t\t\t</select>\n";
+											$text .= "\t\t\t\t\t\t\t</div>\n";
+											$text .= "\t\t\t\t\t\t</div>\n";
+										}else{
+										$text = "\t\t\t\t\t\t<div class=\"form-group\">\n";
+										$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+										$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
+										$text .= "\t\t\t\t\t\t\t</div>\n";
+										$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+										$text .= "\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{\$".$variable."['" . $field ."']}}\" required>\n";
+				    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
+				    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
+			    						$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
 
 
-    					$text .= "\t\t\t\t\t\t\t\t\t</span>\n";
-    					$text .= "\t\t\t\t\t\t\t\t@endif\n";
-    					$text .= "\t\t\t\t\t\t\t</div>\n";
-							$text .= "\t\t\t\t\t\t</div>\n";
-							$text .= "\t\t\t\t\t\t<div class=\"box-footer\">\n";
+				    					$text .= "\t\t\t\t\t\t\t\t\t</span>\n";
+				    					$text .= "\t\t\t\t\t\t\t\t@endif\n";
+				    					$text .= "\t\t\t\t\t\t\t</div>\n";
+										$text .= "\t\t\t\t\t\t</div>\n";
+									}
+										fwrite($myfile, $text);								
+									}
+							$text = "\t\t\t\t\t\t<div class=\"box-footer\">\n";
 							$text .= "\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-primary btn-flat btn-sm\">Submit</button>\n";
 							$text .= "\t\t\t\t\t\t</div>\n";
 							$text .= "\t\t\t\t\t</form>\n";
@@ -178,6 +218,6 @@ if(file_exists(RouteFolderPath)&&isset($controller)){
 	$text .= "</li>\n";
 	fwrite($myfile, $text); */
 
-//new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
+new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
 	
 ?>
