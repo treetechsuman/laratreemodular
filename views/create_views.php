@@ -15,7 +15,37 @@ $modelFolders = scandir(ModelFolderPathForView);
 
  $old_table_name = isset($_SESSION['table_name'])?$_SESSION['table_name']:'';
  $old_no_of_fields = isset($_SESSION['no_of_fields'])?$_SESSION['no_of_fields']:'';
+
+ $objService = new Service();
+ $table_lists = $objService->get_table_name_list();
+if(isset($_SESSION['table_fields'])){
+ $fields = $_SESSION['table_fields'];
+}else{
+  $fields = array();
+}
+ /*echo '<pre>';
+  print_r($fields);
+ echo '</pre>'*/
 ?>
+<div class="col-md-3">
+  <form action="system/process/views/table_fields.php" method="post" class="form-horizontal">
+    <div class="form-group">
+      <label class="control-label col-sm-5" for="viewfolder">Table list:</label>
+      <div class="col-sm-7">
+        <select name="table" class="form-control">
+        <?php foreach($table_lists as $table_list){ ?>
+          <option value="<?php echo $table_list->{TableIn}; ?>"><?php echo $table_list->{TableIn}; ?></option>
+        <?php } ?>
+        </select>
+      </div>
+    </div>    
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-success">Find Fields</button>
+      </div>
+    </div>
+    </form>
+</div>
 <div class="col-md-3">
 	<form action="system/process/views/generate_view.php" method="post" class="form-horizontal">
     <div class="form-group">
@@ -37,10 +67,25 @@ $modelFolders = scandir(ModelFolderPathForView);
       </div>
     </div>
     <div class="form-group">
+      <label class="control-label col-sm-5" for="viewfolder">Select Fields:</label>
+      <div class="col-sm-7"> 
+        <?php foreach($fields as $field){ ?>   
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="fields[]" value="<?php echo $field->name; ?>"
+              <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){echo 'checked="checked"';} ?>
+            >
+            <?php echo $field->name; ?>
+          </label>
+        </div>
+        <?php } ?>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="control-label col-sm-5" for="viewfolder">Select File:</label>
       <div class="col-sm-7">    
         <div class="checkbox">
-  			<label><input type="checkbox" name="views[]" value="index">Index</label>
+  			<label><input type="checkbox" name="views[]" value="index" >Index</label>
 		</div>
 		<div class="checkbox">
   			<label><input type="checkbox" name="views[]" value="show">show</label>

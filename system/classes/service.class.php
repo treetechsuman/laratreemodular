@@ -1,6 +1,6 @@
 <?php
 
-require_once('config/config.php');
+//require_once('../../config/config.php');
 require_once('connection.class.php');
 class Service extends Connection{
 

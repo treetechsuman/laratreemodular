@@ -1,4 +1,4 @@
-<?php session_start(); 
+<?php //session_start(); 
 //processs
 require_once('../../../config/config.php');
 require_once('../../classes/locate.class.php');
@@ -8,6 +8,7 @@ require_once('../../classes/locate.class.php');
 //$_SESSION['repository']= $_POST['repository'];
 $_SESSION['viewfolder']= $_POST['viewfolder'];
 $views = $_POST['views'];
+$table_fields = $_POST['fields'];
 $controller = $_POST['controller'];
 
 //create nav for module--------------
@@ -53,16 +54,25 @@ foreach ($views as $view) {
 						if($view=='index'){
 							$text .= "\t\t\t\t\t<table class=\"table table-condensed table-hover\">\n";
 								$text.= "\t\t\t\t\t\t<thead>\n\t\t\t\t\t\t\t<tr>\n";
-									$text.= "\t\t\t\t\t\t\t\t<th>Id</th>\n";
-									$text.= "\t\t\t\t\t\t\t\t<th>item</th>\n";
-									$text.= "\t\t\t\t\t\t\t\t<th>Action</th>\n";
+								fwrite($myfile, $text);
+								foreach ($table_fields as $field) {
+									$text= "\t\t\t\t\t\t\t\t<th>" . ucfirst($field) ."</th>\n";
+									fwrite($myfile, $text);								
+								}
+									$text= "\t\t\t\t\t\t\t\t<th>Action</th>\n";
 								$text.= "\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t</thead>\n";
 								$text.= "\t\t\t\t\t\t<tbody>\n";
 								$text.="\t\t\t\t\t\t\t@foreach($".$variable."s as $".$variable.")\n";
 								$text.="\t\t\t\t\t\t\t<tr>\n";
-									$text.= "\t\t\t\t\t\t\t\t<td>{{\$" .$variable."['id']}}</td>\n";
-									$text.= "\t\t\t\t\t\t\t\t<td>item1</td>\n";
-									$text.= "\t\t\t\t\t\t\t\t<td>\n";
+									fwrite($myfile, $text);
+									foreach ($table_fields as $field) {
+										
+										$text= "\t\t\t\t\t\t\t\t<td>{{\$" .$variable."['" . $field ."']}}</td>\n";
+										fwrite($myfile, $text);								
+									}
+									//$text.= "\t\t\t\t\t\t\t\t<td>{{\$" .$variable."['id']}}</td>\n";
+									
+									$text= "\t\t\t\t\t\t\t\t<td>\n";
 										$text.= "\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/'.$" .$variable."['id'].'/edit')}}\" data-toggle=\"tooltip\" title=\"Edit\" class=\"btn btn-info btn-xs\"><i class=\"glyphicon glyphicon-edit\"></i></a>\n";
 										$text.= "\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/delete/'.$" .$variable."['id'])}}\" data-toggle=\"tooltip\" title=\"Delete\" class=\"btn btn-danger btn-xs\"><i class=\"glyphicon glyphicon-remove\"></i></a></i></a>\n";
 
@@ -75,6 +85,7 @@ foreach ($views as $view) {
 						}elseif($view=='create'){
 							$text .= "\t\t\t\t\t<form role=\"form\" action=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/store')}}\" method=\"post\" enctype=\"multipart/form-data\">\n";
 							$text .= "\t\t\t\t\t\t{!! csrf_field() !!}\n";
+							
 							$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
 							$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
 							$text .= "\t\t\t\t\t\t\t\t<label for=\"name\" {{ $". "errors->has('name') ? ' has-error' : '' }}>Name:</label>\n";
@@ -167,6 +178,6 @@ if(file_exists(RouteFolderPath)&&isset($controller)){
 	$text .= "</li>\n";
 	fwrite($myfile, $text); */
 
-new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
+//new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
 	
 ?>
