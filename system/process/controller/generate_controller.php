@@ -19,6 +19,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	$text = "use Illuminate\Http\Request;\n";
 	$text .= "use Illuminate\Http\Response;\n";
 	$text .= "use Illuminate\Routing\Controller;\n";
+	$text .= "use Session;\n";
 	fwrite($myfile, $text);
 	foreach ($repositories as $repository) {
 		$repository = substr($repository, 0, -4);
@@ -76,6 +77,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 
 	//create function----------
 	$text = "\n\tpublic function create(){\n";
+
 	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".create');\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
@@ -83,6 +85,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	//store function---------------
 	$text = "\n\tpublic function store(Request $"."request){\n";
 	$text .= "\t\t$"."this->".lcfirst($_POST['controller'])."Repo->create".ucfirst($_POST['controller'])."($"."request->all());\n";
+	$text .= "\t\tSession::flash('success','Operation Success');\n";
 	$text .= "\t\treturn redirect('admin/".lcfirst($_SESSION['module'])."/".lcfirst($_POST['controller'])."');\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
@@ -101,6 +104,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	//update function-------------
 	$text = "\n\tpublic function update($" . "id ,Request $"."request){\n";
 	$text .= "\t\t$"."this->".lcfirst($_POST['controller'])."Repo->update".ucfirst($_POST['controller'])."($" . "id,$"."request->all());\n";
+	$text .= "\t\tSession::flash('success','Operation Success');\n";
 	$text .= "\t\treturn redirect('admin/".lcfirst($_SESSION['module'])."/".lcfirst($_POST['controller'])."');\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
@@ -108,6 +112,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	//delete function---------------
 	$text = "\n\tpublic function delete($" . "id){\n";
 	$text .= "\t\t$"."this->".lcfirst($_POST['controller'])."Repo->delete".ucfirst($_POST['controller'])."($"."id);\n";
+	$text .= "\t\tSession::flash('success','Operation Success');\n";
 	$text .= "\t\treturn redirect('admin/".lcfirst($_SESSION['module'])."/".lcfirst($_POST['controller'])."');\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
