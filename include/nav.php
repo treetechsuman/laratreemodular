@@ -34,6 +34,11 @@
           Create Views
         </a>
       </li>
+      <li <?php if($_SESSION['menu']=='addmodule'){?> class="active" <?php } ?> >
+        <a href="index.php?menu=addmodule&action=create">
+          Add Module
+        </a>
+      </li>
       <li <?php if($_SESSION['menu']=='file'){?> class="active" <?php } ?> >
         <a href="index.php?menu=file&action=read">
           Read File

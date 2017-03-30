@@ -1,0 +1,19 @@
+{
+    "name": "nwidart/product",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "require": {
+        "intervention/image": "^2.3",
+        "nwidart/laravel-modules": "^1.19"
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Product\\": ""
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "name": "Client",
+    "alias": "client",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Client\\Providers\\ClientServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

@@ -18,6 +18,9 @@ switch($menu){
 	case 'modules':
 		$page_to_load = "views/select_module.php";
 		break;
+	case 'addmodule':
+		$page_to_load = "views/add_module.php";
+		break;
 
 	case 'migration':
 		if($action == 'create'){

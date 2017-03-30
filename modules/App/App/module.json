@@ -1,0 +1,16 @@
+{
+    "name": "App",
+    "alias": "app",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\App\\Providers\\AppServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
