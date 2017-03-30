@@ -189,7 +189,7 @@ if(file_exists(RouteFolderPath)&&isset($controller)){
 	fwrite($myfile, $text);
 	$text = "Route::group(['middleware' => 'web','prefix' => 'admin/".lcfirst($_SESSION['module'])."','namespace' => 'Modules\\" . $_SESSION['module'] . "\Http\Controllers'], function() { \n";
 	fwrite($myfile, $text);
-		$text = "\tRoute::group(['prefix' => 'admin/".lcfirst($controller_prefix)."'], function() { \n";
+		$text = "\tRoute::group(['prefix' => '".lcfirst($controller_prefix)."'], function() { \n";
 		fwrite($myfile, $text);
 
 			$text = "\t\tRoute::get('/','".substr($controller, 0, -4). "@index');\n";
