@@ -13,4 +13,5 @@ $fields = $objService->get_table_fields_name($table);
  echo '</pre>';*/
  $_SESSION['table_fields'] = $fields;
 
-new Locate('../../../index.php?menu=views&action=create&success=yes&message= Fields of table are set ');
+new Locate('../../../index.php?menu=views&action=create&success=yes&message=' .$table. ' Fields of table are set ');
+
