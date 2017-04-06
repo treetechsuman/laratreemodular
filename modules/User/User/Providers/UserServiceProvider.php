@@ -25,6 +25,7 @@ class UserServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerUserRepository();
         $this->registerRolePermissionRepository();
+        $this->registerUserDetailRepository();
     }
 
     /**
@@ -110,6 +111,14 @@ class UserServiceProvider extends ServiceProvider
 		return $this->app->bind(
 			'Modules\\User\\Repositories\\UserRepository',
 			'Modules\\User\\Repositories\\UserEloquent'
+
+		);
+	}
+
+	public function registerUserDetailRepository() {
+		return $this->app->bind(
+			'Modules\\User\\Repositories\\UserDetailRepository',
+			'Modules\\User\\Repositories\\UserDetailEloquent'
 
 		);
 	}

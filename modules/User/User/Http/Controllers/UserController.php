@@ -1,29 +1,34 @@
 <?php 
 
 namespace Modules\User\Http\Controllers;
-use Modules\User\Entities\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Input;
 use Modules\User\Repositories\UserRepository;
+use Modules\User\Repositories\UserDetailRepository;
 use Modules\User\Repositories\RolePermissionRepository;
+use Modules\User\Events\UserCreated;
+use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+use Session;
 
 
 
 class UserController extends Controller{
-	
-	private $user;
 	private $userRepo;
+	private $userDetailRepo;
 	private $rolePermissionRepo;
 
 	public function __construct(
-								User $user,
 								UserRepository $userRepo,
+								UserDetailRepository $userDetailRepo,
 								RolePermissionRepository $rolePermissionRepo
 	){
-		$this->user=$user;
 		$this->userRepo = $userRepo;
+		$this->userDetailRepo = $userDetailRepo;
 		$this->rolePermissionRepo = $rolePermissionRepo;
 	}
 
@@ -38,41 +43,9 @@ class UserController extends Controller{
 	}
 
 	public function store(Request $request){
-
-		 $input = $request->all();
-        if ($input) {
-            $destinationPath = 'uploads/users';
-            if ($image = Input::file('userimage_name')) {
-                $input['userimage_name'] = str_random(6) . '_' . time() . "-" . $request->file('userimage_name')
-                        ->getClientOriginalName();
-                $request->file('userimage_name')->move($destinationPath, $input['userimage_name']);
-            }
-
-            $input['password']=bcrypt($input['password']);
-            //  $password = Hash::make(Input::get('password'));
-            $ip = $request->getClientIp();
-
-            $input['ip_address'] = $ip;
-            $browserAgent = $_SERVER['HTTP_USER_AGENT'];
-            $input['browser_agent'] = $browserAgent;
-
-            User::create($input);
-            session()->flash('success', 'Well Done! Record added successfully.');
-            return redirect('admin/user/user');
-
-        } else {
-            session()->flash('error', 'Sorry! Could not proceed the Request.');
-            return redirect()
-                ->back();
-
-        }
-    
-
-
-
-
-		// $this->userRepo->createUser($request->all());
-		// return redirect('admin/user/user');
+		$user = $this->userRepo->createUser($request->all());
+		event(new UserCreated($user));
+		return redirect('admin/user/user');
 	}
 
 	public function show(){
@@ -105,7 +78,53 @@ class UserController extends Controller{
 		//return $request->all();
     	$this->userRepo->assignRole($request->all());
     	session()->flash('success','Operation Success');
-    	return redirect('admin/user/user');
+    	return back();
+    }
+
+    public function manageUser($user_id){
+    	$myuser = $user_id;
+    	$roles = $this->rolePermissionRepo->getAllRole();
+    	$userRepo =$this->userRepo;
+    	$userDetail = $this->userDetailRepo->getUserDetailByUserId($user_id);
+    	return view('user::user.manage-user',compact('roles','userDetail','myuser','userRepo'));
+    }
+
+    public function changePassword(Request $request){
+    	//dd($request->all());
+    	$this->userRepo->changePassword($request->all());
+    	Session::flash('success','Password Changed for this user');
+		return back();
+    }
+
+    public function emailTemplete($templete_name=''){
+    	if($templete_name == ''){
+    		$templete_name = 'welcome';
+    	}
+    	$myuser=array();
+    	$activation_code = 'dummyCode';
+    	$myuser['name'] = 'dummy name';
+    	return view('user::email.email-templete-list',compact('templete_name','myuser','activation_code'));
+    }
+
+    public function activateUser(Request $request){
+    	//return $request->all();
+    	$user_id = base64_decode($request['activation_code']);
+    	$data['status']='Active';
+    	$data['user_id']=$user_id;
+    	try{
+	    	$this->userDetailRepo->getUserDetailById($user_id);
+    	}catch(Exception $e){
+	    	//if ($e instanceof NotFoundHttpException)
+			{
+			    $this->userDetailRepo->createUserDetail($data);
+			    //dd($data);
+			}
+		}	
+    	return 'account is acitvated redirect where you like';
+    }
+
+    public function socialLogin(){
+    	return view('user::user.social-login');
     }
 
 }

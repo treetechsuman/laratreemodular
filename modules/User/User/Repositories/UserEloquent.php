@@ -3,17 +3,23 @@ namespace Modules\User\Repositories;
 
 use Modules\User\Entities\User;
 use Modules\User\Entities\UserRole;
+use Modules\User\Entities\UserDetail;
+use Modules\User\Repositories\UserDetailEloquent;
 use DB;
 
 class UserEloquent implements UserRepository{
 	private $user;
 	private $userRole;
+	private $userDetail;
+	private $userDetailRepo;
 
 	public function __construct(User $user,
-		UserRole $userRole)
+		UserRole $userRole,UserDetail $userDetail,UserDetailEloquent $userDetailRepo)
 	{
 		$this->user = $user;
 		$this->userRole = $userRole;
+		$this->userDetail = $userDetail;
+		$this->userDetailRepo = $userDetailRepo;
 	}
 	public function getAllUser(){
 		return $this->user->all();
@@ -33,6 +39,11 @@ class UserEloquent implements UserRepository{
 	}
 
 	public function deleteUser($id){
+		//delete image of this user if exist
+		$userDetail = $this->userDetail->where('user_id',$id)->first();
+		if($userDetail){
+			$this->userDetailRepo->deleteUserDetail($userDetail['id']);
+		}
 		return $this->user->findorfail($id)->delete();
 	}
 
@@ -85,6 +96,9 @@ class UserEloquent implements UserRepository{
 	    return false;
     }
 
-
+    public function changePassword(array $attributes){
+    	$attributes['password']=bcrypt($attributes['password']);
+    	$this->user->findorfail($attributes['user_id'])->update($attributes);
+    }
 
 }

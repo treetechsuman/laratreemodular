@@ -64,52 +64,13 @@ Create User
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-group{{ $errors->has('contact_no') ? ' has-error' : '' }}">
-                                <label for="contact_no" class="col-sm-4 control-label">Contact No<span class=help-block" style="color: #b30000">&nbsp;* </span></label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="contact_no" name="contact_no"
-                                           placeholder="Enter Your Contact Number." value="{{ old('contact_no') }}">
-                                    @if ($errors->has('contact_no'))
-                                        <span class="help-block" style="color: red">
-                                        <strong> * {{ $errors->first('contact_no') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
-                                <label for="gender" class="col-sm-4 control-label">Gender <span class=help-block" style="color: #b30000">&nbsp;* </span></label>
-                                <div class="col-sm-8">
-                                    <select id="gender" name="gender" class="form-control">
-                                        <option value=" ">
-                                            Select Your Gender
-                                        </option>
-                                        <option value="0">Male</option>
-                                        <option value="1">Female</option>
-                                        <option value="2">Others</option>
-                                    </select>
-                                    @if ($errors->has('gender'))
-                                        <span class="help-block" style="color: red">
-                                        <strong> * {{ $errors->first('gender') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-                                <label for="address" class="col-sm-4 control-label">Address<span class=help-block" style="color: #b30000">&nbsp;* </span></label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="address" name="address"
-                                           placeholder="Enter Your Address."value="{{ old('address') }}">
-                                    @if ($errors->has('address'))
-                                        <span class="help-block" style="color: red">
-                                        <strong> * {{ $errors->first('address') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
+                            
+                            
+                            
                            
                             <div class="form-group">
                                 <label for="pass1" class="col-sm-4 control-label">Password<span class=help-block"
-                                                                                                style="color: #b30000">&nbsp;* </span></label>
+                                    style="color: #b30000">&nbsp;* </span></label>
 
                                 <div class="col-sm-8">
                                     <input type="password" class="form-control" id="pass1"
@@ -118,19 +79,18 @@ Create User
                             </div>
                             <div class="form-group">
                                 <label for="pass2" class="col-sm-4 control-label">Re-Password<span class=help-block"
-                                                                                                   style="color: #b30000">&nbsp;* </span></label>
+                               style="color: #b30000">&nbsp;* </span></label>
 
                                 <div class="col-sm-8">
                                     <input type="password" class="form-control"
-                                           placeholder="Re Type Initial Password." id="pass2" required
-                                           onkeyup="checkPass(); return false;">
+                                           placeholder="Re Type Initial Password." required
+                                           ">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-8">
-                                    <button type="submit" class="btn btn-success btn-flat" id="myBtn" disabled="disabled"
-                                            onkeyup="checkPass()">Save
+                                    <button type="submit" class="btn btn-success btn-flat">Save
                                     </button>
                                     <button type="reset" class="btn btn-default btn-flat">Reset</button>
                                 </div>
@@ -139,25 +99,6 @@ Create User
 
                         </div>
 
-
-                        <div class="col-sm-5 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-5">
-                                    <br>
-                                    <img src="{{URL::asset('adminlte/dist/img/avatar5.png')}}" class="thumbnail"
-                                         alt="User Image" id="profile" height="215px" width="210px">
-
-                                    <div class="form-group">
-                                        &nbsp; &nbsp; &nbsp; &nbsp; <label for="inputfile">Browse Image <span
-                                                    class=help-block" style="color: #b30000">&nbsp;* </span></label>
-
-                                        <input type="file" class="form-control" id="inputfile" name="userimage_name"
-                                               onchange="document.getElementById('profile').src = window.URL.createObjectURL(this.files[0])">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                 </div>

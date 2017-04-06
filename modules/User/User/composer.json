@@ -3,10 +3,14 @@
     "description": "",
     "authors": [
         {
-            "name": "Nicolas Widart",
-            "email": "n.widart@gmail.com"
+            "name": "Suman Dahal",
+            "email": "me.suman@gmail.com"
         }
     ],
+    "require": {
+        "intervention/image": "^2.3",
+        "laravel/socialite": "^2.0"
+    },
     "autoload": {
         "psr-4": {
             "Modules\\User\\": ""

@@ -45,8 +45,30 @@ Route::group(['middleware' => 'web','prefix' => 'admin/user','namespace' => 'Mod
 		Route::post('/update/{id}','UserController@update');
 		Route::get('/delete/{id}','UserController@delete');
 
+		Route::get('/manage-user/{user_id}','UserController@manageUser');
+		Route::post('/change-password','UserController@changePassword');
 		
 	});
 	Route::get('/assign-role/{user_id}','UserController@assignRole');
 	Route::post('/assign-role/','UserController@storeAssignRole'); 
+
+	Route::get('/email-templete/{templete_name?}','UserController@emailTemplete');
+	Route::get('/social-login/{templete_name?}','UserController@socialLogin');
+
+	Route::post('/activate-user/','UserController@activateuser');
+
+	Route::get('{provider}', 'SocialAuthController@redirectTo');
+	Route::get('{provider}/callback', 'SocialAuthController@handleCallback'); 
+}); 
+/*
+|--------------------------------------------------------------------------
+| UserDetail Routes
+|--------------------------------------------------------------------------
+*/
+Route::group(['middleware' => 'web','prefix' => 'admin/user','namespace' => 'Modules\User\Http\Controllers'], function() { 
+	Route::group(['prefix' => 'userDetail'], function() { 
+		Route::post('/store','UserDetailController@store');
+		Route::post('/update/{id}','UserDetailController@update');
+		Route::get('/delete/{id}','UserDetailController@delete');
+	}); 
 }); 
