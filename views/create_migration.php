@@ -48,6 +48,8 @@ $modelFolders = scandir(ModelFolderPathForView);
         <?php if(isset($_SESSION['type'])){ if($_SESSION['type'][$i]=='string'){ ?> checked="checked" <?php }}else{ echo 'checked="checked"';} ?>>
         Integer<input type="radio" name="type[<?php echo $i; ?>]" value="integer"
         <?php if(isset($_SESSION['type'])){ if($_SESSION['type'][$i]=='integer'){ ?> checked="checked" <?php }} ?>>
+        Date<input type="radio" name="type[<?php echo $i; ?>]" value="date"
+        <?php if(isset($_SESSION['type'])){ if($_SESSION['type'][$i]=='date'){ ?> checked="checked" <?php }} ?>>
         Enum<input type="radio" name="type[<?php echo $i; ?>]" value="enum"
         <?php if(isset($_SESSION['type'])){ if($_SESSION['type'][$i]=='enum'){ ?> checked="checked" <?php } }?>>
         Foreignkey<input type="radio" name="type[<?php echo $i; ?>]" value="foreign"

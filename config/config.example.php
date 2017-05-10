@@ -1,10 +1,14 @@
 <?php session_start();
+//session_destroy();
+if(!$_SESSION['module']){
+    header('Location: select_module_first.php');
+}
 //app configuration -----------
 define("AppName", "laraTreeModule");
 
 //database configuration -------
 define("Host", "localhost");
-define("Db", "vhakari");
+define("Db", "social_auth1");
 define("User", "root");
 define("Password", "");
 

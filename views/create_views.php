@@ -77,6 +77,7 @@ if(isset($_SESSION['table_fields'])){
             >
             <?php echo $field->name; ?>
           </label>
+          <label>Select</label>
         </div>
         <?php } ?>
       </div>
