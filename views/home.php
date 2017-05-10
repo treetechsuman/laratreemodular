@@ -8,10 +8,13 @@
   <p>
   	<ul>
   		<li>setup new laravel project using composer</li>
-  		<li>clone laraTree From <a href="https://github.com/treetechsuman/laratree" target="_blank">here</a></li>
-  		<li>Remane laratree/config.example.php to laratree/config.php</li>
-  		<li>visit http://localhost/yourlaravelprojectpath/laratree/</li>
+  		<li>clone laraTree From <a href="https://github.com/treetechsuman/laratree" target="_blank">here</a> inside your new laravel project folder</a></li>
+  		<li>Remane laratreemodular/config.example.php to laratreemodular/config.php</li>
+      <li>Integrate this module <a href="https://github.com/nWidart/laravel-modules">Here</a></li>
+      <li>Generate module php artisan module:make test</li>
   		<li>Wel done laraTree is integrated to help you</li>
+      <li>visit http://localhost/yourlaravelprojectpath/laratreemodular/</li>
+
   	</ul>
   </p>
 </div>

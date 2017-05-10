@@ -49,7 +49,7 @@ if(isset($_SESSION['table_fields'])){
 <div class="col-md-3">
 	<form action="system/process/views/generate_view.php" method="post" class="form-horizontal">
     <div class="form-group">
-      <label class="control-label col-sm-5" for="viewfolder">folder:</label>
+      <label class="control-label col-sm-5" for="viewfolder">View Folder:</label>
       <div class="col-sm-7">
         <input type="text" name="viewfolder" value="<?php //echo $old_table_name; ?>" class="form-control" id="viewfolder" placeholder="Enter viewfolder name">
       </div>
@@ -85,16 +85,16 @@ if(isset($_SESSION['table_fields'])){
       <label class="control-label col-sm-5" for="viewfolder">Select File:</label>
       <div class="col-sm-7">    
         <div class="checkbox">
-  			<label><input type="checkbox" name="views[]" value="index" >Index</label>
+  			<label><input type="checkbox" name="views[]" value="index" checked="checked">Index</label>
 		</div>
 		<div class="checkbox">
-  			<label><input type="checkbox" name="views[]" value="show">show</label>
+  			<label><input type="checkbox" name="views[]" value="show" checked="checked">show</label>
 		</div>
 		<div class="checkbox">
-  			<label><input type="checkbox" name="views[]" value="create">create</label>
+  			<label><input type="checkbox" name="views[]" value="create" checked="checked">create</label>
 		</div>
 		<div class="checkbox">
-  			<label><input type="checkbox" name="views[]" value="edit">edit</label>
+  			<label><input type="checkbox" name="views[]" value="edit" checked="checked">edit</label>
 		</div>
       </div>
     </div>

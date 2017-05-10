@@ -1,5 +1,5 @@
-<?php
-require_once('../../../config/config.php');
+<?php session_start();
+//require_once('../../../config/config.php');
 require_once('../../classes/locate.class.php');
 $module = isset($_GET['module'])?$_GET['module']:'';
 $_SESSION['module']=$module;

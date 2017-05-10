@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Case</title>
+  <title>Laratree Modular</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -17,6 +17,7 @@
   
 <div class="container-fluid" style="margin-top:70px">
   <div class="row">
+  
   <?php require_once('include/alert.php'); ?>
     <?php require_once($page_to_load) ;?>
   </div>
