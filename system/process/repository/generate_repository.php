@@ -1,4 +1,4 @@
-<?php session_start(); 
+<?php //session_start(); 
 //processs
 require_once('../../../config/config.php');
 require_once('../../classes/locate.class.php');

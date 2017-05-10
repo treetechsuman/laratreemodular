@@ -7,6 +7,18 @@ require_once('../../classes/locate.class.php');
 //rtrim($string, ",")
 $_SESSION['field_name']= $_POST['field_name'];
 $_SESSION['type']= $_POST['type'];
+
+//prepare name for model class and file
+	$modules = $_POST['table_name'];
+	$modules = explode('_',$modules);
+	$modules_file_name ='';
+	foreach($modules as $module){
+		$modules_file_name .=ucfirst($module);
+	}
+	$migration_class_name = $modules_file_name;
+	$model_class_name =rtrim($modules_file_name,'s');
+	$model_file_name = rtrim($modules_file_name,'s'). '.php';
+
 //HHMMSS
 $file_name = date("Y").'_'.date("m").'_'.date("d").'_'.date("hms").'_create_'.$_POST['table_name']. '_table.php';
 //echo $file_name;
@@ -21,7 +33,7 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 	$text .= "use Illuminate\Support\Facades\Schema;\n\n";
 	fwrite($myfile, $text);
 
-	$text = "class Create" .ucfirst($_POST['table_name']). "Table extends Migration {\n";
+	$text = "class Create" .$migration_class_name. "Table extends Migration {\n";
 	$text .= "\t/**\n\t* Run the migrations.\n\t*\n\t* @return void\n\t*/";
 	fwrite($myfile, $text);
 
@@ -69,7 +81,9 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 		if (!file_exists(ModelFolderPath)) {
 		    mkdir(ModelFolderPath, 0777, true);
 		}
-		$model_file_name = rtrim(ucfirst($_POST['table_name']),'s'). '.php';
+		
+
+		//$model_file_name = rtrim(ucfirst($_POST['table_name']),'s'). '.php';
 		//echo $file_name;
 		$myfile = fopen(ModelFolderPath.$model_file_name, "w") or die("Unable to open file!");
 		if(fopen(ModelFolderPath.$model_file_name, "w")){
@@ -80,7 +94,7 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 			$text .= "use Illuminate\Database\Eloquent\Model;\n\n";
 			fwrite($myfile, $text);
 
-			$text = "class " .rtrim(ucfirst($_POST['table_name']),'s'). " extends Model{\n";
+			$text = "class " .$model_class_name. " extends Model{\n";
 			$text .= "\tprotected $" . "table='" . $_POST['table_name'] . "';\n";
 			fwrite($myfile, $text);
 
