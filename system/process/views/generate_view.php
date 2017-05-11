@@ -9,7 +9,14 @@ require_once('../../classes/locate.class.php');
 $_SESSION['viewfolder']= $_POST['viewfolder'];
 $views = $_POST['views'];
 $table_fields = $_POST['fields'];
+$types = $_POST['types'];
 $controller = $_POST['controller'];
+$_SESSION['types'] = $types;
+$_SESSION['controller']=$controller;
+
+/*echo '<pre>';
+ print_r($types);
+echo '</pre>';*/
 
 //create nav for module--------------
 if (!file_exists('../../../../Modules/'.$_SESSION['module'].'/Resources/views/layouts/nav.blade.php')) {
@@ -82,96 +89,249 @@ foreach ($views as $view) {
 								$text.="\t\t\t\t\t\t</tbody>\n";
 
 							$text .= "\t\t\t\t\t</table>\n";
+							fwrite($myfile, $text);
 						}elseif($view=='create'){
-							$text .= "\t\t\t\t\t<form role=\"form\" action=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/store')}}\" method=\"post\" enctype=\"multipart/form-data\">\n";
+						/*
+						-----------------------------------------------------------------------------------------
+						create
+						-----------------------------------------------------------------------------------------	
+						 */	
+							$text .= "\t\t\t\t\t<form role=\"form\" class=\"form-horizontal\" action=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/store')}}\" method=\"post\" enctype=\"multipart/form-data\">\n";
 							$text .= "\t\t\t\t\t\t{!! csrf_field() !!}\n";
 							fwrite($myfile, $text);
 									foreach ($table_fields as $field) {
-										
-										//$text= "\t\t\t\t\t\t\t\t<td>{{\$" .$variable."['" . $field ."']}}</td>\n";
-										if($field=='status'){
-											$text = "\t\t\t\t\t\t<div class=\"form-group\">\n";
-											$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
-											$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
-											$text .= "\t\t\t\t\t\t\t</div>\n";
-											$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
-											 $text .= "\t\t\t\t\t\t\t\t<select name=\"status\" class=\"form-control\">\n";
-												$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Active\" @if(old('status')=='Active') selected=\"selected\" @endif >Active</option>\n";
-												$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Inactive\" @if(old('status')=='Inactive') selected=\"selected\" @endif >Inactive</option>\n";
-											$text .= "\t\t\t\t\t\t\t\t</select>\n";
-											$text .= "\t\t\t\t\t\t\t</div>\n";
-											$text .= "\t\t\t\t\t\t</div>\n";
-										}else{
-										$text = "\t\t\t\t\t\t<div class=\"form-group\">\n";
-										$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
-										$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
-										$text .= "\t\t\t\t\t\t\t</div>\n";
-										$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
-										$text .= "\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{old('" . $field ."')}}\" required>\n";
-				    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
-				    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
-			    						$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
+									
+										foreach($types as $key=>$value){
+											//echo  'Field :' . $field. '  key: '  . $key . '<br> ';
+											if($field == $key){	
+												if($value == 'select'){
+														$text = "\t\t\t\t\t\t<!-- _______________________________________________\n";
+														$text .= "\t\t\t\t\t\t\t\t\t\t\t " . $field ." \n";
+														$text .= "\t\t\t\t\t\t _______________________________________________ -->\n";
+														$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+														 $text .= "\t\t\t\t\t\t\t\t<select name=\"" . $field ."\" class=\"form-control\">\n";
+															$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Active\" @if(old('" . $field ."')=='Active') selected=\"selected\" @endif >Active</option>\n";
+															$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Inactive\" @if(old('" . $field ."')=='Inactive') selected=\"selected\" @endif >Inactive</option>\n";
+														$text .= "\t\t\t\t\t\t\t\t</select>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t</div>\n";
+															fwrite($myfile, $text);
+												}elseif($value == 'radio'){
+														$text = "\t\t\t\t\t\t<!-- _______________________________________________\n";
+														$text .= "\t\t\t\t\t\t\t\t\t\t\t " . $field ." \n";
+														$text .= "\t\t\t\t\t\t _______________________________________________ -->\n";
+														$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+														 $text .= "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Male\" @if(old('" . $field ."')=='Male') checked=\"checked\" @endif  >Male</lable>\n";
+														 $text .= "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Female\" @if(old('" . $field ."')=='Female') checked=\"checked\" @endif   >Female</lable>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
+							    						$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t</span>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t@endif\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t</div>\n";
+														fwrite($myfile, $text);
+												}elseif($value == 'checkbox'){
+														$text = "\t\t\t\t\t\t<!-- _______________________________________________\n";
+														$text .= "\t\t\t\t\t\t\t\t\t\t\t " . $field ." \n";
+														$text .= "\t\t\t\t\t\t _______________________________________________ -->\n";
+													$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+														$text .= "\t\t\t\t\t\t\t\t<div class=\"checkbox\">\n";
+														 $text .= "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Yes\" >Yes</lable>\n";
+														 $text .= "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"No\"  >No</lable>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
+							    						$text .= "\t\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t\t</span>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t@endif\n";
+														$text .= "\t\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t</div>\n";
+														fwrite($myfile, $text);
+
+												}elseif($value == 'textarea'){
+														$text = "\t\t\t\t\t\t<!-- _______________________________________________\n";
+														$text .= "\t\t\t\t\t\t\t\t\t\t\t " . $field ." \n";
+														$text .= "\t\t\t\t\t\t _______________________________________________ -->\n";
+														$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+														
+														 $text .= "\t\t\t\t\t\t\t\t<textarea class=\"textarea\" name=\"" . $field ."\" placeholder=\"Place some text here\" style=\"width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;\">\n";
+														 $text .="\t\t\t\t\t\t\t\t\t{{old('" . $field ."')}}\n";
+															$text .= "\t\t\t\t\t\t\t\t</textarea>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t</div>\n";
+														fwrite($myfile, $text);
+												}else{
+														$text = "\t\t\t\t\t\t<!-- _______________________________________________\n";
+														$text .= "\t\t\t\t\t\t\t\t\t\t\t " . $field ." \n";
+														$text .= "\t\t\t\t\t\t _______________________________________________ -->\n";
+															$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+														$text .= "\t\t\t\t\t\t\t\t<input type=\"". $value ."\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{old('" . $field ."')}}\" required>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
+							    						$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
 
 
-				    					$text .= "\t\t\t\t\t\t\t\t\t</span>\n";
-				    					$text .= "\t\t\t\t\t\t\t\t@endif\n";
-				    					$text .= "\t\t\t\t\t\t\t</div>\n";
-										$text .= "\t\t\t\t\t\t</div>\n";
-									}
-										fwrite($myfile, $text);								
-									}
-							
-							$text = "\t\t\t\t\t\t<div class=\"box-footer\">\n";
-							$text .= "\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-primary btn-flat btn-sm\">Submit</button>\n";
-							$text .= "\t\t\t\t\t\t</div>\n";
-							$text .= "\t\t\t\t\t</form>\n";
-						}elseif($view=='edit'){
+								    					$text .= "\t\t\t\t\t\t\t\t\t</span>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t@endif\n";
+								    					$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t</div>\n";
+														fwrite($myfile, $text);
+													}//edd of else
+													}
+											}// end of types loop
+									}//end field loop
+									//form close
+									$text = "\t\t\t\t\t\t<div class=\"box-footer\">\n";
+									$text .= "\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-primary btn-flat btn-sm\">Submit</button>\n";
+								$text .= "\t\t\t\t\t\t</div>\n";
+								$text .= "\t\t\t\t\t</form>\n";
+								fwrite($myfile, $text);		
+						}elseif($view == 'edit'){
+							/*
+						-----------------------------------------------------------------------------------------
+						edit
+						-----------------------------------------------------------------------------------------	
+						 */
 							$text .= "\t\t\t\t\t<form role=\"form\" action=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/update/'.$" .$variable."['id'])}}\" method=\"post\" enctype=\"multipart/form-data\">\n";
 							$text .= "\t\t\t\t\t\t{!! csrf_field() !!}\n";
 							fwrite($myfile, $text);
 									foreach ($table_fields as $field) {
-										
-										//$text= "\t\t\t\t\t\t\t\t<td>{{\$" .$variable."['" . $field ."']}}</td>\n";
-										if($field=='status'){
-											$text = "\t\t\t\t\t\t<div class=\"form-group\">\n";
-											$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
-											$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
-											$text .= "\t\t\t\t\t\t\t</div>\n";
-											$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
-											 $text .= "\t\t\t\t\t\t\t\t<select name=\"status\" class=\"form-control\">\n";
-												$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Active\" @if(\$".$variable."['status']=='Active') selected=\"selected\" @endif >Active</option>\n";
-												$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Inactive\" @if(\$".$variable."['status']=='Inactive') selected=\"selected\" @endif >Inactive</option>\n";
-											$text .= "\t\t\t\t\t\t\t\t</select>\n";
-											$text .= "\t\t\t\t\t\t\t</div>\n";
-											$text .= "\t\t\t\t\t\t</div>\n";
-										}else{
-										$text = "\t\t\t\t\t\t<div class=\"form-group\">\n";
-										$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
-										$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
-										$text .= "\t\t\t\t\t\t\t</div>\n";
-										$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
-										$text .= "\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{\$".$variable."['" . $field ."']}}\" required>\n";
-				    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
-				    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
-			    						$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
+									
+										foreach($types as $key=>$value){
+											//echo  'Field :' . $field. '  key: '  . $key . '<br> ';
+											if($field == $key){	
+												if($value == 'select'){
+														$text = "\t\t\t\t\t\t<!-- _______________________________________________\n";
+														$text .= "\t\t\t\t\t\t\t\t\t\t\t " . $field ." \n";
+														$text .= "\t\t\t\t\t\t _______________________________________________ -->\n";
+														$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+														 $text .= "\t\t\t\t\t\t\t\t<select name=\"" . $field ."\" class=\"form-control\">\n";
+															$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Active\" @if(\$".$variable."['" . $field ."']=='Active') selected=\"selected\" @endif >Active</option>\n";
+															$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Inactive\" @if(\$".$variable."['" . $field ."']=='Inactive') selected=\"selected\" @endif >Inactive</option>\n";
+														$text .= "\t\t\t\t\t\t\t\t</select>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t</div>\n";
+															fwrite($myfile, $text);
+												}elseif($value == 'radio'){
+														$text = "\t\t\t\t\t\t<!-- _______________________________________________\n";
+														$text .= "\t\t\t\t\t\t\t\t\t\t\t " . $field ." \n";
+														$text .= "\t\t\t\t\t\t _______________________________________________ -->\n";
+														$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+														 $text .= "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Male\" @if(\$".$variable."['" . $field ."']=='Male') checked=\"checked\" @endif  >Male</lable>\n";
+														 $text .= "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Female\" @if(\$".$variable."['" . $field ."']=='Female') checked=\"checked\" @endif   >Female</lable>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
+							    						$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t</span>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t@endif\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t</div>\n";
+														fwrite($myfile, $text);
+												}elseif($value == 'checkbox'){
+														$text = "\t\t\t\t\t\t<!-- _______________________________________________\n";
+														$text .= "\t\t\t\t\t\t\t\t\t\t\t " . $field ." \n";
+														$text .= "\t\t\t\t\t\t _______________________________________________ -->\n";
+														$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+														$text .= "\t\t\t\t\t\t\t\t<div class=\"checkbox\">\n";
+														 $text .= "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"{{\$".$variable."['" . $field ."']}}\" @if(\$".$variable."['" . $field ."']=='Yes') checked=\"checked\" @endif >Yes</lable>\n";
+														 $text .= "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"{{\$".$variable."['" . $field ."']}}\" @if(\$".$variable."['" . $field ."']=='No') checked=\"checked\" @endif  >No</lable>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
+							    						$text .= "\t\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t\t</span>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t@endif\n";
+														$text .= "\t\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t</div>\n";
+														fwrite($myfile, $text);
+
+												}elseif($value == 'textarea'){
+														$text = "\t\t\t\t\t\t<!-- _______________________________________________\n";
+														$text .= "\t\t\t\t\t\t\t\t\t\t\t " . $field ." \n";
+														$text .= "\t\t\t\t\t\t _______________________________________________ -->\n";
+														$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+														
+														 $text .= "\t\t\t\t\t\t\t\t<textarea class=\"textarea\" name=\"" . $field ."\" placeholder=\"Place some text here\" style=\"width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;\">\n";
+														 $text .="\t\t\t\t\t\t\t\t\t{{\$".$variable."['" . $field ."']}}\n";
+															$text .= "\t\t\t\t\t\t\t\t</textarea>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t</div>\n";
+														fwrite($myfile, $text);
+												}else{
+														$text = "\t\t\t\t\t\t<!-- _______________________________________________\n";
+														$text .= "\t\t\t\t\t\t\t\t\t\t\t " . $field ." \n";
+														$text .= "\t\t\t\t\t\t _______________________________________________ -->\n";
+														$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
+														$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+														$text .= "\t\t\t\t\t\t\t\t<input type=\"". $value ."\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{\$".$variable."['" . $field ."']}}\" required>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
+							    						$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
 
 
-				    					$text .= "\t\t\t\t\t\t\t\t\t</span>\n";
-				    					$text .= "\t\t\t\t\t\t\t\t@endif\n";
-				    					$text .= "\t\t\t\t\t\t\t</div>\n";
-										$text .= "\t\t\t\t\t\t</div>\n";
-									}
-										fwrite($myfile, $text);								
-									}
-							$text = "\t\t\t\t\t\t<div class=\"box-footer\">\n";
-							$text .= "\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-primary btn-flat btn-sm\">Submit</button>\n";
-							$text .= "\t\t\t\t\t\t</div>\n";
-							$text .= "\t\t\t\t\t</form>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t\t</span>\n";
+								    					$text .= "\t\t\t\t\t\t\t\t@endif\n";
+								    					$text .= "\t\t\t\t\t\t\t</div>\n";
+														$text .= "\t\t\t\t\t\t</div>\n";
+														fwrite($myfile, $text);
+													}//edd of else
+													}
+											}// end of types loop
+									}//end field loop
+									//form close
+									
+									$text = "\t\t\t\t\t\t<div class=\"box-footer\">\n";
+									$text .= "\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-primary btn-flat btn-sm\">Submit</button>\n";
+								$text .= "\t\t\t\t\t\t</div>\n";
+								$text .= "\t\t\t\t\t</form>\n";
+								fwrite($myfile, $text);
 
 						}else{
-							$text .= "\t\t\t\t\tthis is ".$view." \n";
+							fwrite($myfile, $text);
+							$text = "\t\t\t\t\tthis is ".$view." \n";
+							fwrite($myfile, $text);
 						}
-						$text .="\t\t\t\t</div>\n";
+						$text ="\t\t\t\t</div>\n";
 					$text .="\t\t\t</div>\n";
 				$text .="\t\t</div>\n";
 			$text .="\t</div>\n";
@@ -219,5 +379,8 @@ if(file_exists(RouteFolderPath)&&isset($controller)){
 	fwrite($myfile, $text); */
 
 new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
+	
+?>
+
 	
 ?>

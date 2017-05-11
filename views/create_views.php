@@ -51,7 +51,13 @@ if(isset($_SESSION['table_fields'])){
     <div class="form-group">
       <label class="control-label col-sm-5" for="viewfolder">View Folder:</label>
       <div class="col-sm-7">
-        <input type="text" name="viewfolder" value="<?php //echo $old_table_name; ?>" class="form-control" id="viewfolder" placeholder="Enter viewfolder name">
+        <input type="text" name="viewfolder" <?php
+        if(isset($_SESSION['viewfolder'])){
+        ?> 
+            value="<?php echo $_SESSION['viewfolder']; ?>"
+          <?php 
+        }
+        ?> class="form-control" id="viewfolder" placeholder="Enter viewfolder name">
       </div>
     </div>
     <div class="form-group">
@@ -61,7 +67,15 @@ if(isset($_SESSION['table_fields'])){
 
       <?php foreach ($appController as $file) { if($file !='.'&&$file!='..' ){ ?>
         <div class="radio">
-  			<label><input type="radio" name="controller" value="<?php echo $file; ?>"><?php echo $file; ?></label>
+  			<label><input type="radio" name="controller" value="<?php echo $file; ?>"
+        <?php
+        if(isset($_SESSION['controller'])){
+          if($_SESSION['controller']==$file){
+            echo 'checked="checked"'; 
+          }
+        }
+        ?>
+        ><?php echo $file; ?></label>
 		</div>
 		<?php }}?>
       </div>
@@ -69,15 +83,70 @@ if(isset($_SESSION['table_fields'])){
     <div class="form-group">
       <label class="control-label col-sm-5" for="viewfolder">Select Fields:</label>
       <div class="col-sm-7"> 
+      <?php
+       if(isset($_SESSION['types'])){ 
+        $types = $_SESSION['types'];
+       }else{
+        $types=false;
+       }
+      ?>
         <?php foreach($fields as $field){ ?>   
         <div class="checkbox">
           <label>
+          <?php $info=''; ?>
             <input type="checkbox" name="fields[]" value="<?php echo $field->name; ?>"
-              <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){echo 'checked="checked"';} ?>
+              <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){
+                  echo 'checked="checked"';
+                  $info = 'danger';
+              } ?>
             >
+            <div <?php if($info=='danger') {?>style="color: green; font-size: 18px;"<?php }else{ ?>style="color: red; font-size: 18px;" <?php } ?>>
             <?php echo $field->name; ?>
+            </div>
           </label>
-          <label>Select</label>
+          
+        </div class="checkbox">
+          <label>Text<input type="radio" value="text" name="types[<?php echo $field->name; ?>]"
+          <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
+           <?php if($types){ if($types[$field->name]=='text'){ ?> checked="checked" <?php }} ?>
+          <?php } ?>
+          >
+          </label>
+          <label>Number<input type="radio" value="number" name="types[<?php echo $field->name; ?>]"<?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
+           <?php if($types){ if($types[$field->name]=='number'){ ?> checked="checked" <?php }} ?>
+          <?php } ?>
+          ></label>
+          <label>Email<input type="radio" value="email" name="types[<?php echo $field->name; ?>]"
+          <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
+           <?php if($types){ if($types[$field->name]=='email'){ ?> checked="checked" <?php }} ?>
+          <?php } ?>
+          ></label>
+          <label>Date<input type="radio" value="date" name="types[<?php echo $field->name; ?>]"
+          <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
+           <?php if($types){ if($types[$field->name]=='date'){ ?> checked="checked" <?php }} ?>
+          <?php } ?>
+          ></label>
+          <label>Select<input type="radio" value="select" name="types[<?php echo $field->name; ?>]"
+          <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
+           <?php if($types){ if($types[$field->name]=='select'){ ?> checked="checked" <?php }} ?>
+          <?php } ?>
+          ></label>
+          <label>TextArea<input type="radio" value="textarea" name="types[<?php echo $field->name; ?>]" 
+          <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
+           <?php if($types){ if($types[$field->name]=='textarea'){ ?> checked="checked" <?php }} ?>
+          <?php } ?>
+          ></label>
+          <label>Radio<input type="radio" value="radio" name="types[<?php echo $field->name; ?>]"
+          <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
+           <?php if($types){ if($types[$field->name]=='radio'){ ?> checked="checked" <?php }} ?>
+          <?php } ?>
+          ></label>
+          <label>Checkbox<input type="radio" value="checkbox" name="types[<?php echo $field->name; ?>]" <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
+           <?php if($types){ if($types[$field->name]=='checkbox'){ ?> checked="checked" <?php }} ?>
+          <?php } ?>
+          ></label>
+        <div>
+          
         </div>
         <?php } ?>
       </div>

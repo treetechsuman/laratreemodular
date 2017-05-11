@@ -49,7 +49,7 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 				$text = "\n\t\t\t$" . "table->".$_POST['type'][$i]."('" . $_POST['field_name'][$i] ."',['Active','Inactive']);";
 			}elseif($_POST['type'][$i]=='foreign'){
 				$text = "\n\t\t\t$" . "table->integer('" . $_POST['field_name'][$i] ."')->unsigned();";
-				$text .= "\n\t\t\t$" . "table->".$_POST['type'][$i]."('" . $_POST['field_name'][$i] ."')->references('id')->on('table name')->onDelete('cascade');";
+				$text .= "\n\t\t\t$" . "table->".$_POST['type'][$i]."('" . $_POST['field_name'][$i] ."')->references('id')->on('table_name')->onDelete('cascade');";
 
 			}elseif($_POST['type'][$i]=='date'){
 				$text = "\n\t\t\t$" . "table->".$_POST['type'][$i]."('" . $_POST['field_name'][$i] ."');";
