@@ -108,7 +108,7 @@ if(isset($_SESSION['table_fields'])){
         </div class="checkbox">
           <label>Text<input type="radio" value="text" name="types[<?php echo $field->name; ?>]"
           <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
-           <?php if($types){ if($types[$field->name]=='text'){ ?> checked="checked" <?php }} ?>
+           <?php if($types){ if($types[$field->name]=='text'){ ?> checked="checked" <?php }}else{ echo 'checked="checked"'; } ?>
           <?php } ?>
           >
           </label>
