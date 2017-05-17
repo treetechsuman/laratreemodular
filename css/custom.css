@@ -1,6 +1,6 @@
 .mymessage{
 	position: fixed;
-	top: 0;
+	top: 8%;
 	left: 70%;
 	z-index: 9999;
 }

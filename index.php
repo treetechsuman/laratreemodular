@@ -23,6 +23,11 @@
   </div>
 </div>
 
+<script type="text/javascript">
+    $(".alert").delay(1000).slideUp(200, function() {
+    $(this).alert('close');
+});
+</script>
 
 </body>
 </html>

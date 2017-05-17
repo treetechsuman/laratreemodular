@@ -69,6 +69,13 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 
 	//index function---------
+	$text ="\n\t/**\n";
+	$text .="\t* Display a listing of the resource.\n";
+	$text .="\t* @return Response\n";
+	$text .="\t*/";
+	fwrite($myfile, $text);
+
+	
 	$text = "\n\tpublic function index(){\n";
 	$text .= "\t\t$".lcfirst($_POST['controller'])."s = $". "this->".lcfirst($_POST['controller'])."Repo->getAll".ucfirst($_POST['controller'])."();\n";
 	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".index',compact('".lcfirst($_POST['controller'])."s'));\n";
@@ -76,6 +83,12 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 
 	//create function----------
+	$text ="\n\t/**\n";
+	$text .="\t* Show the form for creating a new resource.\n";
+	$text .="\t* @return Response\n";
+	$text .="\t*/";
+	fwrite($myfile, $text);
+
 	$text = "\n\tpublic function create(){\n";
 
 	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".create');\n";
@@ -83,6 +96,13 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 
 	//store function---------------
+	$text ="\n\t/**\n";
+	$text .="\t* Store a newly created resource in storage.\n";
+	$text .="\t* @param  Request $" . "request\n";
+	$text .="\t* @return Response\n";
+	$text .="\t*/";
+	fwrite($myfile, $text);
+
 	$text = "\n\tpublic function store(Request $"."request){\n";
 	$text .= "\t\t$"."this->".lcfirst($_POST['controller'])."Repo->create".ucfirst($_POST['controller'])."($"."request->all());\n";
 	$text .= "\t\tSession::flash('success','Operation Success');\n";
@@ -90,11 +110,23 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
 	
+	//show function---------------
+	$text ="\n\t/**\n";
+	$text .="\t* Show the specified resource.\n";
+	$text .="\t* @return Response\n";
+	$text .="\t*/";
+	fwrite($myfile, $text);
 	$text = "\n\tpublic function show(){\n";
 	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".show');\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
 	//edit function -------
+	$text ="\n\t/**\n";
+	$text .="\t* Show the specified resource.\n";
+	$text .="\t* @return Response\n";
+	$text .="\t*/";
+	fwrite($myfile, $text);
+
 	$text = "\n\tpublic function edit($" . "id){\n";
 	$text .= "\t\t$".lcfirst($_POST['controller'])." = $". "this->".lcfirst($_POST['controller'])."Repo->get".ucfirst($_POST['controller'])."ById($" . "id);\n";
 	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".edit',compact('".lcfirst($_POST['controller'])."'));\n";
@@ -102,6 +134,13 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 
 	//update function-------------
+	$text ="\n\t/**\n";
+	$text .="\t* Update the specified resource in storage..\n";
+	$text .="\t* Request $" . "request\n";
+	$text .="\t* @return Response\n";
+	$text .="\t*/";
+	fwrite($myfile, $text);
+
 	$text = "\n\tpublic function update($" . "id ,Request $"."request){\n";
 	$text .= "\t\t$"."this->".lcfirst($_POST['controller'])."Repo->update".ucfirst($_POST['controller'])."($" . "id,$"."request->all());\n";
 	$text .= "\t\tSession::flash('success','Operation Success');\n";
@@ -110,6 +149,12 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 	
 	//delete function---------------
+	$text ="\n\t/**\n";
+	$text .="\t* Remove the specified resource from storage.\n";
+	$text .="\t* @return Response\n";
+	$text .="\t*/";
+	fwrite($myfile, $text);
+
 	$text = "\n\tpublic function delete($" . "id){\n";
 	$text .= "\t\t$"."this->".lcfirst($_POST['controller'])."Repo->delete".ucfirst($_POST['controller'])."($"."id);\n";
 	$text .= "\t\tSession::flash('success','Operation Success');\n";

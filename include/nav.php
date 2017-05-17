@@ -44,6 +44,13 @@
           Read File
         </a>
       </li>
+      <?php if($_SESSION['module']){ ?>
+      <li>
+        <a href="#" class="navbar-brand">
+          Selected Module : <?= $_SESSION['module']; ?>
+        </a>
+      </li>
+      <?php } ?>
       
       
     </ul>

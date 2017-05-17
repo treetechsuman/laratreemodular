@@ -27,14 +27,19 @@ if(isset($_SESSION['table_fields'])){
   print_r($fields);
  echo '</pre>'*/
 ?>
-<div class="col-md-3">
+<div class="col-md-2">
   <form action="system/process/views/table_fields.php" method="post" class="form-horizontal">
     <div class="form-group">
-      <label class="control-label col-sm-5" for="viewfolder">Table list:</label>
-      <div class="col-sm-7">
+      <label class="control-label col-sm-7" for="viewfolder">Table list:</label>
+      <div class="col-sm-12">
         <select name="table" class="form-control">
         <?php foreach($table_lists as $table_list){ ?>
-          <option value="<?php echo $table_list->{TableIn}; ?>"><?php echo $table_list->{TableIn}; ?></option>
+          <option value="<?php echo $table_list->{TableIn}; ?>" 
+          <?php if(isset($_SESSION['table'])){if($_SESSION['table']==$table_list->{TableIn}){ ?>
+            selected="selected"
+
+          <?php  }} ?>
+          ><?php echo $table_list->{TableIn}; ?></option>
         <?php } ?>
         </select>
       </div>
@@ -46,11 +51,11 @@ if(isset($_SESSION['table_fields'])){
     </div>
     </form>
 </div>
-<div class="col-md-3">
+<div class="col-md-7">
 	<form action="system/process/views/generate_view.php" method="post" class="form-horizontal">
     <div class="form-group">
-      <label class="control-label col-sm-5" for="viewfolder">View Folder:</label>
-      <div class="col-sm-7">
+      <label class="control-label col-sm-2" for="viewfolder">View Folder:</label>
+      <div class="col-sm-10">
         <input type="text" name="viewfolder" <?php
         if(isset($_SESSION['viewfolder'])){
         ?> 
@@ -61,8 +66,8 @@ if(isset($_SESSION['table_fields'])){
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-5" for="viewfolder">Select Controller:</label>
-      <div class="col-sm-7">
+      <label class="control-label col-sm-2" for="viewfolder">Select Controller:</label>
+      <div class="col-sm-10">
       
 
       <?php foreach ($appController as $file) { if($file !='.'&&$file!='..' ){ ?>
@@ -81,8 +86,8 @@ if(isset($_SESSION['table_fields'])){
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-5" for="viewfolder">Select Fields:</label>
-      <div class="col-sm-7"> 
+      <label class="control-label col-sm-2" for="viewfolder">Select Fields:</label>
+      <div class="col-sm-10"> 
       <?php
        if(isset($_SESSION['types'])){ 
         $types = $_SESSION['types'];
@@ -126,29 +131,32 @@ if(isset($_SESSION['table_fields'])){
            <?php if($types){ if($types[$field->name]=='date'){ ?> checked="checked" <?php }} ?>
           <?php } ?>
           ></label>
-          <label>Select<input type="radio" value="select" name="types[<?php echo $field->name; ?>]"
-          <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
-           <?php if($types){ if($types[$field->name]=='select'){ ?> checked="checked" <?php }} ?>
-          <?php } ?>
-          ></label>
           <label>TextArea<input type="radio" value="textarea" name="types[<?php echo $field->name; ?>]" 
           <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
            <?php if($types){ if($types[$field->name]=='textarea'){ ?> checked="checked" <?php }} ?>
-          <?php } ?>
-          ></label>
-          <label>Radio<input type="radio" value="radio" name="types[<?php echo $field->name; ?>]"
-          <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
-           <?php if($types){ if($types[$field->name]=='radio'){ ?> checked="checked" <?php }} ?>
-          <?php } ?>
-          ></label>
-          <label>Checkbox<input type="radio" value="checkbox" name="types[<?php echo $field->name; ?>]" <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
-           <?php if($types){ if($types[$field->name]=='checkbox'){ ?> checked="checked" <?php }} ?>
           <?php } ?>
           ></label>
           <label>File<input type="radio" value="file" name="types[<?php echo $field->name; ?>]" <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
            <?php if($types){ if($types[$field->name]=='file'){ ?> checked="checked" <?php }} ?>
           <?php } ?>
           ></label>
+          <label>Checkbox<input type="radio" value="checkbox" name="types[<?php echo $field->name; ?>]" <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
+           <?php if($types){ if($types[$field->name]=='checkbox'){ ?> checked="checked" <?php }} ?>
+          <?php } ?>
+          ></label>
+          
+          <label>Radio<input type="radio" value="radio" name="types[<?php echo $field->name; ?>]"
+          <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
+           <?php if($types){ if($types[$field->name]=='radio'){ ?> checked="checked" <?php }} ?>
+          <?php } ?>
+          ></label>
+          <label>Select<input type="radio" value="select" name="types[<?php echo $field->name; ?>]"
+          <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
+           <?php if($types){ if($types[$field->name]=='select'){ ?> checked="checked" <?php }} ?>
+          <?php } ?>
+          ></label>
+          
+          
         <div>
           
         </div>
@@ -156,8 +164,8 @@ if(isset($_SESSION['table_fields'])){
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-5" for="viewfolder">Select File:</label>
-      <div class="col-sm-7">    
+      <label class="control-label col-sm-2" for="viewfolder">Select File:</label>
+      <div class="col-sm-10">    
         <div class="checkbox">
   			<label><input type="checkbox" name="views[]" value="index" checked="checked">Index</label>
 		</div>
@@ -193,7 +201,7 @@ if(isset($_SESSION['table_fields'])){
     </div>
     </form>
 </div>
-<div class="col-md-5">
+<div class="col-md-3">
 	<?php //require_once('include/migration_model_file_tree.php'); ?>
 	<?php //require_once('include/controller_file_tree.php'); ?>
 	<?php require_once('include/views_file_tree.php'); ?>	

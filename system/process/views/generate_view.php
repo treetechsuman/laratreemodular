@@ -60,8 +60,8 @@ foreach ($views as $view) {
 				$text .="\t\t<div class=\"col-md-6\">\n";
 					$text .="\t\t\t<div class=\"box box-primary\">\n";
 						$text .="\t\t\t\t<div class=\"box-header with-border\">\n";
-						$text .="\t\t\t\t\t<h3 class=\"box-title\">".$view."</h3>\n";
-						$text .="\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/create')}}\" data-toggle=\"tooltip\" title=\"Create!\" class=\"btn btn-primary btn-xs pull-right\"><i class=\"glyphicon glyphicon-plus\"></i></a>\n";
+						$text .="\t\t\t\t\t<h3 class=\"box-title\">".ucfirst($variable).'::'.$view."</h3>\n";
+						$text .="\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/create')}}\" data-toggle=\"tooltip\" title=\"Create!\" class=\"btn btn-success btn-xs pull-right\"><i class=\"glyphicon glyphicon-plus\"></i></a>\n";
 						$text .="\t\t\t\t</div>\n";
 						$text .="\t\t\t\t<div class=\"box-body\">\n";
 						if($view=='index'){
@@ -86,8 +86,10 @@ foreach ($views as $view) {
 									//$text.= "\t\t\t\t\t\t\t\t<td>{{\$" .$variable."['id']}}</td>\n";
 									
 									$text= "\t\t\t\t\t\t\t\t<td>\n";
-										$text.= "\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/'.$" .$variable."['id'].'/edit')}}\" data-toggle=\"tooltip\" title=\"Edit\" class=\"btn btn-info btn-xs\"><i class=\"glyphicon glyphicon-edit\"></i></a>\n";
-										$text.= "\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/delete/'.$" .$variable."['id'])}}\" data-toggle=\"tooltip\" title=\"Delete\" class=\"btn btn-danger btn-xs\"><i class=\"glyphicon glyphicon-remove\"></i></a></i></a>\n";
+										$text.= "\t\t\t\t\t\t\t\t\t<div class=\"btn-group\">\n";
+										$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/'.$" .$variable."['id'].'/edit')}}\" data-toggle=\"tooltip\" title=\"Edit\" class=\"btn btn-info btn-xs\"><i class=\"glyphicon glyphicon-edit\"></i></a>\n";
+										$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/delete/'.$" .$variable."['id'])}}\" data-toggle=\"tooltip\" title=\"Delete\" class=\"btn btn-danger btn-xs\"><i class=\"glyphicon glyphicon-remove\"></i></a></i></a>\n";
+										$text.= "\t\t\t\t\t\t\t\t\t</div>\n";
 
 									$text.= "\t\t\t\t\t\t\t\t</td>\n";
 								$text.= "\t\t\t\t\t\t\t</tr>\n";
