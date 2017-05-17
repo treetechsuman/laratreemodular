@@ -168,6 +168,20 @@ if(isset($_SESSION['table_fields'])){
 		</div>
       </div>
     </div>
+    <div class="form-group">
+      <label class="control-label col-sm-4" for="no_of_fields">Add Route:</label>
+      <div class="col-sm-8">                 
+        Yes<input type="radio" name="add_route" value="yes" checked="checked">
+        No<input type="radio" name="add_route" value="no" >       
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-4" for="no_of_fields">Add Menu:</label>
+      <div class="col-sm-8">                 
+        Yes<input type="radio" name="add_in_side_nav" value="yes" >
+        No<input type="radio" name="add_in_side_nav" value="no" checked="checked">       
+      </div>
+    </div>
     <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-success">Generate</button>

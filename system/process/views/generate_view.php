@@ -340,6 +340,7 @@ foreach ($views as $view) {
 		fwrite($myfile, $text);
 }
 //generate routes----------------------------------------------------------------
+if($_POST['add_route']=='yes'){
 if(file_exists(RouteFolderPath)&&isset($controller)){
 	$myfile = fopen(RouteFolderPath.'/routes.php', "a") or die("Unable to open file!");
 	$controller_prefix = substr($controller, 0, -14);
@@ -368,16 +369,18 @@ if(file_exists(RouteFolderPath)&&isset($controller)){
 	$text = "}); \n";
 	fwrite($myfile, $text);
 }
+}
 //now add  menu--------------------------
-	/*$myfile = fopen('../../../../resources/views/backend/layouts/generated_menu.blade.php', 'a'); 
+if($_POST['add_in_side_nav']=='yes'){
+	$myfile = fopen('../../../../resources/views/backend/layouts/generated_menu.blade.php', 'a'); 
 	
 	$text = "\n<li class=\"treeview\">\n";
 	$text .= "\t<a href=\"{{url('admin/".lcfirst($controller_prefix)."')}}\">\n";
 	$text .= "\t\t<i class=\"fa fa-dashboard\"></i> <span>".ucfirst($controller_prefix)."</span>\n";
 	$text .= "\t</a>\n";
 	$text .= "</li>\n";
-	fwrite($myfile, $text); */
-
+	fwrite($myfile, $text); 
+}
 new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
 	
 ?>
