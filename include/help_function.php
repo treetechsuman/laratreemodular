@@ -30,4 +30,18 @@ function copyr($source, $dest)
     $dir->close(); 
     return true; 
 } 
+
+function enum_select( $table , $field ){
+    $con=mysqli_connect(Host,User,Password,Db);
+    $query = " SHOW COLUMNS FROM `$table` LIKE '$field' ";
+    $result = mysqli_query($con, $query ) or die( 'error getting enum field ' . mysql_error() );
+    $row = mysqli_fetch_array( $result );
+    #extract the values
+    #the values are enclosed in single quotes
+    #and separated by commas
+    $regex = "/'(.*?)'/";
+    preg_match_all( $regex , $row[1], $enum_array );
+    $enum_fields = $enum_array[1];
+    return( $enum_fields );
+}
 ?>
