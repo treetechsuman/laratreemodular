@@ -145,6 +145,10 @@ if(isset($_SESSION['table_fields'])){
            <?php if($types){ if($types[$field->name]=='checkbox'){ ?> checked="checked" <?php }} ?>
           <?php } ?>
           ></label>
+          <label>File<input type="radio" value="file" name="types[<?php echo $field->name; ?>]" <?php if($field->name!='id'&&$field->name!='created_at'&&$field->name!='updated_at'){?> 
+           <?php if($types){ if($types[$field->name]=='file'){ ?> checked="checked" <?php }} ?>
+          <?php } ?>
+          ></label>
         <div>
           
         </div>
