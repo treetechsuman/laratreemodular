@@ -2,6 +2,7 @@
 //processs
 require_once('../../../config/config.php');
 require_once('../../classes/locate.class.php');
+require_once('../../../include/help_function.php');
 
 //echo MigrationFolderPath .'<br>';
 //rtrim($string, ",")
@@ -13,7 +14,12 @@ $types = $_POST['types'];
 $controller = $_POST['controller'];
 $_SESSION['types'] = $types;
 $_SESSION['controller']=$controller;
+$table = $_SESSION['table'];
 
+/*$enumlists = enum_select( $table , 'address' );
+ echo '<pre>';
+ print_r($enumlists);
+ echo '</pre>';*/
 /*echo '<pre>';
  print_r($types);
 echo '</pre>';*/
@@ -114,9 +120,22 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
 														 $text .= "\t\t\t\t\t\t\t\t<select name=\"" . $field ."\" class=\"form-control\">\n";
-															$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Active\" @if(old('" . $field ."')=='Active') selected=\"selected\" @endif >Active</option>\n";
-															$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Inactive\" @if(old('" . $field ."')=='Inactive') selected=\"selected\" @endif >Inactive</option>\n";
-														$text .= "\t\t\t\t\t\t\t\t</select>\n";
+														 //----------------enum---------------------------
+														 fwrite($myfile, $text);
+														 $enumlists = enum_select( $table , $field );
+														 if(count($enumlists)>0){
+															 foreach ($enumlists as $enumlist) {
+															 	$text = "\t\t\t\t\t\t\t\t\t<option value=\"" . $enumlist ."\" @if(old('" . $field ."')=='" . $enumlist ."') selected=\"selected\" @endif >" . $enumlist ."</option>\n";
+
+																fwrite($myfile, $text);
+															 }
+														 }else{
+															$text = "\t\t\t\t\t\t\t\t\t<option value=\"Active\" @if(old('" . $field ."')=='Active') selected=\"selected\" @endif >Active</option>\n";
+
+															fwrite($myfile, $text);
+														}
+														//----------------enum end---------------------------	
+														$text = "\t\t\t\t\t\t\t\t</select>\n";
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t</div>\n";
 															fwrite($myfile, $text);
@@ -129,9 +148,23 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
-														 $text .= "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Male\" @if(old('" . $field ."')=='Male') checked=\"checked\" @endif  >Male</lable>\n";
-														 $text .= "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Female\" @if(old('" . $field ."')=='Female') checked=\"checked\" @endif   >Female</lable>\n";
-								    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
+														//----------------enum---------------------------
+														 fwrite($myfile, $text);
+														 $enumlists = enum_select( $table , $field );
+														 if(count($enumlists)>0){
+															 foreach ($enumlists as $enumlist) {
+															 	$text = "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"" . $enumlist ."\" @if(old('" . $field ."')=='" . $enumlist ."') checked=\"checked\" @endif  >" . $enumlist ."</lable>\n";
+
+																fwrite($myfile, $text);
+															 }
+														 }else{
+															$text .= "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Male\" @if(old('" . $field ."')=='Male') checked=\"checked\" @endif  >Male</lable>\n";
+
+															fwrite($myfile, $text);
+														}
+														//----------------enum end---------------------------
+														 
+								    					$text = "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
 								    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
 							    						$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
 								    					$text .= "\t\t\t\t\t\t\t\t\t</span>\n";
@@ -149,9 +182,22 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
 														$text .= "\t\t\t\t\t\t\t\t<div class=\"checkbox\">\n";
-														 $text .= "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Yes\" >Yes</lable>\n";
-														 $text .= "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"No\"  >No</lable>\n";
-								    					$text .= "\t\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
+														//----------------enum---------------------------
+														 fwrite($myfile, $text);
+														 $enumlists = enum_select( $table , $field );
+														 if(count($enumlists)>0){
+															 foreach ($enumlists as $enumlist) {
+															 	$text = "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"" . $enumlist ."\" >" . $enumlist ."</lable>\n";
+
+																fwrite($myfile, $text);
+															 }
+														 }else{
+															$text = "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Yes\" >Yes</lable>\n";
+
+															fwrite($myfile, $text);
+														}
+														//----------------enum end---------------------------
+								    					$text = "\t\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
 								    					$text .= "\t\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
 							    						$text .= "\t\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
 								    					$text .= "\t\t\t\t\t\t\t\t\t\t</span>\n";
@@ -231,9 +277,21 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
 														 $text .= "\t\t\t\t\t\t\t\t<select name=\"" . $field ."\" class=\"form-control\">\n";
-															$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Active\" @if(\$".$variable."['" . $field ."']=='Active') selected=\"selected\" @endif >Active</option>\n";
-															$text .= "\t\t\t\t\t\t\t\t\t<option value=\"Inactive\" @if(\$".$variable."['" . $field ."']=='Inactive') selected=\"selected\" @endif >Inactive</option>\n";
-														$text .= "\t\t\t\t\t\t\t\t</select>\n";
+														 //----------------enum---------------------------
+														 fwrite($myfile, $text);
+														 $enumlists = enum_select( $table , $field );
+														 if(count($enumlists)>0){
+															 foreach ($enumlists as $enumlist) {
+															 	$text = "\t\t\t\t\t\t\t\t\t<option value=\"" . $enumlist ."\" @if(\$".$variable."['" . $field ."']=='" . $enumlist ."') selected=\"selected\" @endif >" . $enumlist ."</option>\n";
+
+																fwrite($myfile, $text);
+															 }
+														 }else{
+															$text = "\t\t\t\t\t\t\t\t\t<option value=\"Active\" @if(\$".$variable."['" . $field ."']=='Active') selected=\"selected\" @endif >Active</option>\n";
+
+															fwrite($myfile, $text);
+														}
+														$text = "\t\t\t\t\t\t\t\t</select>\n";
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t</div>\n";
 															fwrite($myfile, $text);
@@ -246,9 +304,23 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
-														 $text .= "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Male\" @if(\$".$variable."['" . $field ."']=='Male') checked=\"checked\" @endif  >Male</lable>\n";
-														 $text .= "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Female\" @if(\$".$variable."['" . $field ."']=='Female') checked=\"checked\" @endif   >Female</lable>\n";
-								    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
+														//----------------enum---------------------------
+														 fwrite($myfile, $text);
+														 $enumlists = enum_select( $table , $field );
+														 if(count($enumlists)>0){
+															 foreach ($enumlists as $enumlist) {
+															 	$text = "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"" . $enumlist ."\" @if(\$".$variable."['" . $field ."']=='" . $enumlist ."') checked=\"checked\" @endif  >" . $enumlist ."</lable>\n";
+
+																fwrite($myfile, $text);
+															 }
+														 }else{
+															$text .= "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Male\" @if(\$".$variable."['" . $field ."']=='Male') checked=\"checked\" @endif  >Male</lable>\n";
+
+															fwrite($myfile, $text);
+														}
+														//----------------enum end---------------------------
+												
+								    					$text = "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
 								    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
 							    						$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
 								    					$text .= "\t\t\t\t\t\t\t\t\t</span>\n";
@@ -266,9 +338,24 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
 														$text .= "\t\t\t\t\t\t\t\t<div class=\"checkbox\">\n";
-														 $text .= "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"{{\$".$variable."['" . $field ."']}}\" @if(\$".$variable."['" . $field ."']=='Yes') checked=\"checked\" @endif >Yes</lable>\n";
-														 $text .= "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"{{\$".$variable."['" . $field ."']}}\" @if(\$".$variable."['" . $field ."']=='No') checked=\"checked\" @endif  >No</lable>\n";
-								    					$text .= "\t\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
+														//----------------enum---------------------------
+														 fwrite($myfile, $text);
+														 $enumlists = enum_select( $table , $field );
+														 if(count($enumlists)>0){
+															 foreach ($enumlists as $enumlist) {
+															 	
+															 	$text = "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"{{\$".$variable."['" . $field ."']}}\" @if(\$".$variable."['" . $field ."']=='" . $enumlist ."') checked=\"checked\" @endif >" . $enumlist ."</lable>\n";
+
+																fwrite($myfile, $text);
+															 }
+														 }else{
+															$text = "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"{{\$".$variable."['" . $field ."']}}\" @if(\$".$variable."['" . $field ."']=='Yes') checked=\"checked\" @endif >Yes</lable>\n";
+
+															fwrite($myfile, $text);
+														}
+														//----------------enum end---------------------------
+														 
+								    					$text = "\t\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
 								    					$text .= "\t\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
 							    						$text .= "\t\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
 								    					$text .= "\t\t\t\t\t\t\t\t\t\t</span>\n";
@@ -383,7 +470,7 @@ if($_POST['add_in_side_nav']=='yes'){
 }
 new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
 	
-?>
+
 
 	
 ?>

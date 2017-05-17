@@ -9,6 +9,7 @@ $objService = new Service();
 $table_lists = $objService->get_table_name_list();
 $table = $_POST['table'];
 $fields = $objService->get_table_fields_name($table);
+$_SESSION['table']= $table;
 unset($_SESSION['controller']);
 unset($_SESSION['types']);
 unset($_SESSION['viewfolder']);
@@ -17,9 +18,9 @@ unset($_SESSION['viewfolder']);
  echo '</pre>';*/
  $_SESSION['table_fields'] = $fields;
 
- $enumlists = enum_select( $table , 'status' );
+ /*$enumlists = enum_select( $table , 'status' );
  echo '<pre>';
  print_r($enumlists);
- echo '</pre>';
-//new Locate('../../../index.php?menu=views&action=create&success=yes&message=' .$table. ' Fields of table are set ');
+ echo '</pre>';*/
+new Locate('../../../index.php?menu=views&action=create&success=yes&message=' .$table. ' Fields of table are set ');
 
