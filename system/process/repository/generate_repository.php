@@ -126,7 +126,62 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 		fwrite($myfile, $text);
 
 	}
-	
+	$text = "\t/*------------------------------------------------------------------------------------
+	 this commented code is only for image you can remove it there is not image
+	 		------------------------------------------------------------------------------------*/\n";
+	fwrite($myfile, $text);
+	$text = "\t/*\n\tprivate function uploadImage($" . "file){
+		if($" . "file){
+			$" . "extension = $" . "file->getClientOriginalExtension();
+			$" . "filename= md5(microtime()).'.'.$" . "extension;
+			$" . "destinationPath= 'uploads/image/';
+			$" . "file->move($" . "destinationPath,$" . "filename);
+			Image::make($" . "destinationPath.$" . "filename)
+                ->resize( 200, 200 )//note width x height		
+                ->text('water',100,100,function($" . "font) {
+								    //$" . "font->file('foo/bar.ttf');
+								    $" . "font->size(200);
+								    $" . "font->color(array(255, 255, 255, 0.5));
+								    $" . "font->align('center');
+								    $" . "font->valign('top');
+								    $" . "font->angle(45);
+								})
+                ->save($" . "destinationPath.$" . "filename);    	
+    	}
+    	return $" . "destinationPath.$" . "filename;
+
+	}\n\t*/\n\n";
+	fwrite($myfile, $text);
+
+	$text = "\t//copy this code in create function----\n";
+	$text .= "\t\t/*\n\t\tif(array_key_exists('image', $" . "attributes)){
+			$" . "path = $" . "this->uploadImage($" . "attributes['image']);
+			$" . "attributes['image']=$" . "path;
+		}\n\t\t*/\n\n";
+
+	fwrite($myfile, $text);
+
+	$text = "\t//copy this code in update need some edit ----\n";
+	$text .= "\t\t/*\n\t\tif(array_key_exists('image', $" . "attributes)){
+			$" . "testimonial = $" . "this->testimonial->findorfail($" . "id);
+			//delete image
+			if($" . "testimonial['image']!='' && file_exists($" . "testimonial['image'])){ 				
+				unlink($" . "testimonial['image']);
+			}
+			$" . "path = $" . "" . "this->uploadImage($" . "attributes['image']);
+			$" . "attributes['image']=$" . "path;
+		}\n\t\t*/\n\n";
+
+	fwrite($myfile, $text);
+
+	$text = "\t//copy this code in delete function ----\n";
+	$text .= "\t\t/*\n\t\t$" . "testimonial = $" . "this->testimonial->findorfail($" . "id);
+		//delete image 
+		if($" . "" . "testimonial['image']!='' && file_exists($" . "testimonial['image'])){
+			unlink($" . "testimonial['image']);
+		}\n\t\t*/\n\n";
+
+	fwrite($myfile, $text);
 
 	$text = "}";
 	fwrite($myfile, $text);
@@ -171,7 +226,7 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 	$text = "\n$" . "this->register".ucfirst($_POST['repository'])."Repository();";
 	fwrite($myfile, $text);
 
-new Locate('../../../index.php?menu=repository&action=create&success=yes&message=' .$_POST['repository'] . ' Repository and Eloquent is created ');
+//new Locate('../../../index.php?menu=repository&action=create&success=yes&message=' .$_POST['repository'] . ' Repository and Eloquent is created ');
 	
 }
 
