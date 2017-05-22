@@ -226,7 +226,7 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 	$text = "\n$" . "this->register".ucfirst($_POST['repository'])."Repository();";
 	fwrite($myfile, $text);
 
-//new Locate('../../../index.php?menu=repository&action=create&success=yes&message=' .$_POST['repository'] . ' Repository and Eloquent is created ');
+new Locate('../../../index.php?menu=repository&action=create&success=yes&message=' .$_POST['repository'] . ' Repository and Eloquent is created ');
 	
 }
 
