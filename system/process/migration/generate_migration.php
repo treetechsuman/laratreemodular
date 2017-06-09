@@ -122,14 +122,71 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 
 			$text ="\t];\n}";
 			fwrite($myfile, $text);
-			new Locate('../../../index.php?menu=migration&action=create&success=yes&message=' .$_POST['table_name'] . ' migration and module is created ');
+			//new Locate('../../../index.php?menu=migration&action=create&success=yes&message=' .$_POST['table_name'] . ' migration and module is created ');
 		}
 
 	}
-	new Locate('../../../index.php?menu=migration&action=create&success=yes&message=' .$_POST['table_name'] . ' migration is created ');
+
+	//for creating seeder---------------------------------------------------------------------------------------------
+	if($_POST['create_seeder']=='yes'){
+		//echo 'cteate model tooooo';
+		//ucfirst("hello world!");
+		//create Model folder inside app
+		if (!file_exists(SeedersFolderPath)) {
+		    mkdir(SeedersFolderPath, 0777, true);
+		}
+		
+
+		//$model_file_name = rtrim(ucfirst($_POST['table_name']),'s'). '.php';
+		//echo $file_name;
+		$myfile = fopen(SeedersFolderPath . rtrim($modules_file_name,'.php'). "DataSeeders.php", "w") or die("Unable to open file!");
+		if(fopen(SeedersFolderPath . rtrim($modules_file_name,'.php'). "DataSeeders.php", "w")){
+			$text = "<?php \n";
+			fwrite($myfile, $text);
+
+			$text = "namespace Modules\\".$_SESSION['module']."\Database\Seeders;\n\n";
+			$text .= "use Illuminate\Database\Seeder;\n";
+			$text .= "use Illuminate\Database\Eloquent\Model;\n";
+			$text .= "use Faker\Factory as Faker;\n\n";
+			$text .= "use Modules\\".$_SESSION['module']."\Repositories\\".rtrim($modules_file_name,'.php')."Repository;\n\n";
+			fwrite($myfile, $text);
+
+			$text = "class " .$model_class_name. "DataSeeders extends Seeder{\n\n";
+			$text .= "\tprivate $"."" .lcfirst($model_class_name). "Repo;\n\n";
+			$text .= "\tpublic function __construct(" .ucfirst($model_class_name). "Repository $" .lcfirst($model_class_name). "Repo){\n\n";
+			$text .= "\t\t$"."this->" .lcfirst($model_class_name). "Repo = $" .lcfirst($model_class_name). "Repo;\n\n";
+				$text .= "\t}\n\n";
+			$text .= "\tpublic function run(){\n\n";
+			$text .= "\t\tModel::unguard();\n\n";
+			$text .= "\t\t$"."faker = Faker::create();\n\n";
+			$text .= "\t\tfor($"."i=1;$"."i<=20;$"."i++){\n";
+			fwrite($myfile, $text);
+			$text = "\t\t\t$" . lcfirst($model_class_name). "Data = [\n\n";
+			fwrite($myfile, $text);
+				for($i=0;$i<$_POST['no_of_fields'];$i++){
+			
+					$text = "\t\t\t\t\t'" . $_POST['field_name'][$i] . "'=>$"."faker->" . $_POST['field_name'][$i] . "(),\n";
+					fwrite($myfile, $text);
+				}
+			$text = "\n\t\t\t];\n";
+			$text .= "\t\t\t$"."this->" .lcfirst($model_class_name). "Repo->create" .ucfirst($model_class_name). "($" . lcfirst($model_class_name). "Data);\n";
+			fwrite($myfile, $text);
+			$text = "\t\t}\n\n";
+			$text .= "\t\t//$"."this->call(OthersTableSeeder::class);\n";
+			$text .= "\t}\n";
+			fwrite($myfile, $text);
+
+			$text = "}\n";
+			fwrite($myfile, $text);
+			
+			//new Locate('../../../index.php?menu=migration&action=create&success=yes&message=' .$_POST['table_name'] . ' migration and module is created ');
+		}
+
+	}
+	//new Locate('../../../index.php?menu=migration&action=create&success=yes&message=' .$_POST['table_name'] . ' migration is created ');
 	
 }else{
-new Locate('../../../index.php?menu=migration&action=create&success=no&message=' . $_POST['table_name'] . ' migration is created ');
+//new Locate('../../../index.php?menu=migration&action=create&success=no&message=' . $_POST['table_name'] . ' migration is created ');
 }
 
 
