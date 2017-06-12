@@ -97,6 +97,8 @@ foreach ($views as $view) {
 								$text.="\t\t\t\t\t\t</tbody>\n";
 
 							$text .= "\t\t\t\t\t</table>\n";
+							$text .= "\t\t\t\t\t{"."{"."$".$variable."s"."->"."links()}"."}\n";
+
 							fwrite($myfile, $text);
 						}elseif($view=='create'){
 						/*

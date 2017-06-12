@@ -100,7 +100,10 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 	//creation of constructor---------------end
 	foreach ($models as $model) {
 		$model = substr($model, 0, -4);
-		$text = "\tpublic function getAll".ucfirst($model)."(){\n";
+		$text = "\tpublic function getAll".ucfirst($model)."($"."limit = null){\n";
+		$text .=	"\t\tif($"."limit!=null){\n";
+		$text .=	"\t\treturn $" . "this->" .strtolower($model). "->paginate($"."limit);\n";
+		$text .=	"\t\t}\n";
 		$text .=	"\t\treturn $" . "this->" .strtolower($model). "->all();\n";
 		$text .= "\t}\n\n";
 		fwrite($myfile, $text);

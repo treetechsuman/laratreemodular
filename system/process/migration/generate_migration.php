@@ -170,6 +170,7 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 				}
 			$text = "\n\t\t\t];\n";
 			$text .= "\t\t\t$"."this->" .lcfirst($model_class_name). "Repo->create" .ucfirst($model_class_name). "($" . lcfirst($model_class_name). "Data);\n";
+			$text .= "\n\t\t\techo '.';\n";
 			fwrite($myfile, $text);
 			$text = "\t\t}\n\n";
 			$text .= "\t\t//$"."this->call(OthersTableSeeder::class);\n";
@@ -179,7 +180,7 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 			$text = "}\n";
 			fwrite($myfile, $text);
 			
-			//new Locate('../../../index.php?menu=migration&action=create&success=yes&message=' .$_POST['table_name'] . ' migration and module is created ');
+			new Locate('../../../index.php?menu=migration&action=create&success=yes&message=' .$_POST['table_name'] . ' migration and module is created ');
 		}
 
 	}
