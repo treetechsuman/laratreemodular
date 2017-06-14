@@ -139,8 +139,8 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 
 		//$model_file_name = rtrim(ucfirst($_POST['table_name']),'s'). '.php';
 		//echo $file_name;
-		$myfile = fopen(SeedersFolderPath . rtrim($modules_file_name,'.php'). "DataSeeders.php", "w") or die("Unable to open file!");
-		if(fopen(SeedersFolderPath . rtrim($modules_file_name,'.php'). "DataSeeders.php", "w")){
+		$myfile = fopen(SeedersFolderPath . rtrim($model_file_name,'.php'). "DataSeeders.php", "w") or die("Unable to open file!");
+		if(fopen(SeedersFolderPath . rtrim($model_file_name,'.php'). "DataSeeders.php", "w")){
 			$text = "<?php \n";
 			fwrite($myfile, $text);
 
@@ -148,7 +148,7 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 			$text .= "use Illuminate\Database\Seeder;\n";
 			$text .= "use Illuminate\Database\Eloquent\Model;\n";
 			$text .= "use Faker\Factory as Faker;\n\n";
-			$text .= "use Modules\\".$_SESSION['module']."\Repositories\\".rtrim($modules_file_name,'.php')."Repository;\n\n";
+			$text .= "use Modules\\".$_SESSION['module']."\Repositories\\".rtrim($model_file_name,'.php')."Repository;\n\n";
 			fwrite($myfile, $text);
 
 			$text = "class " .$model_class_name. "DataSeeders extends Seeder{\n\n";
