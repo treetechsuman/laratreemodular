@@ -16,6 +16,8 @@ $_SESSION['types'] = $types;
 $_SESSION['controller']=$controller;
 $table = $_SESSION['table'];
 
+$controller_prefix = substr($controller, 0, -14);
+
 /*$enumlists = enum_select( $table , 'address' );
  echo '<pre>';
  print_r($enumlists);
@@ -31,7 +33,7 @@ if (!file_exists('../../../../Modules/'.$_SESSION['module'].'/Resources/views/la
     $text = "\t<div class=\"row\">\n";
     $text .= "\t\t<div class=\"col-md-6\">\n";
     $text .= "\t\t\t<div class=\"btn-group\">\n";
-    $text .= "\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/')}}\" class=\"btn btn-default\">Home</a>\n";
+    $text .= "\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".lcfirst($controller_prefix)."')}}\" class=\"btn btn-default\">Home</a>\n";
     $text .= "\t\t\t</div>\n";
     $text .= "\t\t</div>\n";
     $text .= "\t</div>\n";
@@ -79,8 +81,17 @@ foreach ($views as $view) {
 								$text.="\t\t\t\t\t\t\t<tr>\n";
 									fwrite($myfile, $text);
 									foreach ($table_fields as $field) {
+										if($field=='image'){
+											$text= "\t\t\t\t\t\t\t\t<td>\n";
+												$text.= "\t\t\t\t\t\t\t\t\t<a href=\"{{ asset(\$" .$variable."['" . $field ."'])}}\" data-toggle=\"lightbox\">\n";
+													$text.= "\t\t\t\t\t\t\t\t\t\t<img src=\"{{ asset(\$" .$variable."['" . $field ."'])}}\" height=\"50\" width=\"50\" class=\"img-fluid img-thumbnail\" >\n";
+												$text.= "\t\t\t\t\t\t\t\t\t</a>\n";
+											$text.= "\t\t\t\t\t\t\t\t</td>\n";
+											//$text= "\t\t\t\t\t\t\t\t<td><img src=\"{{ asset(\$" .$variable."['" . $field ."'])}}\" ></td>\n";
+										}else{
+											$text= "\t\t\t\t\t\t\t\t<td>{{\$" .$variable."['" . $field ."']}}</td>\n";
+										}
 										
-										$text= "\t\t\t\t\t\t\t\t<td>{{\$" .$variable."['" . $field ."']}}</td>\n";
 										fwrite($myfile, $text);								
 									}
 									//$text.= "\t\t\t\t\t\t\t\t<td>{{\$" .$variable."['id']}}</td>\n";
@@ -222,7 +233,7 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
 														
 														 $text .= "\t\t\t\t\t\t\t\t<textarea class=\"textarea\" name=\"" . $field ."\" placeholder=\"Place some text here\" style=\"width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;\">\n";
-														 $text .="\t\t\t\t\t\t\t\t\t{{old('" . $field ."')}}\n";
+														 $text .="\t\t\t\t\t\t\t\t\t{{ old('" . $field ."') }}\n";
 															$text .= "\t\t\t\t\t\t\t\t</textarea>\n";
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t</div>\n";
@@ -236,7 +247,7 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
-														$text .= "\t\t\t\t\t\t\t\t<input type=\"". $value ."\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{old('" . $field ."')}}\" required>\n";
+														$text .= "\t\t\t\t\t\t\t\t<input type=\"". $value ."\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{ old('" . $field ."') }}\" required>\n";
 								    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
 								    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
 							    						$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
@@ -263,7 +274,7 @@ foreach ($views as $view) {
 						edit
 						-----------------------------------------------------------------------------------------	
 						 */
-							$text .= "\t\t\t\t\t<form role=\"form\" action=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/update/'.$" .$variable."['id'])}}\" method=\"post\" enctype=\"multipart/form-data\">\n";
+							$text .= "\t\t\t\t\t<form role=\"form\" class=\"form-horizontal\" action=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/update/'.$" .$variable."['id'])}}\" method=\"post\" enctype=\"multipart/form-data\">\n";
 							$text .= "\t\t\t\t\t\t{!! csrf_field() !!}\n";
 							fwrite($myfile, $text);
 									foreach ($table_fields as $field) {
@@ -348,12 +359,12 @@ foreach ($views as $view) {
 														 if(count($enumlists)>0){
 															 foreach ($enumlists as $enumlist) {
 															 	
-															 	$text = "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"{{\$".$variable."['" . $field ."']}}\" @if(\$".$variable."['" . $field ."']=='" . $enumlist ."') checked=\"checked\" @endif >" . $enumlist ."</lable>\n";
+															 	$text = "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"{{ \$".$variable."['" . $field ."'] }}\" @if(\$".$variable."['" . $field ."']=='" . $enumlist ."') checked=\"checked\" @endif >" . $enumlist ."</lable>\n";
 
 																fwrite($myfile, $text);
 															 }
 														 }else{
-															$text = "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"{{\$".$variable."['" . $field ."']}}\" @if(\$".$variable."['" . $field ."']=='Yes') checked=\"checked\" @endif >Yes</lable>\n";
+															$text = "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"{{ \$".$variable."['" . $field ."'] }}\" @if(\$".$variable."['" . $field ."']=='Yes') checked=\"checked\" @endif >Yes</lable>\n";
 
 															fwrite($myfile, $text);
 														}
@@ -380,12 +391,27 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
 														
 														 $text .= "\t\t\t\t\t\t\t\t<textarea class=\"textarea\" name=\"" . $field ."\" placeholder=\"Place some text here\" style=\"width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;\">\n";
-														 $text .="\t\t\t\t\t\t\t\t\t{{\$".$variable."['" . $field ."']}}\n";
+														 $text .="\t\t\t\t\t\t\t\t\t{{ \$".$variable."['" . $field ."'] }}\n";
 															$text .= "\t\t\t\t\t\t\t\t</textarea>\n";
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t</div>\n";
 														fwrite($myfile, $text);
 												}else{
+														if($value == 'file'){
+															$text = "\t\t\t\t\t\t<!-- _______________________________________________\n";
+															$text .= "\t\t\t\t\t\t\t\t\t\t\t old" . $field ." \n";
+															$text .= "\t\t\t\t\t\t _______________________________________________ -->\n";
+															$text .= "\t\t\t\t\t\t<div class=\"form-group\">\n";
+														 	$text .= "\t\t\t\t\t\t\t<div class=\"col-md-3\">\n";
+																$text .= "\t\t\t\t\t\t\t\t<label for=\"image\" {{ $" . "errors->has('image') ? ' has-error' : '' }}>Image:</label>\n";
+															$text .= "\t\t\t\t\t\t\t</div>\n";
+															$text .= "\t\t\t\t\t\t<div class=\"col-md-9\">\n";
+																$text .= "\t\t\t\t\t\t\t<img src=\"{{ asset(\$".$variable."['" . $field ."']) }}\" class=\"img-responsive\" >\n";
+															$text .= "\t\t\t\t\t\t\t</div>\n";
+														 	
+														 	$text .= "\t\t\t\t\t\t</div>\n";
+															fwrite($myfile, $text);
+														}
 														$text = "\t\t\t\t\t\t<!-- _______________________________________________\n";
 														$text .= "\t\t\t\t\t\t\t\t\t\t\t " . $field ." \n";
 														$text .= "\t\t\t\t\t\t _______________________________________________ -->\n";
@@ -394,7 +420,7 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
-														$text .= "\t\t\t\t\t\t\t\t<input type=\"". $value ."\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{\$".$variable."['" . $field ."']}}\" required>\n";
+														$text .= "\t\t\t\t\t\t\t\t<input type=\"". $value ."\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{ \$".$variable."['" . $field ."'] }}\" required>\n";
 								    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
 								    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
 							    						$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
@@ -466,7 +492,7 @@ if($_POST['add_in_side_nav']=='yes'){
 	$myfile = fopen('../../../../resources/views/backend/layouts/generated_menu.blade.php', 'a'); 
 	
 	$text = "\n<li class=\"treeview\">\n";
-	$text .= "\t<a href=\"{{url('admin/".lcfirst($controller_prefix)."')}}\">\n";
+	$text .= "\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".lcfirst($controller_prefix)."')}}\">\n";
 	$text .= "\t\t<i class=\"fa fa-dashboard\"></i> <span>".ucfirst($controller_prefix)."</span>\n";
 	$text .= "\t</a>\n";
 	$text .= "</li>\n";
