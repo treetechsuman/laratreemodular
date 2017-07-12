@@ -1,6 +1,7 @@
 <?php session_start();
 //session_destroy();
 if(!$_SESSION['module']){
+	$_SESSION['module']="notslelectd";
     header('Location: select_module_first.php');
 }
 //app configuration -----------

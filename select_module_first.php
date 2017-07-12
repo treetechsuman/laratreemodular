@@ -15,5 +15,10 @@ $module= str_replace('../Modules/','',$folder); ?>
   </a>
   </li>
 <?php } ?>
+<li>
+	<a href="index.php?menu=adminlte&action=create">
+         !!!Danger!!! Integrate adminlte Only on project setup 
+    </a>
+</li>
 </ul>
 </div>
