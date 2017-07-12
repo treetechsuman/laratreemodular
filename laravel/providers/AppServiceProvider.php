@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        require_once('boot.php');  
+        //require_once('boot.php');  
     }
 
     /**

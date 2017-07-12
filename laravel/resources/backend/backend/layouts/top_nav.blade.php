@@ -18,6 +18,41 @@
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-wrench"></i>
+                        <span class="label label-danger">4</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">Dev links</li>
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                <li>
+                                    <a href="https://github.com/nWidart/laravel-modules" target="_blank">Laravel Module</a>
+                                </li>
+                                <li>
+                                    <a href="http://image.intervention.io/" target="_blank">Image Intervention</a>
+                                </li>
+                                <li>
+                                    <a href="http://fontawesome.io/icons/" target="_blank">Font Awesome</a>
+                                </li>
+                                <li>
+                                    <a href="https://adminlte.io/" target="_blank">Admin Lte</a>
+                                </li>
+                                <li>
+                                    <a href="http://paletton.com" target="_blank">Color Design</a>
+                                    <a href="https://laravel.com/docs/5.3/installation" target="_blank">Laravel Doc</a>
+                                </li>
+                                <li>
+                                    
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="footer"><a href="#">Devlopment Tools</a></li>
+                    </ul>
+                </li>
+                <!-- Messages: style can be found in dropdown.less-->
+                <li class="dropdown messages-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>
                         <span class="label label-success">4</span>
                     </a>
