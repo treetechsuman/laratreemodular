@@ -52,8 +52,8 @@ copyr($source, $destination);
 
 
 // add dashboard route---------------------------
-if(file_exists(RouteFolderPath)){
-	$myfile = fopen(RouteFolderPath.'/web.php', "a") or die("Unable to open file!");
+if(file_exists(AdminLteRouteFolderPath)){
+	$myfile = fopen(AdminLteRouteFolderPath.'/web.php', "a") or die("Unable to open file!");
 	$text ="/*\n|--------------------------------------------------------------------------\n";
 	$text .="| Dashboard Routes\n";
 	$text .="|--------------------------------------------------------------------------\n*/\n";
@@ -68,8 +68,8 @@ if(file_exists(RouteFolderPath)){
 }
 
 // add frontend route---------------------------
-if(file_exists(RouteFolderPath)){
-	$myfile = fopen(RouteFolderPath.'/web.php', "a") or die("Unable to open file!");
+if(file_exists(AdminLteRouteFolderPath)){
+	$myfile = fopen(AdminLteRouteFolderPath.'/web.php', "a") or die("Unable to open file!");
 	$text ="/*\n|--------------------------------------------------------------------------\n";
 	$text .="| Frontend Routes\n";
 	$text .="|--------------------------------------------------------------------------\n*/\n";

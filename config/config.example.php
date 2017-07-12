@@ -20,6 +20,7 @@ define("ControllerFolderPath", "../../../../Modules/".$_SESSION['module']."/Http
 define("RepositoryFolderPath", "../../../../Modules/".$_SESSION['module']."/Repositories/");
 define("ViewFolderPath", "../../../../Modules/".$_SESSION['module']."/resources/views/");
 define("RouteFolderPath", "../../../../Modules/".$_SESSION['module']."/Http/");
+define("AdminLteRouteFolderPath", "../../../../routes/");
 
 //for views-----------------------------------------
 define("MigrationFolderPathForView", "../Modules/".$_SESSION['module']."/database/migrations/");

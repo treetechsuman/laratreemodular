@@ -69,6 +69,11 @@ switch($menu){
 			$page_to_load = "views/read_file.php";
 		}
 		break;
+	case 'adminlte':
+		if($action == 'create'){
+			$page_to_load = "views/create_adminlte.php";
+		}
+		break;
 	
 	default:
 		$page_to_load = "views/not_found.php";

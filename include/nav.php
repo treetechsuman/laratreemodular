@@ -44,6 +44,11 @@
           Read File
         </a>
       </li>
+      <li <?php if($_SESSION['menu']=='adminlte'){?> class="active" <?php } ?> >
+        <a href="index.php?menu=adminlte&action=create">
+          Create adminlte
+        </a>
+      </li>
       <?php if($_SESSION['module']){ ?>
       <li>
         <a href="#" class="navbar-brand">
