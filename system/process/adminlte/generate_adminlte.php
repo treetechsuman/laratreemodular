@@ -51,6 +51,41 @@ $destination ='../../../../config/';
 copyr($source, $destination);  
 
 
+// add setup route---------------------------
+if(file_exists(AdminLteRouteFolderPath)){
+	$myfile = fopen(AdminLteRouteFolderPath.'/web.php', "a") or die("Unable to open file!");
+	$text ="/*\n|--------------------------------------------------------------------------\n";
+	$text .="| Setup Routes\n";
+	$text .="|--------------------------------------------------------------------------\n*/\n";
+	fwrite($myfile, $text);
+	$text = "Route::group(['prefix' => 'setup'], function() { \n";
+	fwrite($myfile, $text);
+
+
+	$text = "\tRoute::get('/cache-clear', function(){ \n";
+	$text .= "\t\t\\Artisan::call('cache:clear');\n";
+	$text .= "\t\techo 'cache-clear complete';\n";
+	$text .= "\t});\n";
+	fwrite($myfile, $text);
+
+
+	$text = "\tRoute::get('/config-cache', function(){ \n";
+	$text .= "\t\t\\Artisan::call('config:cache');\n";
+	$text .= "\t\techo 'config-cache complete';\n";
+	$text .= "\t});\n";
+	fwrite($myfile, $text);
+
+	$text = "\tRoute::get('/dump-autoload', function(){ \n";
+	$text .= "\t\texec('composer dump-autoload');\n";
+	$text .= "\t\techo 'composer dump-autoload complete';\n";
+	$text .= "\t});\n";
+	fwrite($myfile, $text);
+
+
+	$text = "}); \n";
+	fwrite($myfile, $text);
+}
+
 // add dashboard route---------------------------
 if(file_exists(AdminLteRouteFolderPath)){
 	$myfile = fopen(AdminLteRouteFolderPath.'/web.php', "a") or die("Unable to open file!");
