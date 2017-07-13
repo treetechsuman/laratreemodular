@@ -21,7 +21,7 @@ $modelFolders = scandir(ModelFolderPathForView);
     <div class="form-group">
       <label class="control-label col-sm-5" for="controller">Controller:</label>
       <div class="col-sm-7">
-        <input type="text" name="controller" value="<?php //echo $old_table_name; ?>" class="form-control" id="controller" placeholder="Enter controller name">
+        <input type="text" name="controller" value="<?php //echo $old_table_name; ?>" class="form-control" id="controller" placeholder="Enter controller name" required>
       </div>
     </div>
     <div class="form-group">

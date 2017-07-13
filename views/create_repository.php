@@ -19,7 +19,7 @@ $modelFolders = scandir(ModelFolderPathForView);
     <div class="form-group">
       <label class="control-label col-sm-5" for="repository">Repository:</label>
       <div class="col-sm-7">
-        <input type="text" name="repository" value="<?php //echo $old_table_name; ?>" class="form-control" id="repository" placeholder="Enter repository name">
+        <input type="text" name="repository"  class="form-control" id="repository" placeholder="Enter repository name" required>
       </div>
     </div>
     <div class="form-group">
@@ -40,6 +40,7 @@ $modelFolders = scandir(ModelFolderPathForView);
         <button type="submit" class="btn btn-success">Generate</button>
       </div>
     </div>
+    </form>
 </div>
 
 <div class="col-md-5">

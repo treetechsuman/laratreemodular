@@ -18,13 +18,13 @@ $modelFolders = scandir(ModelFolderPathForView);
     <div class="form-group">
       <label class="control-label col-sm-5" for="table">Table:</label>
       <div class="col-sm-7">
-        <input type="text" name="table_name" value="<?php echo $old_table_name; ?>" class="form-control" id="table" placeholder="Enter table name">
+        <input type="text" name="table_name" value="<?php echo $old_table_name; ?>" class="form-control" id="table" placeholder="Enter table name" required>
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-5" for="no_of_fields">No of Fields:</label>
       <div class="col-sm-7">          
-        <input type="number" name="no_of_fields" value="<?php echo $old_no_of_fields; ?>" class="form-control" id="no_of_fields" placeholder="No fo Fields">
+        <input type="number" name="no_of_fields" value="<?php echo $old_no_of_fields; ?>" class="form-control" id="no_of_fields" placeholder="No fo Fields" required>
       </div>
     </div>
     <div class="form-group">        

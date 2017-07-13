@@ -62,7 +62,7 @@ if(isset($_SESSION['table_fields'])){
             value="<?php echo $_SESSION['viewfolder']; ?>"
           <?php 
         }
-        ?> class="form-control" id="viewfolder" placeholder="Enter viewfolder name">
+        ?> class="form-control" id="viewfolder" placeholder="Enter viewfolder name" required>
       </div>
     </div>
     <div class="form-group">
