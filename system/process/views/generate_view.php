@@ -420,7 +420,11 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
-														$text .= "\t\t\t\t\t\t\t\t<input type=\"". $value ."\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{ \$".$variable."['" . $field ."'] }}\" required>\n";
+														if($value == 'file'){
+															$text .= "\t\t\t\t\t\t\t\t<input type=\"". $value ."\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{ \$".$variable."['" . $field ."'] }}\" >\n";
+														}else{
+															$text .= "\t\t\t\t\t\t\t\t<input type=\"". $value ."\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{ \$".$variable."['" . $field ."'] }}\" required>\n";
+													 }
 								    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
 								    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";
 							    						$text .= "\t\t\t\t\t\t\t\t\t\t<strong> * {{ $"."errors->first('" . $field ."') }}</strong>\n";
