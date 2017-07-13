@@ -22,7 +22,11 @@
     <?php require_once($page_to_load) ;?>
   </div>
 </div>
-
+<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+  <div class="container">
+    Develop By <a href="https://www.facebook.com/suman.dahal.9026">Er.Suman Dahal</a>
+  </div>
+</nav>
 <script type="text/javascript">
     $(".alert").delay(1000).slideUp(200, function() {
     $(this).alert('close');
