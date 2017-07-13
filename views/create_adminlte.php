@@ -14,8 +14,17 @@ Click only once at the begining of Project setup
 	<li>Update protected $redirectTo = '/home'; to protected $redirectTo = '/dashboard';</li>
 	<li>Run php artisan migrate</li>
 	<li>Now visit http://localhost:8000/dashboard</li>
+	<li>Add laravel Modular <a href="https://github.com/nWidart/laravel-modules"></a></li>
+	<li>Run compusoer dump-autoload</li>
+	<li>Create test module as php artisan module:make test</li>
+	<li>open laratree as localhost/yourpojectfolder/laratreemodular</li>
 	<li>All done adminLTE is integrated Enjoy!!</li>
 </ul>
 </p>
-	<a href="system/process/adminlte/generate_adminlte.php" class="btn btn-success">Integrate adminLTE</a>
+	<a href="system/process/adminlte/generate_adminlte.php" Onclick="return ConfirmDelete()" class="btn btn-success">Integrate adminLTE</a>
 </div>
+<script type="text/javascript">
+	function ConfirmDelete() {
+	  return confirm("Are you sure you want to delete?");
+	}
+</script>
