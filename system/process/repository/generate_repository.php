@@ -102,7 +102,7 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 		$model = substr($model, 0, -4);
 		$text = "\tpublic function getAll".ucfirst($model)."($"."limit = null){\n";
 		$text .=	"\t\tif($"."limit!=null){\n";
-		$text .=	"\t\treturn $" . "this->" .strtolower($model). "->paginate($"."limit);\n";
+		$text .=	"\t\t\treturn $" . "this->" .strtolower($model). "->paginate($"."limit);\n";
 		$text .=	"\t\t}\n";
 		$text .=	"\t\treturn $" . "this->" .strtolower($model). "->all();\n";
 		$text .= "\t}\n\n";
@@ -125,6 +125,19 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 
 		$text = "\tpublic function delete".ucfirst($model)."($" . "id){\n";
 		$text .=	"\t\treturn $" . "this->" .strtolower($model). "->findorfail($"."id)->delete();\n";
+		$text .= "\t}\n\n";
+		fwrite($myfile, $text);
+
+		$text = "\tpublic function softDelete".ucfirst($model)."($" . "id){\n";
+		$text .=	"\t\treturn $" . "this->" .strtolower($model). "->findorfail($"."id)->update(['status'=>'Deleted']);\n";
+		$text .= "\t}\n\n";
+		fwrite($myfile, $text);
+
+		$text = "\tpublic function get".ucfirst($model)."ByStatus($" . "status,$"."limit = null){\n";
+		$text .=	"\t\tif($"."limit!=null){\n";
+		$text .=	"\t\t\treturn $" . "this->" .strtolower($model). "->where('status',$"."status)->paginate($"."limit);\n";
+		$text .=	"\t\t}\n";
+		$text .=	"\t\treturn $" . "this->" .strtolower($model). "->where('status',$"."status)->get();\n";
 		$text .= "\t}\n\n";
 		fwrite($myfile, $text);
 
@@ -152,7 +165,6 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
                 ->save($" . "destinationPath.$" . "filename);    	
     	}
     	return $" . "destinationPath.$" . "filename;
-
 	}\n\t*/\n\n";
 	fwrite($myfile, $text);
 
