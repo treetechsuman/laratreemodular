@@ -6,6 +6,7 @@ require_once('../../classes/locate.class.php');
 $_SESSION['repository']= $_POST['repository'];
 $_SESSION['controller']= $_POST['controller'];
 $repositories = $_POST['repository'];
+$moduleRepository = $_SESSION['module'].'Module';
 $file_name = ucfirst($_POST['controller']).'Controller.php';
 
 $myfile = fopen(ControllerFolderPath.'/'.$file_name, "w") or die("Unable to open file!");
@@ -24,7 +25,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	foreach ($repositories as $repository) {
 		$repository = substr($repository, 0, -4);
 		$folder = substr($repository, 0, -10);
-		$text = "use Modules\\".$_SESSION['module']."\Repositories\\" .ucfirst($repository).";\n";
+		$text = "use Modules\\".$_SESSION['module']."\Repositories\\" .ucfirst($moduleRepository)."Repository;\n";
 		fwrite($myfile, $text);
 
 	}
@@ -34,7 +35,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	//private property---------------
 	foreach ($repositories as $repository) {
 		$repository = substr($repository, 0, -10);
-		$text = "\tprivate $".lcfirst($repository).";\n";
+		$text = "\tprivate $".lcfirst($moduleRepository)."Repo;\n";
 		fwrite($myfile, $text);
 
 	}
@@ -47,7 +48,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 		foreach ($repositories as $repository) {
 			$repoProperty = substr($repository, 0, -10);
 			$repository = substr($repository, 0, -4);
-			$text = "\t\t".$repository." $".lcfirst($repoProperty)."\n";
+			$text = "\t\t".ucfirst($moduleRepository)."Repository" ." $".lcfirst($moduleRepository)."Repo\n";
 			if ($i != $len - 1) {
 				$text .= ",";
 			}
@@ -61,7 +62,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 		foreach ($repositories as $repository) {
 			$repoProperty = substr($repository, 0, -10);
 			$repository = substr($repository, 0, -4);
-			$text = "\t\t$"."this->".lcfirst($repoProperty)." = $".lcfirst($repoProperty).";\n";
+			$text = "\t\t$"."this->".lcfirst($moduleRepository)."Repo = $".lcfirst($moduleRepository)."Repo;\n";
 			fwrite($myfile, $text);
 		}
 
@@ -77,7 +78,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 
 	
 	$text = "\n\tpublic function index(){\n";
-	$text .= "\t\t$".lcfirst($_POST['controller'])."s = $". "this->".lcfirst($_POST['controller'])."Repo->getAll".ucfirst($_POST['controller'])."($"."limit = 10);\n";
+	$text .= "\t\t$".lcfirst($_POST['controller'])."s = $". "this->".lcfirst($moduleRepository)."Repo->getAll".ucfirst($_POST['controller'])."($"."limit = 10);\n";
 	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".index',compact('".lcfirst($_POST['controller'])."s'));\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
@@ -104,7 +105,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 
 	$text = "\n\tpublic function store(Request $"."request){\n";
-	$text .= "\t\t$"."this->".lcfirst($_POST['controller'])."Repo->create".ucfirst($_POST['controller'])."($"."request->all());\n";
+	$text .= "\t\t$"."this->".lcfirst($moduleRepository)."Repo->create".ucfirst($_POST['controller'])."($"."request->all());\n";
 	$text .= "\t\tSession::flash('success','Operation Success');\n";
 	$text .= "\t\treturn redirect('admin/".lcfirst($_SESSION['module'])."/".lcfirst($_POST['controller'])."');\n";
 	$text .= "\t}\n";
@@ -128,7 +129,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 
 	$text = "\n\tpublic function edit($" . "id){\n";
-	$text .= "\t\t$".lcfirst($_POST['controller'])." = $". "this->".lcfirst($_POST['controller'])."Repo->get".ucfirst($_POST['controller'])."ById($" . "id);\n";
+	$text .= "\t\t$".lcfirst($_POST['controller'])." = $". "this->".lcfirst($moduleRepository)."Repo->get".ucfirst($_POST['controller'])."ById($" . "id);\n";
 	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".edit',compact('".lcfirst($_POST['controller'])."'));\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
@@ -142,7 +143,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 
 	$text = "\n\tpublic function update($" . "id ,Request $"."request){\n";
-	$text .= "\t\t$"."this->".lcfirst($_POST['controller'])."Repo->update".ucfirst($_POST['controller'])."($" . "id,$"."request->all());\n";
+	$text .= "\t\t$"."this->".lcfirst($moduleRepository)."Repo->update".ucfirst($_POST['controller'])."($" . "id,$"."request->all());\n";
 	$text .= "\t\tSession::flash('success','Operation Success');\n";
 	$text .= "\t\treturn redirect('admin/".lcfirst($_SESSION['module'])."/".lcfirst($_POST['controller'])."');\n";
 	$text .= "\t}\n";
@@ -156,7 +157,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 
 	$text = "\n\tpublic function delete($" . "id){\n";
-	$text .= "\t\t$"."this->".lcfirst($_POST['controller'])."Repo->delete".ucfirst($_POST['controller'])."($"."id);\n";
+	$text .= "\t\t$"."this->".lcfirst($moduleRepository)."Repo->delete".ucfirst($_POST['controller'])."($"."id);\n";
 	$text .= "\t\tSession::flash('success','Operation Success');\n";
 	$text .= "\t\treturn redirect('admin/".lcfirst($_SESSION['module'])."/".lcfirst($_POST['controller'])."');\n";
 	$text .= "\t}\n";
