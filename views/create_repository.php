@@ -35,6 +35,13 @@ $modelFolders = scandir(ModelFolderPathForView);
 		<?php }} ?>
       </div>
     </div>
+    <div class="form-group">
+      <label class="control-label col-sm-4" for="no_of_fields">Update Service Provider:</label>
+      <div class="col-sm-8">                 
+        Yes<input type="radio" name="update_service_provider" value="yes" >
+        No<input type="radio" name="update_service_provider" value="no" checked="checked" >       
+      </div>
+    </div>
     <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-success">Generate</button>
