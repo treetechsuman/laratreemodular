@@ -95,7 +95,13 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 	//creation of constructor---------------end
 	foreach ($models as $model) {
+
 		$model = substr($model, 0, -4);
+		$text = "\t/*---------------------------------------------------------------\n";
+		$text .= "\t\t\t\t\t".ucfirst($model)." related Function\n";
+		$text .= "\t---------------------------------------------------------------*/\n";
+		fwrite($myfile, $text);
+
 		$text = "\tpublic function getAll".ucfirst($model)."($"."limit = null){\n";
 		$text .=	"\t\tif($"."limit!=null){\n";
 		$text .=	"\t\t\treturn $" . "this->" .strtolower($model). "->paginate($"."limit);\n";
@@ -144,32 +150,29 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 	//for updating AppsServiceProvider.php-------------------------
 	// These two lines can be accomplished by using array_pop 
-	// This will also prevent it from inserting blank lines 
-	$file  = file('../../../../Modules/'.$_SESSION['module'].'/Providers/'.$_SESSION['module'].'ServiceProvider.php'); 
-	array_pop($file); 
-	$fp    = fopen('../../../../Modules/'.$_SESSION['module'].'/Providers/'.$_SESSION['module'].'ServiceProvider.php','w'); 
-	fwrite($fp, implode('',$file)); 
-	fclose($fp);  
+	// This will also prevent it from inserting blank lines
+	if($_POST['update_service_provider']=='yes'){ 
+		$file  = file('../../../../Modules/'.$_SESSION['module'].'/Providers/'.$_SESSION['module'].'ServiceProvider.php'); 
+		array_pop($file); 
+		$fp    = fopen('../../../../Modules/'.$_SESSION['module'].'/Providers/'.$_SESSION['module'].'ServiceProvider.php','w'); 
+		fwrite($fp, implode('',$file)); 
+		fclose($fp);  
 
-	// write the new data to the file 
-	$myfile = fopen('../../../../Modules/'.$_SESSION['module'].'/Providers/'.$_SESSION['module'].'ServiceProvider.php', 'a'); 
-	/*public function registerCategoryRepo() {
-        return $this->app->bind(
-            'App\\Repositories\\Category\\CategoryRepository',
-            'App\\Repositories\\Category\\EloquentCategory'
-            );
-    }*/
-	$text = "\n\tpublic function register".ucfirst($_POST['repository'])."Repository() {\n";
-	$text .= "\t\treturn $"."this->app->bind(\n";
-	fwrite($myfile, $text);
+		// write the new data to the file 
+		$myfile = fopen('../../../../Modules/'.$_SESSION['module'].'/Providers/'.$_SESSION['module'].'ServiceProvider.php', 'a'); 
+		
+		$text = "\n\tpublic function register".ucfirst($_POST['repository'])."Repository() {\n";
+		$text .= "\t\treturn $"."this->app->bind(\n";
+		fwrite($myfile, $text);
 
-	$text = "\t\t\t'Modules\\"."\\" .$_SESSION['module']."\\" . "\Repositories\\" . "\\".ucfirst($_POST['repository'])."Repository',\n"; 
-	$text .= "\t\t\t'Modules\\"."\\" .$_SESSION['module']."\\" . "\Repositories\\" . "\\".ucfirst($_POST['repository'])."Eloquent'\n"; 
-	//$text .= "\t\t\t'App\\" . "\Repositories\\"."\\" .ucfirst($_POST['repository']). "Eloquent"."'"; 
-	fwrite($myfile, $text);
+		$text = "\t\t\t'Modules\\"."\\" .$_SESSION['module']."\\" . "\Repositories\\" . "\\".ucfirst($_POST['repository'])."Repository',\n"; 
+		$text .= "\t\t\t'Modules\\"."\\" .$_SESSION['module']."\\" . "\Repositories\\" . "\\".ucfirst($_POST['repository'])."Eloquent'\n"; 
+		//$text .= "\t\t\t'App\\" . "\Repositories\\"."\\" .ucfirst($_POST['repository']). "Eloquent"."'"; 
+		fwrite($myfile, $text);
 
-	$text = "\n\t\t);\n\t}\n}";
-	fwrite($myfile, $text); 
+		$text = "\n\t\t);\n\t}\n}";
+		fwrite($myfile, $text); 
+  	}
 
 	//create boot.php inside Provider folder----
 	if(!file_exists('../../../../Modules/'.$_SESSION['module'].'/Providers/boot.php')) {
