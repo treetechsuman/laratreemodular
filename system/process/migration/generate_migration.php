@@ -8,6 +8,8 @@ require_once('../../classes/locate.class.php');
 $_SESSION['field_name']= $_POST['field_name'];
 $_SESSION['type']= $_POST['type'];
 
+$moduleRepository = $_SESSION['module'].'Module';
+
 //prepare name for model class and file
 	$modules = $_POST['table_name'];
 	$modules = explode('_',$modules);
@@ -148,13 +150,13 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 			$text .= "use Illuminate\Database\Seeder;\n";
 			$text .= "use Illuminate\Database\Eloquent\Model;\n";
 			$text .= "use Faker\Factory as Faker;\n\n";
-			$text .= "use Modules\\".$_SESSION['module']."\Repositories\\".rtrim($model_file_name,'.php')."Repository;\n\n";
+			$text .= "use Modules\\".$_SESSION['module']."\Repositories\\".$moduleRepository."Repository;\n\n";
 			fwrite($myfile, $text);
 
 			$text = "class " .$model_class_name. "DataSeeders extends Seeder{\n\n";
-			$text .= "\tprivate $"."" .lcfirst($model_class_name). "Repo;\n\n";
-			$text .= "\tpublic function __construct(" .ucfirst($model_class_name). "Repository $" .lcfirst($model_class_name). "Repo){\n\n";
-			$text .= "\t\t$"."this->" .lcfirst($model_class_name). "Repo = $" .lcfirst($model_class_name). "Repo;\n\n";
+			$text .= "\tprivate $"."" .$moduleRepository. "Repo;\n\n";
+			$text .= "\tpublic function __construct(" .$moduleRepository. "Repository $" .$moduleRepository. "Repo){\n\n";
+			$text .= "\t\t$"."this->" .$moduleRepository. "Repo = $" .$moduleRepository. "Repo;\n\n";
 				$text .= "\t}\n\n";
 			$text .= "\tpublic function run(){\n\n";
 			$text .= "\t\tModel::unguard();\n\n";
@@ -169,7 +171,7 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 					fwrite($myfile, $text);
 				}
 			$text = "\n\t\t\t];\n";
-			$text .= "\t\t\t$"."this->" .lcfirst($model_class_name). "Repo->create" .ucfirst($model_class_name). "($" . lcfirst($model_class_name). "Data);\n";
+			$text .= "\t\t\t$"."this->" .$moduleRepository. "Repo->create" .ucfirst($model_class_name). "($" . lcfirst($model_class_name). "Data);\n";
 			$text .= "\n\t\t\techo '.';\n";
 			fwrite($myfile, $text);
 			$text = "\t\t}\n\n";
