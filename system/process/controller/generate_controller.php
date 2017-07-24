@@ -163,6 +163,32 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
 
+	//soft delete function---------------
+	$text ="\n\t/**\n";
+	$text .="\t* Remove the specified resource from user but not form storage.\n";
+	$text .="\t* @return Response\n";
+	$text .="\t*/";
+	fwrite($myfile, $text);
+
+	$text = "\n\tpublic function softDelete($" . "id){\n";
+	$text .= "\t\t$"."this->".lcfirst($moduleRepository)."Repo->softDelete".ucfirst($_POST['controller'])."($"."id);\n";
+	$text .= "\t\tSession::flash('success','Operation Success');\n";
+	$text .= "\t\treturn redirect('admin/".lcfirst($_SESSION['module'])."/".lcfirst($_POST['controller'])."');\n";
+	$text .= "\t}\n";
+	fwrite($myfile, $text);
+
+	//export  function---------------
+	$text ="\n\t/**\n";
+	$text .="\t* Export table related to this module.\n";
+	$text .="\t* @return Response\n";
+	$text .="\t*/";
+	fwrite($myfile, $text);
+
+	$text = "\n\tpublic function export(){\n";
+	$text .= "\t\t$"."this->".lcfirst($moduleRepository)."Repo->export(['users']);\n";
+	$text .= "\t}\n";
+	fwrite($myfile, $text);
+
 	$text ="\n}";
 	fwrite($myfile, $text);
 }

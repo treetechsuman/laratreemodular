@@ -190,7 +190,7 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 }
 
 
-//creation of  eloquent,boot,inject to service provider--------------------------------------------
+//creation of  module Repository--------------------------------------------
 $file_name = ucfirst($_SESSION['module']).'ModuleRepository.php';
 if (!file_exists('../../../../Modules/'.$_SESSION['module'].'/Repositories/'.$file_name)) {
 
@@ -203,11 +203,34 @@ if (!file_exists('../../../../Modules/'.$_SESSION['module'].'/Repositories/'.$fi
 
 		$text = "namespace Modules\\".$_SESSION['module']."\Repositories;\n\n";
 		fwrite($myfile, $text);
+		$text = "use DB;\n";
+		$text .= "use Excel;\n";
+		fwrite($myfile, $text);
 
 		$text = "class " . ucfirst($_SESSION['module']).'ModuleRepository'. " extends ". ucfirst($_POST['repository'])."Eloquent{\n";
 		fwrite($myfile, $text);
 
-		$text = "\tpublic function getDemo(){\n";
+		$text = "\tpublic function export(array $"."tables){\n";
+		$text .= "\t\t$"."datas = array();\n";
+		$text .= "\t\t//prepared datas ------------------\n";
+		$text .= "\t\tforeach($"."tables as $"."table){\n";
+		$text .= "\t\t\t$"."tempData = DB::table($"."table)->get();\n";
+		$text .= "\t\t\tarray_push($"."datas,$"."tempData);\n";
+		$text .= "\t\t}\n";
+		$text .= "\t\t//file name according to modules\n";
+		$text .= "\t\t$"."filename = '". ucfirst($_SESSION['module']) ."';\n";
+		$text .= "\t\tExcel::create($"."filename, function($"."excel) use ($"."datas,$"."filename,$"."tables) {\n";
+		$text .= "\t\t\t$"."sheetNames = $"."tables;\n";
+		$text .= "\t\t\t$"."i = 0;\n";
+		$text .= "\t\t\t// loop table to create sheet\n";
+		$text .= "\t\t\tforeach ($"."datas as $"."data) {\n";
+		$text .= "\t\t\t\t$"."excel->sheet($"."sheetNames[$"."i], function($"."sheet) use($"."data,$"."sheetNames) {\n";
+		$text .= "\t\t\t\t\t$"."sheet->fromArray($"."data);\n";
+		$text .= "\t\t\t\t});\n";
+		$text .= "\t\t\t\t$"."i++;\n";
+		$text .= "\t\t\t}\n";
+		$text .= "\t\t})->export('xls');\n";
+
 		$text .= "\t}\n";
 		fwrite($myfile, $text);
 

@@ -34,6 +34,7 @@ if (!file_exists('../../../../Modules/'.$_SESSION['module'].'/Resources/views/la
     $text .= "\t\t<div class=\"col-md-6\">\n";
     $text .= "\t\t\t<div class=\"btn-group\">\n";
     $text .= "\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".lcfirst($controller_prefix)."')}}\" class=\"btn btn-default\">Home</a>\n";
+    $text .= "\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".lcfirst($controller_prefix)."/export/data')}}\" class=\"btn btn-default\">Export</a>\n";
     $text .= "\t\t\t</div>\n";
     $text .= "\t\t</div>\n";
     $text .= "\t</div>\n";
@@ -99,6 +100,7 @@ foreach ($views as $view) {
 									$text= "\t\t\t\t\t\t\t\t<td>\n";
 										$text.= "\t\t\t\t\t\t\t\t\t<div class=\"btn-group\">\n";
 										$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/'.$" .$variable."['id'].'/edit')}}\" data-toggle=\"tooltip\" title=\"Edit\" class=\"btn btn-info btn-xs\"><i class=\"glyphicon glyphicon-edit\"></i></a>\n";
+										$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/soft-delete/'.$" .$variable."['id'])}}\" data-toggle=\"tooltip\" title=\"Soft Delete\" class=\"btn btn-warning btn-xs\"><i class=\"glyphicon glyphicon-remove\"></i></a>\n";
 										$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/delete/'.$" .$variable."['id'])}}\" data-toggle=\"tooltip\" title=\"Delete\" class=\"btn btn-danger btn-xs\"><i class=\"glyphicon glyphicon-remove\"></i></a>\n";
 										$text.= "\t\t\t\t\t\t\t\t\t</div>\n";
 
@@ -481,7 +483,8 @@ if(file_exists(RouteFolderPath)&&isset($controller)){
 			$text .= "\t\tRoute::get('/{id}','".substr($controller, 0, -4). "@show');\n";
 			$text .= "\t\tRoute::post('/update/{id}','".substr($controller, 0, -4). "@update');\n";
 			$text .= "\t\tRoute::get('/delete/{id}','".substr($controller, 0, -4). "@delete');\n";
-			
+			$text .= "\t\tRoute::get('/soft-delete/{id}','".substr($controller, 0, -4). "@softDelete');\n";
+			$text .= "\t\tRoute::get('/export/data','".substr($controller, 0, -4). "@export');\n";
 			fwrite($myfile, $text);
 
 

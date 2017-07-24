@@ -39,11 +39,14 @@
                                     <a href="https://adminlte.io/" target="_blank">Admin Lte</a>
                                 </li>
                                 <li>
-                                    <a href="http://paletton.com" target="_blank">Color Design</a>
-                                    <a href="https://laravel.com/docs/5.3/installation" target="_blank">Laravel Doc</a>
+                                    <a href="http://www.maatwebsite.nl/laravel-excel/docs/getting-started" target="_blank">Excel</a>
                                 </li>
                                 <li>
+                                    <a href="http://paletton.com" target="_blank">Color Design</a>
                                     
+                                </li>
+                                <li>
+                                    <a href="https://laravel.com/docs/5.3/installation" target="_blank">Laravel Doc</a>
                                 </li>
                             </ul>
                         </li>
