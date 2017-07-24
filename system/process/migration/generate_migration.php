@@ -80,14 +80,10 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 	fwrite($myfile, $text);
 	//for creating model---------------------------------------------------------------------------------------------
 	if($_POST['create_model']=='yes'){
-		//echo 'cteate model tooooo';
-		//ucfirst("hello world!");
-		//create Model folder inside app
+		
 		if (!file_exists(ModelFolderPath)) {
 		    mkdir(ModelFolderPath, 0777, true);
 		}
-		
-
 		//$model_file_name = rtrim(ucfirst($_POST['table_name']),'s'). '.php';
 		//echo $file_name;
 		$myfile = fopen(ModelFolderPath.$model_file_name, "w") or die("Unable to open file!");
@@ -124,22 +120,18 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 
 			$text ="\t];\n}";
 			fwrite($myfile, $text);
-			//new Locate('../../../index.php?menu=migration&action=create&success=yes&message=' .$_POST['table_name'] . ' migration and module is created ');
 		}
 
 	}
 
 	//for creating seeder---------------------------------------------------------------------------------------------
 	if($_POST['create_seeder']=='yes'){
-		//echo 'cteate model tooooo';
-		//ucfirst("hello world!");
+		
 		//create Model folder inside app
 		if (!file_exists(SeedersFolderPath)) {
 		    mkdir(SeedersFolderPath, 0777, true);
 		}
 		
-
-		//$model_file_name = rtrim(ucfirst($_POST['table_name']),'s'). '.php';
 		//echo $file_name;
 		$myfile = fopen(SeedersFolderPath . rtrim($model_file_name,'.php'). "DataSeeders.php", "w") or die("Unable to open file!");
 		if(fopen(SeedersFolderPath . rtrim($model_file_name,'.php'). "DataSeeders.php", "w")){
