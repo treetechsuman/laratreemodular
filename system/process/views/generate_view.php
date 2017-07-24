@@ -33,7 +33,7 @@ if (!file_exists('../../../../Modules/'.$_SESSION['module'].'/Resources/views/la
     $text = "\t<div class=\"row\">\n";
     $text .= "\t\t<div class=\"col-md-6\">\n";
     $text .= "\t\t\t<div class=\"btn-group\">\n";
-    $text .= "\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".lcfirst($controller_prefix)."')}}\" class=\"btn btn-default\">Home</a>\n";
+    $text .= "\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".lcfirst($controller_prefix)."')}}\" class=\"btn @if(Session::get('menu')=='".lcfirst($controller_prefix)."') btn-success @else btn-default @endif\">Home</a>\n";
     $text .= "\t\t\t</div>\n";
     $text .= "\t\t</div>\n";
     $text .= "\t</div>\n";

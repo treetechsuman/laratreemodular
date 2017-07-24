@@ -78,6 +78,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 
 	
 	$text = "\n\tpublic function index(){\n";
+	$text .= "\t\tSession::put('menu','".lcfirst($_POST['controller'])."');\n";
 	$text .= "\t\t$".lcfirst($_POST['controller'])."s = $". "this->".lcfirst($moduleRepository)."Repo->getAll".ucfirst($_POST['controller'])."($"."limit = 10);\n";
 	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".index',compact('".lcfirst($_POST['controller'])."s'));\n";
 	$text .= "\t}\n";
