@@ -185,7 +185,7 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	fwrite($myfile, $text);
 
 	$text = "\n\tpublic function export(){\n";
-	$text .= "\t\t$"."this->".lcfirst($moduleRepository)."Repo->export(['users']);\n";
+	$text .= "\t\t$"."this->".lcfirst($moduleRepository)."Repo->export(['".lcfirst($_POST['controller'])."s']);\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
 

@@ -34,7 +34,6 @@ if (!file_exists('../../../../Modules/'.$_SESSION['module'].'/Resources/views/la
     $text .= "\t\t<div class=\"col-md-6\">\n";
     $text .= "\t\t\t<div class=\"btn-group\">\n";
     $text .= "\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".lcfirst($controller_prefix)."')}}\" class=\"btn btn-default\">Home</a>\n";
-    $text .= "\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".lcfirst($controller_prefix)."/export/data')}}\" class=\"btn btn-default\">Export</a>\n";
     $text .= "\t\t\t</div>\n";
     $text .= "\t\t</div>\n";
     $text .= "\t</div>\n";
@@ -64,7 +63,9 @@ foreach ($views as $view) {
 					$text .="\t\t\t<div class=\"box box-primary\">\n";
 						$text .="\t\t\t\t<div class=\"box-header with-border\">\n";
 						$text .="\t\t\t\t\t<h3 class=\"box-title\">".ucfirst($variable).'::'.$view."</h3>\n";
+						$text .="\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/export/data')}}\" data-toggle=\"tooltip\" title=\"Export!\" class=\"btn btn-primary btn-xs pull-right\"><i class=\"glyphicon glyphicon-download\"></i>Export</a>\n";
 						$text .="\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/create')}}\" data-toggle=\"tooltip\" title=\"Create!\" class=\"btn btn-success btn-xs pull-right\"><i class=\"glyphicon glyphicon-plus\"></i>Add New</a>\n";
+						
 						$text .="\t\t\t\t</div>\n";
 						$text .="\t\t\t\t<div class=\"box-body\">\n";
 						if($view=='index'){
