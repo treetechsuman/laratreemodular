@@ -217,6 +217,7 @@ if (!file_exists('../../../../Modules/'.$_SESSION['module'].'/Repositories/'.$fi
 		$text .= "\t\t\t$"."tempData = DB::table($"."table)->get();\n";
 		$text .= "\t\t\tarray_push($"."datas,$"."tempData);\n";
 		$text .= "\t\t}\n";
+		$text .= "\t\t//$"."datas =json_decode( json_encode($"."datas), true);\n";
 		$text .= "\t\t//file name according to modules\n";
 		$text .= "\t\t$"."filename = '". ucfirst($_SESSION['module']) ."';\n";
 		$text .= "\t\tExcel::create($"."filename, function($"."excel) use ($"."datas,$"."filename,$"."tables) {\n";
