@@ -69,9 +69,13 @@ foreach ($views as $view) {
 						$text .="\t\t\t\t</div>\n";
 						$text .="\t\t\t\t<div class=\"box-body\">\n";
 						if($view=='index'){
+							$text .= "\t\t\t\t\t<form method=\"POST\" action=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/delete-multiple')}}\">\n";
+							$text .= "\t\t\t\t\t{!! csrf_field() !!}\n";
 							$text .= "\t\t\t\t\t<table class=\"table table-condensed table-hover\">\n";
 								$text.= "\t\t\t\t\t\t<thead>\n\t\t\t\t\t\t\t<tr>\n";
 								fwrite($myfile, $text);
+								$text= "\t\t\t\t\t\t\t\t<th><input type=\"checkbox\" class=\"checkall\" name=\"checkall\"><input type=\"submit\" class=\"btn btn-danger btn-xs\" value=\"Delete\" style=\"display: none;\" ></th>\n";
+									fwrite($myfile, $text);
 								foreach ($table_fields as $field) {
 									$text= "\t\t\t\t\t\t\t\t<th>" . ucfirst($field) ."</th>\n";
 									fwrite($myfile, $text);								
@@ -82,6 +86,8 @@ foreach ($views as $view) {
 								$text.="\t\t\t\t\t\t\t@foreach($".$variable."s as $".$variable.")\n";
 								$text.="\t\t\t\t\t\t\t<tr>\n";
 									fwrite($myfile, $text);
+									$text= "\t\t\t\t\t\t\t\t<td><input type=\"checkbox\" name=\"checked[]\" value=\"{{\$".$variable."['id']}}\"</td>\n";
+									fwrite($myfile, $text);		
 									foreach ($table_fields as $field) {
 										if($field=='image'){
 											$text= "\t\t\t\t\t\t\t\t<td>\n";
@@ -111,6 +117,7 @@ foreach ($views as $view) {
 								$text.="\t\t\t\t\t\t</tbody>\n";
 
 							$text .= "\t\t\t\t\t</table>\n";
+							$text .= "\t\t\t\t\t</form>\n";
 							$text .= "\t\t\t\t\t{"."{"."$".$variable."s"."->"."links()}"."}\n";
 
 							fwrite($myfile, $text);
@@ -486,6 +493,7 @@ if(file_exists(RouteFolderPath)&&isset($controller)){
 			$text .= "\t\tRoute::get('/delete/{id}','".substr($controller, 0, -4). "@delete');\n";
 			$text .= "\t\tRoute::get('/soft-delete/{id}','".substr($controller, 0, -4). "@softDelete');\n";
 			$text .= "\t\tRoute::get('/export/data','".substr($controller, 0, -4). "@export');\n";
+			$text .= "\t\tRoute::post('/delete-multiple','".substr($controller, 0, -4). "@deleteMultiple');\n";
 			fwrite($myfile, $text);
 
 

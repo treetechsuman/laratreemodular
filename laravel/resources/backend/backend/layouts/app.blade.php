@@ -150,5 +150,30 @@
     });
                
 </script>
+<!-- this is for multiple delete -->
+<script type="text/javascript">
+    
+      $('.checkall').change(function() {
+        if(this.checked){
+            var checked = $(this).prop('checked');
+            $('tbody').find('input:checkbox').prop('checked', checked);
+            $('thead').find('input:submit').css('display', 'block');
+        }else{
+            $('tbody').find('input:checkbox').prop('checked', false);
+            $('thead').find('input:submit').css('display', 'none');
+        }
+    });
+
+  $('tbody').find('input:checkbox').change(function(){
+    var checkboxes =  $('tbody').find('input:checkbox');
+    $('thead').find('input:submit').css('display', 'none');
+    $.each(checkboxes,function(key,value){
+        if(this.checked){
+            $('thead').find('input:submit').css('display', 'block');
+        }
+    });
+  })
+    
+</script>
 </body>
 </html>

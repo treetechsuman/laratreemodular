@@ -178,6 +178,27 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
 
+	//delete multiple function---------------
+	$text ="\n\t/**\n";
+	$text .="\t* Remove the Multiple resource from storage.\n";
+	$text .="\t* @return Response\n";
+	$text .="\t*/";
+	fwrite($myfile, $text);
+
+	$text = "\n\tpublic function deleteMultiple(Request $"."request){\n";
+	$text .= "\t\t$"."checkeds = $"."request->only('checked')['checked'];\n";
+	$text .= "\t\tif(count($"."checkeds)<=0){\n";
+	$text .= "\t\t\tSession::flash('error','Item is not selected');\n";
+	$text .= "\t\t\treturn back();\n";
+	$text .= "\t\t}\n";
+	$text .= "\t\tforeach($"."checkeds as $"."checked){\n";
+	$text .= "\t\t\t$"."this->".lcfirst($moduleRepository)."Repo->delete".ucfirst($_POST['controller'])."($"."checked);\n";
+	$text .= "\t\t}\n";
+	$text .= "\t\tSession::flash('success','Operation Success');\n";
+	$text .= "\t\treturn redirect('admin/".lcfirst($_SESSION['module'])."/".lcfirst($_POST['controller'])."');\n";
+	$text .= "\t}\n";
+	fwrite($myfile, $text);
+
 	//export  function---------------
 	$text ="\n\t/**\n";
 	$text .="\t* Export table related to this module.\n";
