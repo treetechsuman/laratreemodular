@@ -9,6 +9,7 @@
 	@include('user::layouts.nav')
 	<div class="row">
 		<div class="col-md-4">
+		@if($isSuperAdmin)
 			<div class="box box-primary">
 				<div class="box-header with-border">
 					<h3 class="box-title">Assign Role</h3>
@@ -44,6 +45,7 @@
 					</form>
 				</div>
 			</div>
+		@endif
 			<div class="box box-primary">
 				<div class="box-header with-border">
 					<h3 class="box-title">Change Passowrd</h3>

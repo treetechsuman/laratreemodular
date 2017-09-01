@@ -12,5 +12,10 @@ return [
         'client_secret' => env('G_CS'),
         'redirect' => env('G_CBU'),
     ],
+    'roles' =>[
+        'User',
+        'Staff',
+        'SuperAdmin'
+    ]
 ];
 

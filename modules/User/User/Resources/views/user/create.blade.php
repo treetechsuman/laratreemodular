@@ -90,7 +90,7 @@ Create User
 
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-8">
-                                    <button type="submit" class="btn btn-success btn-flat">Save
+                                    <button type="submit" id="save"  class="btn btn-success btn-flat">Save
                                     </button>
                                     <button type="reset" class="btn btn-default btn-flat">Reset</button>
                                 </div>

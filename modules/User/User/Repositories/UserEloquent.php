@@ -100,5 +100,10 @@ class UserEloquent implements UserRepository{
     	$attributes['password']=bcrypt($attributes['password']);
     	$this->user->findorfail($attributes['user_id'])->update($attributes);
     }
+    public function getPasswordById($user_id){
+		$user = DB::table('users')->where('id',$user_id)->first();
+		//$user = $this->user->findorfail($user_id)->get();
+		return $user['password'];
+	}
 
 }

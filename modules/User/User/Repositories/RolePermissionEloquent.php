@@ -45,6 +45,10 @@ class RolePermissionEloquent implements RolePermissionRepository{
 		return $this->role->findorfail($id);
 	}
 
+	public function getRoleByName($name){
+		return $this->role->where('name',$name)->first();
+	}
+
 	public function createRole(array $attributes){
 		return $this->role->create($attributes);
 	}

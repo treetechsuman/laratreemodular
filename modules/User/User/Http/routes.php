@@ -9,7 +9,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'admin/user', 'namespace' => 'M
 | RolePermission Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware' => 'web','prefix' => 'admin/user','namespace' => 'Modules\User\Http\Controllers'], function() { 
+Route::group(['middleware' => ['web','superadmin'],'prefix' => 'admin/user','namespace' => 'Modules\User\Http\Controllers'], function() { 
 	Route::group(['prefix' => 'role-permission'], function() { 
 		Route::get('/','RolePermissionController@index');
 		Route::get('/create','RolePermissionController@create');
@@ -52,13 +52,16 @@ Route::group(['middleware' => 'web','prefix' => 'admin/user','namespace' => 'Mod
 	Route::get('/assign-role/{user_id}','UserController@assignRole');
 	Route::post('/assign-role/','UserController@storeAssignRole'); 
 
-	Route::get('/email-templete/{templete_name?}','UserController@emailTemplete');
-	Route::get('/social-login/{templete_name?}','UserController@socialLogin');
+	Route::get('/email-templete/{templete_name?}','UserController@emailTemplete')->middleware('superadmin');
+	Route::get('/social-login/{templete_name?}','UserController@socialLogin')->middleware('superadmin');
 
 	Route::post('/activate-user/','UserController@activateuser');
 
 	Route::get('{provider}', 'SocialAuthController@redirectTo');
 	Route::get('{provider}/callback', 'SocialAuthController@handleCallback'); 
+
+	Route::get('profile/{user_id}', 'UserController@profile');
+	Route::post('change-profile-password', 'UserController@changeProiflePassword');
 }); 
 /*
 |--------------------------------------------------------------------------

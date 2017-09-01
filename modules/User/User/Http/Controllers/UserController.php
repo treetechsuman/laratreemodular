@@ -12,6 +12,8 @@ use Modules\User\Repositories\RolePermissionRepository;
 use Modules\User\Events\UserCreated;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Auth;
+use Validator;
 
 use Session;
 
@@ -35,7 +37,15 @@ class UserController extends Controller{
 	public function index(){
 		$users = $this->userRepo->getAllUser();
 		$userRepo = $this->userRepo;
-		return view('user::user.index',compact('users','userRepo'));
+        $isSuperAdmin =false;
+        $roles = $userRepo->getRoleByUserId(Auth::user()['id']);
+        foreach($roles as $role){
+            if($role['name']=="SuperAdmin"){
+                $isSuperAdmin =true;
+            }
+        }
+        
+		return view('user::user.index',compact('users','userRepo','isSuperAdmin'));
 	}
 
 	public function create(){
@@ -83,10 +93,17 @@ class UserController extends Controller{
 
     public function manageUser($user_id){
     	$myuser = $user_id;
-    	$roles = $this->rolePermissionRepo->getAllRole();
     	$userRepo =$this->userRepo;
     	$userDetail = $this->userDetailRepo->getUserDetailByUserId($user_id);
-    	return view('user::user.manage-user',compact('roles','userDetail','myuser','userRepo'));
+        $isSuperAdmin =false;
+        $roles = $userRepo->getRoleByUserId(Auth::user()['id']);
+        foreach($roles as $role){
+            if($role['name']=="SuperAdmin"){
+                $isSuperAdmin =true;
+            }
+        }
+        $roles = $this->rolePermissionRepo->getAllRole();
+    	return view('user::user.manage-user',compact('roles','userDetail','myuser','userRepo','isSuperAdmin'));
     }
 
     public function changePassword(Request $request){
@@ -125,6 +142,33 @@ class UserController extends Controller{
 
     public function socialLogin(){
     	return view('user::user.social-login');
+    }
+
+    public function profile($user_id){
+    	$profile = $this->userRepo->getUserById($user_id);
+    	return view('user::user.profile',compact('profile'));
+    }
+
+    public function changeProiflePassword(Request $request){
+    	//return Auth::user()['id'];
+    	Validator::validate($request->all(), [
+            'password' => 'required|min:6|confirmed',
+        ]);
+        if($request['password'] != $request['password_confirmation']){
+        	Session::flash('error', 'Confirm  password do not match');
+        	return back();
+        }
+        $inputs = $request->all();
+        $hash = $this->userRepo->getPasswordById(Auth::user()['id']);
+        if (password_verify($inputs['oldpassword'], $hash)) {
+        	$data['user_id']=Auth::user()['id'];
+        	$data['password']=$request['password'];
+            $this->userRepo->changePassword($data);
+            Session::flash('success', 'Your password is changed');
+        } else {
+            Session::flash('error', 'Sorry unable to change Password');
+        }
+        return back();
     }
 
 }

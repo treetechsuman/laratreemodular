@@ -31,7 +31,7 @@ class SendVerificationMail
     public function handle(UserCreated $event)
     {
         $activation_code = SendVerificationMail::generateVerificationCode($event->user['id']);
-        Mail::to('me.suman11@gmail.com')
+        Mail::to($event->user['email'])
         ->send(new VerificationMail($event->user,$activation_code));
         dd($event->user);
     }

@@ -54,6 +54,15 @@ Social login
 					G_CID=google client id<br>
 					G_CS=secret key<br>
 					G_CBU=Call back url<br>
+					<h3>.email setup on .env</h3>
+					MAIL_DRIVER=smtp<br>
+					MAIL_HOST=smtp.gmail.com<br>
+					MAIL_PORT=587<br>
+					MAIL_USERNAME=me.suman11@gmail.com<br>
+					MAIL_PASSWORD=ectibxopqcaojgxa<br>
+					MAIL_ENCRYPTION=tls<br>
+					
+
 				</p>
 			</div>
 		</div>
