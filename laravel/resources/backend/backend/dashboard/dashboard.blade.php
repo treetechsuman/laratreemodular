@@ -3,7 +3,7 @@
     Dashboard
 @endsection
 @section('site_map')
-    Dashboard
+    
 @endsection
 @section('content')
     <!-- Small boxes (Stat box) -->

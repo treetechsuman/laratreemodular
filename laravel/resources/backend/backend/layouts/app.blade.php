@@ -32,6 +32,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.1.1/ekko-lightbox.min.css">
     <link rel="stylesheet" href="{{asset('adminlte/bootstrap/css/custom.css')}}">
 
+    <!-- jQuery 2.2.3 -->
+<script src="{{asset('adminlte/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -41,7 +44,7 @@
     <![endif]-->
     @yield('styles')
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
 <div class="wrapper">
 
 @include('backend.layouts.top_nav')
@@ -52,14 +55,14 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
+            <h1 class="pull-right">
                 @yield('site_map')                
             </h1>
             @include('backend.layouts.message')
         </section>
 
         <!-- Main content -->
-        <section class="content">
+        <section class="content" style="min-height: 550px;">
         
             @yield('content')
 
@@ -74,16 +77,20 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="{{asset('adminlte/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
+
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
     $.widget.bridge('uibutton', $.ui.button);
 </script>
+
 <!-- Bootstrap 3.3.6 -->
 <script src="{{asset('adminlte/bootstrap/js/bootstrap.min.js')}}"></script>
+<!-- DataTables -->
+<script src="{{asset('adminlte/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('adminlte/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+
 <!-- Morris.js charts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="{{asset('adminlte/plugins/morris/morris.min.js')}}"></script>
@@ -107,8 +114,7 @@
 <script src="{{asset('adminlte/plugins/fastclick/fastclick.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('adminlte/dist/js/app.min.js')}}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{asset('adminlte/dist/js/pages/dashboard.js')}}"></script>
+
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('adminlte/dist/js/demo.js')}}"></script>
 <!-- Lightbox -->
@@ -130,6 +136,7 @@
         $(this).ekkoLightbox();
     });
 </script>
+<!-- this is for user profile -->
 <script type="text/javascript">
     $('#change_form').hide();
     $('#change_password').on('click',function(){
@@ -172,8 +179,45 @@
             $('thead').find('input:submit').css('display', 'block');
         }
     });
-  })
-    
+  })  
+
 </script>
+<!-- dropdown on hover -->
+<script type="text/javascript">
+    $('ul.nav li.dropdown').hover(function() {
+      $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeIn(300);
+    }, function() {
+      $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeOut(300);
+    });
+</script>
+<script>
+  $(function () {
+    //$(".datatable").DataTable();
+    $('.datatable').DataTable({
+      "paging": false,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+    $('.productList').DataTable({
+      "paging": false,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": false,
+      "autoWidth": false
+    });
+  });
+</script>
+<script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+</script>
+
+
+
 </body>
 </html>
