@@ -9,3 +9,6 @@ rename config.example.php to config.php
 
 ##uses
 open index.php which is in side laratree folder browser
+
+##version
+version5.3
