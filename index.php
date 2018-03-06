@@ -15,7 +15,7 @@
 <?php require_once('config/config.php'); ?>
 <?php require_once('include/nav.php'); ?>
   
-<div class="container-fluid" style="margin-top:70px">
+<div class="container-fluid" style="margin-top:70px; margin-bottom: 100px">
   <div class="row">
   
   <?php require_once('include/alert.php'); ?>
