@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php //session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +11,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<?php require_once('route.php'); ?>
-<?php require_once('config/config.php'); ?>
+  <?php require_once('config/config.php'); ?>
+  <?php require_once('route.php'); ?>
+
 <?php require_once('include/nav.php'); ?>
   
 <div class="container-fluid" style="margin-top:70px; margin-bottom: 100px">
