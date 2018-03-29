@@ -91,13 +91,13 @@ foreach ($views as $view) {
 									foreach ($table_fields as $field) {
 										if($field=='image'){
 											$text= "\t\t\t\t\t\t\t\t<td>\n";
-												$text.= "\t\t\t\t\t\t\t\t\t<a href=\"{{ asset(\$" .$variable."['" . $field ."'])}}\" data-toggle=\"lightbox\">\n";
-													$text.= "\t\t\t\t\t\t\t\t\t\t<img src=\"{{ asset(\$" .$variable."['" . $field ."'])}}\" height=\"50\" width=\"50\" class=\"img-fluid img-thumbnail\" >\n";
+												$text.= "\t\t\t\t\t\t\t\t\t<a href=\"{{ asset(\$" .$variable."->" . $field .")}}\" data-toggle=\"lightbox\">\n";
+													$text.= "\t\t\t\t\t\t\t\t\t\t<img src=\"{{ asset(\$" .$variable."->" . $field .")}}\" height=\"50\" width=\"50\" class=\"img-fluid img-thumbnail\" >\n";
 												$text.= "\t\t\t\t\t\t\t\t\t</a>\n";
 											$text.= "\t\t\t\t\t\t\t\t</td>\n";
-											//$text= "\t\t\t\t\t\t\t\t<td><img src=\"{{ asset(\$" .$variable."['" . $field ."'])}}\" ></td>\n";
+											//$text= "\t\t\t\t\t\t\t\t<td><img src=\"{{ asset(\$" .$variable."->" . $field .")}}\" ></td>\n";
 										}else{
-											$text= "\t\t\t\t\t\t\t\t<td>{{\$" .$variable."['" . $field ."']}}</td>\n";
+											$text= "\t\t\t\t\t\t\t\t<td>{{\$" .$variable."->" . $field ."}}</td>\n";
 										}
 										
 										fwrite($myfile, $text);								
@@ -307,12 +307,12 @@ foreach ($views as $view) {
 														 $enumlists = enum_select( $table , $field );
 														 if(count($enumlists)>0){
 															 foreach ($enumlists as $enumlist) {
-															 	$text = "\t\t\t\t\t\t\t\t\t<option value=\"" . $enumlist ."\" @if(\$".$variable."['" . $field ."']=='" . $enumlist ."') selected=\"selected\" @endif >" . $enumlist ."</option>\n";
+															 	$text = "\t\t\t\t\t\t\t\t\t<option value=\"" . $enumlist ."\" @if(\$".$variable."->" . $field ."=='" . $enumlist ."') selected=\"selected\" @endif >" . $enumlist ."</option>\n";
 
 																fwrite($myfile, $text);
 															 }
 														 }else{
-															$text = "\t\t\t\t\t\t\t\t\t<option value=\"Active\" @if(\$".$variable."['" . $field ."']=='Active') selected=\"selected\" @endif >Active</option>\n";
+															$text = "\t\t\t\t\t\t\t\t\t<option value=\"Active\" @if(\$".$variable."->" . $field ."=='Active') selected=\"selected\" @endif >Active</option>\n";
 
 															fwrite($myfile, $text);
 														}
@@ -334,12 +334,12 @@ foreach ($views as $view) {
 														 $enumlists = enum_select( $table , $field );
 														 if(count($enumlists)>0){
 															 foreach ($enumlists as $enumlist) {
-															 	$text = "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"" . $enumlist ."\" @if(\$".$variable."['" . $field ."']=='" . $enumlist ."') checked=\"checked\" @endif  >" . $enumlist ."</lable>\n";
+															 	$text = "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"" . $enumlist ."\" @if(\$".$variable."->" . $field ."=='" . $enumlist ."') checked=\"checked\" @endif  >" . $enumlist ."</lable>\n";
 
 																fwrite($myfile, $text);
 															 }
 														 }else{
-															$text .= "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Male\" @if(\$".$variable."['" . $field ."']=='Male') checked=\"checked\" @endif  >Male</lable>\n";
+															$text .= "\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"Male\" @if(\$".$variable."->" . $field ."=='Male') checked=\"checked\" @endif  >Male</lable>\n";
 
 															fwrite($myfile, $text);
 														}
@@ -369,12 +369,12 @@ foreach ($views as $view) {
 														 if(count($enumlists)>0){
 															 foreach ($enumlists as $enumlist) {
 															 	
-															 	$text = "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"{{ \$".$variable."['" . $field ."'] }}\" @if(\$".$variable."['" . $field ."']=='" . $enumlist ."') checked=\"checked\" @endif >" . $enumlist ."</lable>\n";
+															 	$text = "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"{{ \$".$variable."->" . $field ." }}\" @if(\$".$variable."->" . $field ."=='" . $enumlist ."') checked=\"checked\" @endif >" . $enumlist ."</lable>\n";
 
 																fwrite($myfile, $text);
 															 }
 														 }else{
-															$text = "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"{{ \$".$variable."['" . $field ."'] }}\" @if(\$".$variable."['" . $field ."']=='Yes') checked=\"checked\" @endif >Yes</lable>\n";
+															$text = "\t\t\t\t\t\t\t\t\t<label><input type=\"". $value ."\" id=\"" . $field ."\"  name=\"" . $field ."\" value=\"{{ \$".$variable."->" . $field ." }}\" @if(\$".$variable."->" . $field ."=='Yes') checked=\"checked\" @endif >Yes</lable>\n";
 
 															fwrite($myfile, $text);
 														}
@@ -401,7 +401,7 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
 														
 														 $text .= "\t\t\t\t\t\t\t\t<textarea class=\"textarea\" name=\"" . $field ."\" placeholder=\"Place some text here\" style=\"width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;\">\n";
-														 $text .="\t\t\t\t\t\t\t\t\t{{ \$".$variable."['" . $field ."'] }}\n";
+														 $text .="\t\t\t\t\t\t\t\t\t{{ \$".$variable."->" . $field ." }}\n";
 															$text .= "\t\t\t\t\t\t\t\t</textarea>\n";
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t</div>\n";
@@ -416,7 +416,7 @@ foreach ($views as $view) {
 																$text .= "\t\t\t\t\t\t\t\t<label for=\"image\" {{ $" . "errors->has('image') ? ' has-error' : '' }}>Image:</label>\n";
 															$text .= "\t\t\t\t\t\t\t</div>\n";
 															$text .= "\t\t\t\t\t\t<div class=\"col-md-9\">\n";
-																$text .= "\t\t\t\t\t\t\t<img src=\"{{ asset(\$".$variable."['" . $field ."']) }}\" class=\"img-responsive\" >\n";
+																$text .= "\t\t\t\t\t\t\t<img src=\"{{ asset(\$".$variable."->" . $field .") }}\" class=\"img-responsive\" >\n";
 															$text .= "\t\t\t\t\t\t\t</div>\n";
 														 	
 														 	$text .= "\t\t\t\t\t\t</div>\n";
@@ -431,9 +431,9 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
 														if($value == 'file'){
-															$text .= "\t\t\t\t\t\t\t\t<input type=\"". $value ."\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{ \$".$variable."['" . $field ."'] }}\" >\n";
+															$text .= "\t\t\t\t\t\t\t\t<input type=\"". $value ."\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{ \$".$variable."->" . $field ." }}\" >\n";
 														}else{
-															$text .= "\t\t\t\t\t\t\t\t<input type=\"". $value ."\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{ \$".$variable."['" . $field ."'] }}\" required>\n";
+															$text .= "\t\t\t\t\t\t\t\t<input type=\"". $value ."\" class=\"form-control\" id=\"" . $field ."\" placeholder=\"Enter " . $field ."\" name=\"" . $field ."\" value=\"{{ \$".$variable."->" . $field ." }}\" required>\n";
 													 }
 								    					$text .= "\t\t\t\t\t\t\t\t@if ($"."errors->has('" . $field ."'))\n";
 								    					$text .= "\t\t\t\t\t\t\t\t\t<span class=\"help-block\" style=\"color: #cc0000\">\n";

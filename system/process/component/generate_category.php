@@ -92,4 +92,5 @@ if(file_exists(RouteFolderPath)){
 	$text = "\n<li><a href=\"{{url('/admin/category')}}\"><i class=\"fa fa-circle-o\"></i>Category</a></li>\n";
 	fwrite($myfile, $text); 
 
-new Locate('../../../index.php?menu=component&action=create&success=yes&message=Category Component is Added ');
+$location = new Locate();
+$location->redirect('../../../index.php?menu=component&action=create&success=yes&message=Category Component is Added ');

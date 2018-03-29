@@ -1,4 +1,4 @@
-<?php session_start();
+<?php //session_start();
 //session_destroy();
 if(!$_SESSION['module']){
 	$_SESSION['module']="notslelectd";
