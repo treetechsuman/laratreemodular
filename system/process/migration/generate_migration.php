@@ -173,8 +173,8 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 
 			$text = "}\n";
 			fwrite($myfile, $text);
-			
-			new Locate('../../../index.php?menu=migration&action=create&success=yes&message=' .$_POST['table_name'] . ' migration and module is created ');
+			$location = new Locate();
+			$location->redirect('../../../index.php?menu=migration&action=create&success=yes&message=' .$_POST['table_name'] . ' migration and module is created ');
 		}
 
 	}

@@ -22,5 +22,6 @@ unset($_SESSION['viewfolder']);
  echo '<pre>';
  print_r($enumlists);
  echo '</pre>';*/
-new Locate('../../../index.php?menu=views&action=create&success=yes&message=' .$table. ' Fields of table are set ');
+$location = new Locate();
+$location->redirect('../../../index.php?menu=views&action=create&success=yes&message=' .$table. ' Fields of table are set ');
 

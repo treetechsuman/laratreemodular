@@ -514,7 +514,8 @@ if($_POST['add_in_side_nav']=='yes'){
 	$text .= "</li>\n";
 	fwrite($myfile, $text); 
 }
-new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
+$location = new Locate();
+$location->redirect('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
 	
 
 

@@ -64,6 +64,8 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 			$repository = substr($repository, 0, -4);
 			$text = "\t\t$"."this->".lcfirst($moduleRepository)."Repo = $".lcfirst($moduleRepository)."Repo;\n";
 			fwrite($myfile, $text);
+			//fwrite($myfile, $text);
+			//$text = "//$"."this"."->middleware('auth');\n"
 		}
 
 	$text = "\t}\n";
