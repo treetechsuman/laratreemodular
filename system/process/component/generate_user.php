@@ -96,4 +96,5 @@ if(file_exists(RouteFolderPath)){
 	$text = "\n<li><a href=\"{{url('/admin/user')}}\"><i class=\"fa fa-circle-o\"></i>User</a></li>\n";
 	fwrite($myfile, $text); 
 
-new Locate('../../../index.php?menu=component&action=create&success=yes&message=User Component is Added ');
+$location = new Locate();
+$location->redirect('../../../index.php?menu=component&action=create&success=yes&message=User Component is Added ');

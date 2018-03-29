@@ -214,5 +214,6 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	$text ="\n}";
 	fwrite($myfile, $text);
 }
-new Locate('../../../index.php?menu=controller&action=create&success=yes&message=' .$_POST['controller'] . ' controller is created ');	
+$location = new Locate();
+$location->redirect('../../../index.php?menu=controller&action=create&success=yes&message=' .$_POST['controller'] . ' controller is created ');	
 ?>
