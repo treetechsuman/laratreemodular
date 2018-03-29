@@ -115,4 +115,5 @@ if(file_exists(AdminLteRouteFolderPath)){
 	fwrite($myfile, $text);
 }
 
-new Locate('../../../index.php?menu=adminlte&action=create&success=yes&message=AdminLTE is integrated ');
+$location = new Locate();
+$location->redirect('../../../index.php?menu=adminlte&action=create&success=yes&message=AdminLTE is integrated ');

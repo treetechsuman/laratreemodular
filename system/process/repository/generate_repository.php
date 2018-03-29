@@ -9,6 +9,7 @@ $_SESSION['repository']= $_POST['repository'];
 $_SESSION['model']= $_POST['model'];
 $models = $_POST['model'];
 $file_name = ucfirst($_POST['repository']).'Repository.php';
+
 //create Repositories folder inside app
 if (!file_exists(RepositoryFolderPath)) {
     mkdir(RepositoryFolderPath, 0777, true);
@@ -288,8 +289,8 @@ if (!file_exists('../../../../Modules/'.$_SESSION['module'].'/Repositories/'.$fi
 	$text .= "\t\t/*\n\t\tif(array_key_exists('image', $" . "attributes)){
 			$" . "testimonial = $" . "this->testimonial->findorfail($" . "id);
 			//delete image
-			if($" . "testimonial['image']!='' && file_exists($" . "testimonial['image'])){ 				
-				unlink($" . "testimonial['image']);
+			if($" . "testimonial->image!='' && file_exists($" . "testimonial->image)){ 				
+				unlink($" . "testimonial->image);
 			}
 			$" . "path = $" . "" . "this->uploadImage($" . "attributes['image']);
 			$" . "attributes['image']=$" . "path;
@@ -300,8 +301,8 @@ if (!file_exists('../../../../Modules/'.$_SESSION['module'].'/Repositories/'.$fi
 	$text = "\t//copy this code in delete function ----\n";
 	$text .= "\t\t/*\n\t\t$" . "testimonial = $" . "this->testimonial->findorfail($" . "id);
 		//delete image 
-		if($" . "" . "testimonial['image']!='' && file_exists($" . "testimonial['image'])){
-			unlink($" . "testimonial['image']);
+		if($" . "" . "testimonial->image!='' && file_exists($" . "testimonial->image)){
+			unlink($" . "testimonial->image);
 		}\n\t\t*/\n\n";
 
 	fwrite($myfile, $text);
@@ -312,7 +313,8 @@ if (!file_exists('../../../../Modules/'.$_SESSION['module'].'/Repositories/'.$fi
 }
 
 
-new Locate('../../../index.php?menu=repository&action=create&success=yes&message=' .$_POST['repository'] . ' Repository and Eloquent is created ');
+$location = new Locate();
+$location->redirect('../../../index.php?menu=repository&action=create&success=yes&message=' .$_POST['repository'] . ' Repository and Eloquent is created ');
 
 
 

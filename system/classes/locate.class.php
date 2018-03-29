@@ -1,7 +1,7 @@
 <?php
 class Locate{
 	
-	public function Locate($link){
+	public function redirect($link){
 		echo '<script type="text/javascript" language="javascript" >
 		
 		window.location = "'.$link.'";

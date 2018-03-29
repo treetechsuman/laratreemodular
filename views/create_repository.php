@@ -6,6 +6,10 @@ require_once('system/classes/service.class.php');
 $migratinFolders = scandir(MigrationFolderPathForView);
 
 //$appFolders = glob(RepositoryFolderPathForView. '/*' , GLOB_ONLYDIR);
+//create Repositories folder inside app
+if (!file_exists(RepositoryFolderPathForView)) {
+    mkdir(RepositoryFolderPathForView, 0777, true);
+}
 $appFolders = scandir(RepositoryFolderPathForView);
 
 $modelFolders = scandir(ModelFolderPathForView);

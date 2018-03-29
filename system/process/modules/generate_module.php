@@ -12,4 +12,7 @@ $source= '../../../modules/'.$module;
 $destination ='../../../../Modules/';
 copyr($source, $destination); 
 
-new Locate('../../../index.php?menu=addmodule&action=create&success=yes&message=' . $module . ' Modules is Added ');
+//new Locate('../../../index.php?menu=addmodule&action=create&success=yes&message=' . $module . ' Modules is Added ');
+
+$location = new Locate();
+$location->redirect('../../../index.php?menu=addmodule&action=create&success=yes&message=' . $module . ' Modules is Added ');

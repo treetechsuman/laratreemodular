@@ -109,4 +109,5 @@ if(file_exists(RouteFolderPath)){
 	$text = "\n<li><a href=\"{{url('/role-permission/role')}}\"><i class=\"fa fa-circle-o\"></i>RolePermission</a></li>\n";
 	fwrite($myfile, $text); 
 
-new Locate('../../../index.php?menu=component&action=create&success=yes&message=Role Permission Component is added');
+$location = new Locate();
+$location->redirect('../../../index.php?menu=component&action=create&success=yes&message=Role Permission Component is added');
