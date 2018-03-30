@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title','treeShop')</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -179,16 +180,45 @@
             $('thead').find('input:submit').css('display', 'block');
         }
     });
+  })
+  $('#multipleDelete').on('click',function(e){
+    //alert('this is clicked');
+    e.preventDefault();
+    //alert($('#deleteLink').val());
+    var URL = '/'+$('#deleteLink').val();
+    $.ajaxSetup({
+
+        headers: {
+
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+        }
+
+    });
+    var data = $("input[name='checked[]']:checked")
+              .map(function(){return $(this).val();}).get();
+    //console.log(data);
+    //console.log(URL);
+      $.ajax({
+
+         type:'POST',
+
+         url:URL,
+
+         data:{checked:data},
+
+         success:function(data){
+            location.reload();
+            //alert(data.success);
+
+         },
+         error: function(xhr){
+            alert("An error occured: " + xhr.status + " " + xhr.statusText);
+         }
+
+      });
   })  
 
-</script>
-<!-- dropdown on hover -->
-<script type="text/javascript">
-    $('ul.nav li.dropdown').hover(function() {
-      $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeIn(300);
-    }, function() {
-      $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeOut(300);
-    });
 </script>
 <script>
   $(function () {
