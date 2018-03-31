@@ -26,11 +26,12 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 		$repository = substr($repository, 0, -4);
 		$folder = substr($repository, 0, -10);
 		$text = "use Modules\\".$_SESSION['module']."\Repositories\\" .ucfirst($moduleRepository)."Repository;\n";
+		$text .= "use Modules\\".$_SESSION['module']."\Http\Requests\\".ucfirst($_POST['controller'])."Request;\n";
 		fwrite($myfile, $text);
 
 	}
 	$text = "\n\n";
-	$text .= "class ".ucfirst($_POST['controller'])."Controller extends Controller{\n";
+	$text .= "class ".ucfirst($_POST['controller'])."Controller extends Controller{\n\n";
 	fwrite($myfile, $text);
 	//private property---------------
 	foreach ($repositories as $repository) {
@@ -120,8 +121,9 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	$text .="\t* @return Response\n";
 	$text .="\t*/";
 	fwrite($myfile, $text);
-	$text = "\n\tpublic function show(){\n";
-	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".show');\n";
+	$text = "\n\tpublic function show($" . "id){\n";
+	$text .= "\t\t$".lcfirst($_POST['controller'])." = $". "this->".lcfirst($moduleRepository)."Repo->get".ucfirst($_POST['controller'])."ById($" . "id);\n";
+	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".show',compact('".lcfirst($_POST['controller'])."'));\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
 	//edit function -------

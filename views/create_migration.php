@@ -2,7 +2,7 @@
 require_once('config/config.php');
 require_once('system/classes/connection.class.php');
 require_once('system/classes/service.class.php');
-
+require_once('include/module_not_found_error.php');
 $migratinFolders = scandir(MigrationFolderPathForView);
 
 //$appFolders = glob('app/Repositories'. '/*' , GLOB_ONLYDIR);
@@ -66,12 +66,21 @@ $modelFolders = scandir(ModelFolderPathForView);
     </div>
 
     <div class="form-group">
+      <label class="control-label col-sm-4" for="no_of_fields">Create Request Too:</label>
+      <div class="col-sm-8">                 
+        Yes<input type="radio" name="create_request" value="yes" checked="checked">
+        No<input type="radio" name="create_request" value="no">       
+      </div>
+    </div>
+
+    <div class="form-group">
       <label class="control-label col-sm-4" for="no_of_fields">Create Seeder Too:</label>
       <div class="col-sm-8">                 
         Yes<input type="radio" name="create_seeder" value="yes" checked="checked">
         No<input type="radio" name="create_seeder" value="no">       
       </div>
     </div>
+
    
     <input type="hidden" name="table_name" value="<?php echo $old_table_name ?>">
     <input type="hidden" name="no_of_fields" value="<?php echo $old_no_of_fields ?>">

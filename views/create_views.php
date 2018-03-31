@@ -2,7 +2,7 @@
 require_once('config/config.php');
 require_once('system/classes/connection.class.php');
 require_once('system/classes/service.class.php');
-
+require_once('include/module_not_found_error.php');
 $migratinFolders = scandir(MigrationFolderPathForView);
 
 $appFolders = glob(RepositoryFolderPathForView. '/*' , GLOB_ONLYDIR);
@@ -56,13 +56,14 @@ if(isset($_SESSION['table_fields'])){
     <div class="form-group">
       <label class="control-label col-sm-2" for="viewfolder">View Folder:</label>
       <div class="col-sm-10">
-        <input type="text" name="viewfolder" <?php
-        if(isset($_SESSION['viewfolder'])){
-        ?> 
+        <input type="text" name="viewfolder" 
+        <?php if(isset($_SESSION['viewfolder'])){ ?> 
             value="<?php echo $_SESSION['viewfolder']; ?>"
-          <?php 
-        }
-        ?> class="form-control" id="viewfolder" placeholder="Enter viewfolder name" required>
+        <?php 
+        }else{?>
+          value="<?php echo lcfirst($_SESSION['controller']); ?>"
+
+        <?php } ?> class="form-control" id="viewfolder" placeholder="Enter viewfolder name" required>
       </div>
     </div>
     <div class="form-group">
@@ -80,6 +81,7 @@ if(isset($_SESSION['table_fields'])){
           }
         }
         ?>
+        required
         ><?php echo $file; ?></label>
 		</div>
 		<?php }}?>

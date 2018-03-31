@@ -1,4 +1,4 @@
-<?php //session_start(); ?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +11,15 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <?php require_once('config/config.php'); ?>
-  <?php require_once('route.php'); ?>
 
+<?php 
+  if(!file_exists("config/config.php")){
+    echo "<h2>Config file is not created</h2>";
+    exit(0);
+  }
+?>
+<?php require_once('route.php'); ?>
+<?php require_once('config/config.php'); ?>
 <?php require_once('include/nav.php'); ?>
   
 <div class="container-fluid" style="margin-top:70px; margin-bottom: 100px">
@@ -32,6 +38,17 @@
     $(".alert").delay(1000).slideUp(200, function() {
     $(this).alert('close');
 });
+</script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".btn-danger").click(function(e){
+        if(!confirm('Are you sure?')){
+            e.preventDefault();
+            return false;
+        }
+        return true;
+    });
+  });
 </script>
 
 </body>

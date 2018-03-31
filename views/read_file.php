@@ -2,7 +2,7 @@
 require_once('config/config.php');
 require_once('system/classes/connection.class.php');
 require_once('system/classes/service.class.php');
-
+require_once('include/module_not_found_error.php');
 $migratinFolders = scandir(MigrationFolderPathForView);
 
 //$appFolders = glob(RepositoryFolderPathForView. '/*' , GLOB_ONLYDIR);

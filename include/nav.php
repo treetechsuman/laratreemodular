@@ -16,17 +16,17 @@
       </li>
       <li <?php if($_SESSION['menu']=='migration'){?> class="active" <?php } ?> >
       	<a href="index.php?menu=migration&action=create">
-      		Create Migration
+      		Migration
       	</a>
       </li>
       <li <?php if($_SESSION['menu']=='repository'){?> class="active" <?php } ?> >
         <a href="index.php?menu=repository&action=create">
-          Create Repository
+          Repository
         </a>
       </li>
       <li <?php if($_SESSION['menu']=='controller'){?> class="active" <?php } ?> >
         <a href="index.php?menu=controller&action=create">
-          Create Controller
+         Controller
         </a>
       </li>
       <li <?php if($_SESSION['menu']=='views'){?> class="active" <?php } ?> >
@@ -34,21 +34,30 @@
           Create Views
         </a>
       </li>
-      <li <?php if($_SESSION['menu']=='addmodule'){?> class="active" <?php } ?> >
-        <a href="index.php?menu=addmodule&action=create">
-          Add Module
-        </a>
+      
+      <li class="dropdown <?php if($_SESSION['menu']=='addmodule' || $_SESSION['menu']=='adminlte' || $_SESSION['menu']=='file'){ echo "active";  } ?>">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">More..
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li <?php if($_SESSION['menu']=='adminlte'){?> class="active" <?php } ?> >
+            <a href="index.php?menu=adminlte&action=create">
+              Create adminlte
+            </a>
+          </li>
+          <li <?php if($_SESSION['menu']=='addmodule'){?> class="active" <?php } ?> >
+            <a href="index.php?menu=addmodule&action=create">
+              Add Module
+            </a>
+          </li>
+          <li <?php if($_SESSION['menu']=='file'){?> class="active" <?php } ?> >
+            <a href="index.php?menu=file&action=read">
+              Read File
+            </a>
+          </li>
+        </ul>
       </li>
-      <li <?php if($_SESSION['menu']=='file'){?> class="active" <?php } ?> >
-        <a href="index.php?menu=file&action=read">
-          Read File
-        </a>
-      </li>
-      <li <?php if($_SESSION['menu']=='adminlte'){?> class="active" <?php } ?> >
-        <a href="index.php?menu=adminlte&action=create">
-          Create adminlte
-        </a>
-      </li>
+      
+      
       <?php if($_SESSION['module']){ ?>
       <li>
         <a href="#" class="navbar-brand">
