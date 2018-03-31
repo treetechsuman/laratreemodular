@@ -490,7 +490,7 @@ foreach ($views as $view) {
 							$text .= "\t\t\t\t\t\t@endforeach \n";
 							$text .= "\t\t\t\t\t\t<tbody> \n";
 							$text .= "\t\t\t\t\t</table> \n";
-							$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/'.$" .$variable."->id.'/edit')}}\" data-toggle=\"tooltip\" title=\"Edit\" class=\"btn btn-info btn-xs\"><i class=\"glyphicon glyphicon-edit\"></i>Edit</a>\n";
+							$text.= "\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/'.$" .$variable."->id.'/edit')}}\" data-toggle=\"tooltip\" title=\"Edit\" class=\"btn btn-info btn-xs\"><i class=\"glyphicon glyphicon-edit\"></i>Edit</a>\n";
 							fwrite($myfile, $text);
 						}
 						$text ="\t\t\t\t</div>\n";

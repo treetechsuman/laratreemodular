@@ -21,6 +21,9 @@ $moduleRepository = $_SESSION['module'].'Module';
 	$model_class_name =rtrim($modules_file_name,'s');
 	$model_file_name = rtrim($modules_file_name,'s'). '.php';
 
+	$request_class_name =rtrim($modules_file_name,'s'). 'Request';
+	$request_file_name = rtrim($modules_file_name,'s'). 'Request.php';
+
 //HHMMSS
 $file_name = date("Y").'_'.date("m").'_'.date("d").'_'.date("hms").'_create_'.$_POST['table_name']. '_table.php';
 //echo $file_name;
@@ -119,6 +122,65 @@ if(fopen(MigrationFolderPath.$file_name, "w")){
 			fwrite($myfile, $text);
 
 			$text ="\t];\n}";
+			fwrite($myfile, $text);
+		}
+
+	}
+
+	//for creating request---------------------------------------------------------------------------------------------
+	if($_POST['create_request']=='yes'){
+		
+		if (!file_exists(RequestFolderPath)) {
+		    mkdir(RequestFolderPath, 0777, true);
+		}
+		//$model_file_name = rtrim(ucfirst($_POST['table_name']),'s'). '.php';
+		//echo $file_name;
+		$myfile = fopen(RequestFolderPath.$request_file_name, "w") or die("Unable to open file!");
+		if(fopen(RequestFolderPath.$request_file_name, "w")){
+			$text = "<?php \n\n";
+			fwrite($myfile, $text);
+
+			$text = "namespace Modules\\".$_SESSION['module']."\Http\Requests;\n\n";
+			$text .= "use Illuminate\Foundation\Http\FormRequest;\n\n";
+			fwrite($myfile, $text);
+
+			$text = "class " .$request_class_name. " extends FormRequest\n{\n";
+			
+			$text .= "\t/**\n";
+			$text .= "\t * Get the validation rules that apply to the request.\n";
+			$text .= "\t *\n";
+			$text .= "\t * @return array\n";
+			$text .= "\t */\n";
+			$text .= "\tpublic function rules()\n";
+			$text .= "\t{\n";
+			$text .= "\t\treturn [\n";
+			fwrite($myfile, $text);
+				for($i=0;$i<$_POST['no_of_fields'];$i++){
+					$text = "\t\t\t '" . $_POST['field_name'][$i] . "' => 'required', \n";
+					fwrite($myfile, $text);
+			    }
+			$text = "\t\t];\n";
+			$text .= "\t}\n\n";
+
+			$text .= "\t/**\n";
+			$text .= "\t * Determine if the user is authorized to make this request.\n";
+			$text .= "\t *\n";
+			$text .= "\t * @return bool\n";
+			$text .= "\t */\n";
+			$text .= "\tpublic function authorize()\n";
+			$text .= "\t{\n";
+			$text .= "\t\treturn true;\n";
+			$text .= "\t}\n";
+			fwrite($myfile, $text);
+
+			//------------------------logic------------------------------
+			/*for($i=0;$i<$_POST['no_of_fields'];$i++){
+			
+				$text = "\n\t\t\t\t'" . $_POST['field_name'][$i] . "',";
+				fwrite($myfile, $text);
+			}*/
+
+			$text ="\t\n}";
 			fwrite($myfile, $text);
 		}
 

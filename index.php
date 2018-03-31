@@ -39,6 +39,17 @@
     $(this).alert('close');
 });
 </script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".btn-danger").click(function(e){
+        if(!confirm('Are you sure?')){
+            e.preventDefault();
+            return false;
+        }
+        return true;
+    });
+  });
+</script>
 
 </body>
 </html>
