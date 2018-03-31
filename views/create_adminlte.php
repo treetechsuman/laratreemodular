@@ -25,6 +25,6 @@ Click only once at the begining of Project setup
 </div>
 <script type="text/javascript">
 	function ConfirmDelete() {
-	  return confirm("Are you sure you want to delete?");
+	  return confirm("Are you sure you want to Integrate?");
 	}
 </script>

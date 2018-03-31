@@ -16,17 +16,17 @@
       </li>
       <li <?php if($_SESSION['menu']=='migration'){?> class="active" <?php } ?> >
       	<a href="index.php?menu=migration&action=create">
-      		Create Migration
+      		Migration
       	</a>
       </li>
       <li <?php if($_SESSION['menu']=='repository'){?> class="active" <?php } ?> >
         <a href="index.php?menu=repository&action=create">
-          Create Repository
+          Repository
         </a>
       </li>
       <li <?php if($_SESSION['menu']=='controller'){?> class="active" <?php } ?> >
         <a href="index.php?menu=controller&action=create">
-          Create Controller
+         Controller
         </a>
       </li>
       <li <?php if($_SESSION['menu']=='views'){?> class="active" <?php } ?> >

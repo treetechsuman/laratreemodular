@@ -2,7 +2,7 @@
 require_once('config/config.php');
 require_once('system/classes/connection.class.php');
 require_once('system/classes/service.class.php');
-
+require_once('include/module_not_found_error.php');
 $migratinFolders = scandir(MigrationFolderPathForView);
 
 //$appFolders = glob(RepositoryFolderPathForView. '/*' , GLOB_ONLYDIR);
@@ -23,7 +23,7 @@ $modelFolders = scandir(ModelFolderPathForView);
     <div class="form-group">
       <label class="control-label col-sm-5" for="repository">Repository:</label>
       <div class="col-sm-7">
-        <input type="text" name="repository"  class="form-control" id="repository" placeholder="Enter repository name" required>
+        <input type="text" name="repository" value="<?= $_SESSION['module'];?>Service"  class="form-control" id="repository" placeholder="Enter repository name" required>
       </div>
     </div>
     <div class="form-group">

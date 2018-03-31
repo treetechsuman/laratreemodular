@@ -120,8 +120,9 @@ if(fopen(ControllerFolderPath.'/'.$file_name, "w")){
 	$text .="\t* @return Response\n";
 	$text .="\t*/";
 	fwrite($myfile, $text);
-	$text = "\n\tpublic function show(){\n";
-	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".show');\n";
+	$text = "\n\tpublic function show($" . "id){\n";
+	$text .= "\t\t$".lcfirst($_POST['controller'])." = $". "this->".lcfirst($moduleRepository)."Repo->get".ucfirst($_POST['controller'])."ById($" . "id);\n";
+	$text .= "\t\treturn view('". lcfirst($_SESSION['module']) . "::".lcfirst($_POST['controller']).".show',compact('".lcfirst($_POST['controller'])."'));\n";
 	$text .= "\t}\n";
 	fwrite($myfile, $text);
 	//edit function -------

@@ -60,7 +60,7 @@ foreach ($views as $view) {
 		$text .="@section('content')\n";
 			$text .="\t@include('".lcfirst($_SESSION['module'])."::layouts.nav')\n";
 			$text .="\t<div class=\"row\">\n";
-				$text .="\t\t<div class=\"col-md-6\">\n";
+				$text .="\t\t<div class=\"col-md-8\">\n";
 					$text .="\t\t\t<div class=\"box box-primary\">\n";
 						$text .="\t\t\t\t<div class=\"box-header with-border\">\n";
 						$text .="\t\t\t\t\t<h3 class=\"box-title\">".ucfirst($variable).'::'.$view."</h3>\n";
@@ -116,6 +116,7 @@ foreach ($views as $view) {
 									$text= "\t\t\t\t\t\t\t\t<td>\n";
 										$text.= "\t\t\t\t\t\t\t\t\t<div class=\"btn-group\">\n";
 										$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/'.$" .$variable."->id.'/edit')}}\" data-toggle=\"tooltip\" title=\"Edit\" class=\"btn btn-info btn-xs\"><i class=\"glyphicon glyphicon-edit\"></i></a>\n";
+										$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/'.$" .$variable."->id.'/show')}}\" data-toggle=\"tooltip\" title=\"Show Details\" class=\"btn btn-primary btn-xs\"><i class=\"glyphicon glyphicon-list\"></i></a>\n";
 										$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/soft-delete/'.$" .$variable."->id)}}\" data-toggle=\"tooltip\" title=\"Soft Delete\" class=\"btn btn-warning btn-xs\"><i class=\"glyphicon glyphicon-remove\"></i></a>\n";
 										/*$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/delete/'.$" .$variable."->id)}}\" data-toggle=\"tooltip\" title=\"Delete\" class=\"btn btn-danger btn-xs\"><i class=\"glyphicon glyphicon-remove\"></i></a>\n";*/
 
@@ -296,7 +297,7 @@ foreach ($views as $view) {
 								$text .= "\t\t\t\t\t</form>\n";
 								fwrite($myfile, $text);		
 						}elseif($view == 'edit'){
-							/*
+						/*
 						-----------------------------------------------------------------------------------------
 						edit
 						-----------------------------------------------------------------------------------------	
@@ -475,8 +476,21 @@ foreach ($views as $view) {
 								fwrite($myfile, $text);
 
 						}else{
+							/*
+							-----------------------------------------------------------------------------------------
+							show
+							-----------------------------------------------------------------------------------------	
+							 */
 							fwrite($myfile, $text);
-							$text = "\t\t\t\t\tthis is ".$view." \n";
+							
+							$text = "\t\t\t\t\t<table class=\"table\"> \n";
+							$text .= "\t\t\t\t\t\t<tbody> \n";
+							$text .= "\t\t\t\t\t\t@foreach($".$variable."->toArray() as $"."key=>$"."value) \n";
+							$text .= "\t\t\t\t\t\t<tr><td>{"."{"."$"."key}"."}</td><td>{"."{"."$"."value}"."}</td></tr> \n";
+							$text .= "\t\t\t\t\t\t@endforeach \n";
+							$text .= "\t\t\t\t\t\t<tbody> \n";
+							$text .= "\t\t\t\t\t</table> \n";
+							$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/'.$" .$variable."->id.'/edit')}}\" data-toggle=\"tooltip\" title=\"Edit\" class=\"btn btn-info btn-xs\"><i class=\"glyphicon glyphicon-edit\"></i>Edit</a>\n";
 							fwrite($myfile, $text);
 						}
 						$text ="\t\t\t\t</div>\n";
@@ -505,7 +519,7 @@ if(file_exists(RouteFolderPath)&&isset($controller)){
 			$text .= "\t\tRoute::get('/create','".substr($controller, 0, -4). "@create');\n";
 			$text .= "\t\tRoute::post('/store','".substr($controller, 0, -4). "@store');\n";
 			$text .= "\t\tRoute::get('/{id}/edit','".substr($controller, 0, -4). "@edit');\n";
-			$text .= "\t\tRoute::get('/{id}','".substr($controller, 0, -4). "@show');\n";
+			$text .= "\t\tRoute::get('/{id}/show','".substr($controller, 0, -4). "@show');\n";
 			$text .= "\t\tRoute::post('/update/{id}','".substr($controller, 0, -4). "@update');\n";
 			$text .= "\t\tRoute::delete('/delete/{id}','".substr($controller, 0, -4). "@delete');\n";
 			$text .= "\t\tRoute::get('/soft-delete/{id}','".substr($controller, 0, -4). "@softDelete');\n";
