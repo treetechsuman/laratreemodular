@@ -33,6 +33,9 @@
                                     <a href="http://image.intervention.io/" target="_blank">Image Intervention</a>
                                 </li>
                                 <li>
+                                    <a href="https://laravelcollective.com/" target="_blank">Laravel Form</a>
+                                </li>
+                                <li>
                                     <a href="http://fontawesome.io/icons/" target="_blank">Font Awesome</a>
                                 </li>
                                 <li>

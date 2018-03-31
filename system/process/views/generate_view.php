@@ -49,6 +49,7 @@ foreach ($views as $view) {
 		//mkdir(ViewFolderPath.'/'.lcfirst($_POST['viewfolder'].'/'.$view), 0777, true);
 		$myfile = fopen(ViewFolderPath.'/'.lcfirst($_POST['viewfolder']).'/'.$view.'.blade.php', "w") or die("Unable to open file!");
 		//$text ="@extends('". lcfirst($_SESSION['module']) ."::layouts.master')\n";
+		
 		$text ="@extends('backend.layouts.app')\n";
 		$text .="@section('title')\n";
 			$text .="\t".$view."\n";
@@ -63,18 +64,26 @@ foreach ($views as $view) {
 					$text .="\t\t\t<div class=\"box box-primary\">\n";
 						$text .="\t\t\t\t<div class=\"box-header with-border\">\n";
 						$text .="\t\t\t\t\t<h3 class=\"box-title\">".ucfirst($variable).'::'.$view."</h3>\n";
+						//export and add if it is index file
+						if($view=='index'){
 						$text .="\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/export/data')}}\" data-toggle=\"tooltip\" title=\"Export!\" class=\"btn btn-primary btn-xs pull-right\"><i class=\"glyphicon glyphicon-download\"></i>Export</a>\n";
 						$text .="\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/create')}}\" data-toggle=\"tooltip\" title=\"Create!\" class=\"btn btn-success btn-xs pull-right\"><i class=\"glyphicon glyphicon-plus\"></i>Add New</a>\n";
-						
+						}
+						//export and add if it is index file ends
 						$text .="\t\t\t\t</div>\n";
 						$text .="\t\t\t\t<div class=\"box-body\">\n";
+						/*
+						-----------------------------------------------------------------------------------------
+						index
+						-----------------------------------------------------------------------------------------	
+						 */	
 						if($view=='index'){
-							$text .= "\t\t\t\t\t<form method=\"POST\" action=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/delete-multiple')}}\">\n";
-							$text .= "\t\t\t\t\t{!! csrf_field() !!}\n";
+							
+							$text .= "\t\t\t\t\t<input type=\"hidden\" name=\"link\" id=\"deleteLink\" value=\"admin/".lcfirst($_SESSION['module'])."/".$variable."/delete-multiple\">\n";
 							$text .= "\t\t\t\t\t<table class=\"table table-condensed table-hover\">\n";
 								$text.= "\t\t\t\t\t\t<thead>\n\t\t\t\t\t\t\t<tr>\n";
 								fwrite($myfile, $text);
-								$text= "\t\t\t\t\t\t\t\t<th><input type=\"checkbox\" class=\"checkall\" name=\"checkall\"><input type=\"submit\" class=\"btn btn-danger btn-xs\" value=\"Delete\" style=\"display: none;\" ></th>\n";
+								$text= "\t\t\t\t\t\t\t\t<th><input type=\"checkbox\" class=\"checkall\" name=\"checkall\"><input type=\"submit\" class=\"btn btn-danger btn-xs\" value=\"Delete\" id=\"multipleDelete\" style=\"display: none;\" ></th>\n";
 									fwrite($myfile, $text);
 								foreach ($table_fields as $field) {
 									$text= "\t\t\t\t\t\t\t\t<th>" . ucfirst($field) ."</th>\n";
@@ -86,7 +95,7 @@ foreach ($views as $view) {
 								$text.="\t\t\t\t\t\t\t@foreach($".$variable."s as $".$variable.")\n";
 								$text.="\t\t\t\t\t\t\t<tr>\n";
 									fwrite($myfile, $text);
-									$text= "\t\t\t\t\t\t\t\t<td><input type=\"checkbox\" name=\"checked[]\" value=\"{{\$".$variable."['id']}}\"</td>\n";
+									$text= "\t\t\t\t\t\t\t\t<td><input type=\"checkbox\" name=\"checked[]\" value=\"{{\$".$variable."->id}}\"/></td>\n";
 									fwrite($myfile, $text);		
 									foreach ($table_fields as $field) {
 										if($field=='image'){
@@ -106,9 +115,18 @@ foreach ($views as $view) {
 									
 									$text= "\t\t\t\t\t\t\t\t<td>\n";
 										$text.= "\t\t\t\t\t\t\t\t\t<div class=\"btn-group\">\n";
-										$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/'.$" .$variable."['id'].'/edit')}}\" data-toggle=\"tooltip\" title=\"Edit\" class=\"btn btn-info btn-xs\"><i class=\"glyphicon glyphicon-edit\"></i></a>\n";
-										$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/soft-delete/'.$" .$variable."['id'])}}\" data-toggle=\"tooltip\" title=\"Soft Delete\" class=\"btn btn-warning btn-xs\"><i class=\"glyphicon glyphicon-remove\"></i></a>\n";
-										$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/delete/'.$" .$variable."['id'])}}\" data-toggle=\"tooltip\" title=\"Delete\" class=\"btn btn-danger btn-xs\"><i class=\"glyphicon glyphicon-remove\"></i></a>\n";
+										$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/'.$" .$variable."->id.'/edit')}}\" data-toggle=\"tooltip\" title=\"Edit\" class=\"btn btn-info btn-xs\"><i class=\"glyphicon glyphicon-edit\"></i></a>\n";
+										$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/soft-delete/'.$" .$variable."->id)}}\" data-toggle=\"tooltip\" title=\"Soft Delete\" class=\"btn btn-warning btn-xs\"><i class=\"glyphicon glyphicon-remove\"></i></a>\n";
+										/*$text.= "\t\t\t\t\t\t\t\t\t\t<a href=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/delete/'.$" .$variable."->id)}}\" data-toggle=\"tooltip\" title=\"Delete\" class=\"btn btn-danger btn-xs\"><i class=\"glyphicon glyphicon-remove\"></i></a>\n";*/
+
+										$text.= "\t\t\t\t\t\t\t\t\t\t{!! Form::open([\n";
+										$text.= "\t\t\t\t\t\t\t\t\t\t\t'method' => 'DELETE',\n";
+										$text.= "\t\t\t\t\t\t\t\t\t\t\t'class' => 'btn btn-xs',\n";
+										$text.= "\t\t\t\t\t\t\t\t\t\t\t'url' => ['admin/".lcfirst($_SESSION['module'])."/".$variable."/delete', $" .$variable."->id]\n";
+										$text.= "\t\t\t\t\t\t\t\t\t\t]) !!}\n";
+										$text.= "\t\t\t\t\t\t\t\t\t\t\t{!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}\n";
+										$text.= "\t\t\t\t\t\t\t\t\t\t{!! Form::close() !!}\n";
+
 										$text.= "\t\t\t\t\t\t\t\t\t</div>\n";
 
 									$text.= "\t\t\t\t\t\t\t\t</td>\n";
@@ -117,7 +135,6 @@ foreach ($views as $view) {
 								$text.="\t\t\t\t\t\t</tbody>\n";
 
 							$text .= "\t\t\t\t\t</table>\n";
-							$text .= "\t\t\t\t\t</form>\n";
 							$text .= "\t\t\t\t\t{"."{"."$".$variable."s"."->"."links()}"."}\n";
 
 							fwrite($myfile, $text);
@@ -284,7 +301,7 @@ foreach ($views as $view) {
 						edit
 						-----------------------------------------------------------------------------------------	
 						 */
-							$text .= "\t\t\t\t\t<form role=\"form\" class=\"form-horizontal\" action=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/update/'.$" .$variable."['id'])}}\" method=\"post\" enctype=\"multipart/form-data\">\n";
+							$text .= "\t\t\t\t\t<form role=\"form\" class=\"form-horizontal\" action=\"{{url('admin/".lcfirst($_SESSION['module'])."/".$variable."/update/'.$" .$variable."->id)}}\" method=\"post\" enctype=\"multipart/form-data\">\n";
 							$text .= "\t\t\t\t\t\t{!! csrf_field() !!}\n";
 							fwrite($myfile, $text);
 									foreach ($table_fields as $field) {
@@ -490,7 +507,7 @@ if(file_exists(RouteFolderPath)&&isset($controller)){
 			$text .= "\t\tRoute::get('/{id}/edit','".substr($controller, 0, -4). "@edit');\n";
 			$text .= "\t\tRoute::get('/{id}','".substr($controller, 0, -4). "@show');\n";
 			$text .= "\t\tRoute::post('/update/{id}','".substr($controller, 0, -4). "@update');\n";
-			$text .= "\t\tRoute::get('/delete/{id}','".substr($controller, 0, -4). "@delete');\n";
+			$text .= "\t\tRoute::delete('/delete/{id}','".substr($controller, 0, -4). "@delete');\n";
 			$text .= "\t\tRoute::get('/soft-delete/{id}','".substr($controller, 0, -4). "@softDelete');\n";
 			$text .= "\t\tRoute::get('/export/data','".substr($controller, 0, -4). "@export');\n";
 			$text .= "\t\tRoute::post('/delete-multiple','".substr($controller, 0, -4). "@deleteMultiple');\n";
@@ -514,7 +531,8 @@ if($_POST['add_in_side_nav']=='yes'){
 	$text .= "</li>\n";
 	fwrite($myfile, $text); 
 }
-new Locate('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
+$location = new Locate();
+$location->redirect('../../../index.php?menu=views&action=create&success=yes&message=views is created ');
 	
 
 

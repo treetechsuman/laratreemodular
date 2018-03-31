@@ -105,9 +105,9 @@ if(fopen(RepositoryFolderPath.'/'.$file_name, "w")){
 
 		$text = "\tpublic function getAll".ucfirst($model)."($"."limit = null){\n";
 		$text .=	"\t\tif($"."limit!=null){\n";
-		$text .=	"\t\t\treturn $" . "this->" .strtolower($model). "->paginate($"."limit);\n";
+		$text .=	"\t\t\treturn $" . "this->" .strtolower($model). "->orderBy('created_at','desc')->paginate($"."limit);\n";
 		$text .=	"\t\t}\n";
-		$text .=	"\t\treturn $" . "this->" .strtolower($model). "->all();\n";
+		$text .=	"\t\treturn $" . "this->" .strtolower($model). "->orderBy('created_at','desc')->get();\n";
 		$text .= "\t}\n\n";
 		fwrite($myfile, $text);
 
