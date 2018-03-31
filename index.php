@@ -11,6 +11,12 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<?php 
+  if(!file_exists("config/config.php")){
+    echo "<h2>Config file is not created</h2>";
+    exit(0);
+  }
+?>
 <?php require_once('route.php'); ?>
 <?php require_once('config/config.php'); ?>
 <?php require_once('include/nav.php'); ?>
