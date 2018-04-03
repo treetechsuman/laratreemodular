@@ -162,7 +162,7 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
-														 $text .= "\t\t\t\t\t\t\t\t<select name=\"" . $field ."\" class=\"form-control\">\n";
+														 $text .= "\t\t\t\t\t\t\t\t<select name=\"" . $field ."\" class=\"form-control selectpicker\" data-live-search=\"true\">\n";
 														 //----------------enum---------------------------
 														 fwrite($myfile, $text);
 														 $enumlists = enum_select( $table , $field );
@@ -319,7 +319,7 @@ foreach ($views as $view) {
 														$text .= "\t\t\t\t\t\t\t\t<label for=\"" . $field ."\" {{ $". "errors->has('" . $field ."') ? ' has-error' : '' }}>" . ucfirst($field)  .":</label>\n";
 														$text .= "\t\t\t\t\t\t\t</div>\n";
 														$text .= "\t\t\t\t\t\t\t<div class=\"col-md-9\">\n";
-														 $text .= "\t\t\t\t\t\t\t\t<select name=\"" . $field ."\" class=\"form-control\">\n";
+														 $text .= "\t\t\t\t\t\t\t\t<select name=\"" . $field ."\" class=\"form-control selectpicker\" data-live-search=\"true\">\n";
 														 //----------------enum---------------------------
 														 fwrite($myfile, $text);
 														 $enumlists = enum_select( $table , $field );
