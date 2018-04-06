@@ -1,21 +1,23 @@
-<?php //session_start();
+<?php session_start();
 //session_destroy();
 if(!$_SESSION['module']){
 	$_SESSION['module']="notslelectd";
     header('Location: select_module_first.php');
+    exit();
 }
 //app configuration -----------
 define("AppName", "laraTreeModule");
 
 //database configuration -------
 define("Host", "localhost");
-define("Db", "modules");
+define("Db", "blog");
 define("User", "root");
 define("Password", "");
 
 //for process---------------------------------------
 define("MigrationFolderPath", "../../../../Modules/".$_SESSION['module']."/database/migrations/");
 define("ModelFolderPath", "../../../../Modules/".$_SESSION['module']."/Entities/");
+define("RequestFolderPath", "../../../../Modules/".$_SESSION['module']."/Http/Requests/");
 define("SeedersFolderPath", "../../../../Modules/".$_SESSION['module']."/Database/Seeders/");
 define("ControllerFolderPath", "../../../../Modules/".$_SESSION['module']."/Http/Controllers/");
 define("RepositoryFolderPath", "../../../../Modules/".$_SESSION['module']."/Repositories/");
@@ -26,6 +28,7 @@ define("AdminLteRouteFolderPath", "../../../../routes/");
 //for views-----------------------------------------
 define("MigrationFolderPathForView", "../Modules/".$_SESSION['module']."/database/migrations/");
 define("ModelFolderPathForView", "../Modules/".$_SESSION['module']."/Entities/");
+define("RequestFolderPathView", "../Modules/".$_SESSION['module']."/Http/Requests/");
 define("SeedersFolderPathForView", "../Modules/".$_SESSION['module']."/Database/Seeders/");
 define("ControllerFolderPathForView", "../Modules/".$_SESSION['module']."/Http/Controllers");
 define("RepositoryFolderPathForView", "../Modules/".$_SESSION['module']."/Repositories");
