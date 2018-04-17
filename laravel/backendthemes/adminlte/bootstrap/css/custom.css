@@ -23,3 +23,7 @@
     padding-right: 5px;
     padding-left: 5px;
 }
+form.btn.btn-xs {
+    border-style: none;
+    padding: 0;
+}
